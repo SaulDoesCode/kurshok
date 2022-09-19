@@ -1,0 +1,1 @@
+{"version":3,"file":"bundle.js","sources":["../../src/main.js"],"sourcesContent":["import './global.css'\nimport './site.css'\n\nconsole.log('loaded')"],"names":["console","log"],"mappings":"yBAGAA,QAAQC,IAAI"}
