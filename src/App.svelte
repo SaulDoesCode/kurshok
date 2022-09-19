@@ -1,32 +1,35 @@
-<script></script>
-
 <nav>
-	<header class="kurshok"> Kurshok </header>
+	<header class="kurshok"> kurshok </header>
 </nav>
 <main>
 	<p>
 		Hello, this is a personal site, very much underconstruction
 	</p>
-
-	<footer>
-		<section class="links">
-			<div>
-				<span>github: </span>
-				<a href="http://github.com/SaulDoesCode" target="_blank">SaulDoesCode</a>
-			</div>
-			<div>
-				<span>twitter: </span>
-				<a href="http://twitter.com/saulvdw">@saulvdw</a>
-			</div>
-		</section>
-	</footer>
 </main>
 
+<footer>
+	<section class="links">
+		<header>Links</header>
+		<div>
+			<span>github: </span>
+			<a href="http://github.com/SaulDoesCode" target="_blank">SaulDoesCode</a>
+		</div>
+		<div>
+			<span>twitter: </span>
+			<a href="http://twitter.com/saulvdw">@saulvdw</a>
+		</div>
+	</section>
+</footer>
+
 <style>
+	:root {
+		--highlight-color: hsl(0, 70%, 60%);
+	}
 	.kurshok {
 		display: inline-block;
 		font-size: 1.3em;
-		background: #ccc;
+		background: var(--highlight-color);
+		color: #fff;
 		padding: .5em .5em;
 		border-radius: .5em;
 	}
@@ -38,15 +41,13 @@
 		margin: 0 auto;
 	}
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	.large {
-		font-size: 3em;
+	footer {
+		display: inline-block;
+		width: 94vw;
+		margin: .5em 2.5vw .5em 2.5vw;
+		padding-top: .5em;
+		border-top: 1px solid rgb(207, 59, 59);
+		box-shadow: inset 0 4px 3px -4px rgb(207, 59, 59, .3);
 	}
 
 	@media (min-width: 640px) {
@@ -55,3 +56,7 @@
 		}
 	}
 </style>
+
+<script>
+
+</script>
