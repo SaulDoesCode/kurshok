@@ -50,6 +50,23 @@
 		box-shadow: inset 0 4px 3px -4px rgb(207, 59, 59, .3);
 	}
 
+	.links {
+		font-size: .8em;
+		display: inline-block;
+		padding: .5em .5em;
+		margin: .5em;
+		border: 1px solid #ccc;
+		border-radius: .25em;
+	}
+
+	.links > header {
+		font-weight: bold;
+	}
+
+	.links > div {
+		margin-left: 1.25em;
+	}
+
 	@media (min-width: 640px) {
 		main {
 			max-width: none;
