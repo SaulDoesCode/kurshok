@@ -2,9 +2,12 @@
 	<header class="kurshok"> kurshok </header>
 </nav>
 <main>
-	<p>
-		Hello, this is a personal site, very much underconstruction
-	</p>
+	<section class="books">
+		<header>Books</header>
+		<iframe type="text/html" sandbox="allow-scripts allow-same-origin allow-popups" width="336" height="550" frameborder="0" allowfullscreen style="max-width:100%" src="https://read.amazon.com/kp/card?asin=B08WS1NS1W&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_M3SY9JYDYCMPDW2052H7" ></iframe>
+		<iframe type="text/html" sandbox="allow-scripts allow-same-origin allow-popups" width="336" height="550" frameborder="0" allowfullscreen style="max-width:100%" src="https://read.amazon.com/kp/card?asin=B07ZKXSHLM&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_KG5H5CZMBY22ZK12W5ZY" ></iframe>
+		<iframe type="text/html" sandbox="allow-scripts allow-same-origin allow-popups" width="336" height="550" frameborder="0" allowfullscreen style="max-width:100%" src="https://read.amazon.com/kp/card?asin=B07Z57C9KM&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_9VCET209YES1RV90V3CH" ></iframe>
+	</section>
 </main>
 
 <footer>
@@ -46,8 +49,8 @@
 		width: 94vw;
 		margin: .5em 2.5vw .5em 2.5vw;
 		padding-top: .5em;
-		border-top: 1px solid rgb(207, 59, 59);
-		box-shadow: inset 0 4px 3px -4px rgb(207, 59, 59, .3);
+		border-top: 1px solid var(--highlight-color);
+		box-shadow: inset 0 5px 4px -5px rgb(207, 59, 59, .3);
 	}
 
 	.links {
@@ -59,8 +62,12 @@
 		border-radius: .25em;
 	}
 
-	.links > header {
+	header {
+		max-width: 80%;
 		font-weight: bold;
+		margin: .25em auto .25em auto;
+		padding-bottom: .25em;
+		border-bottom: 1px solid rgba(0,0,0,.15);
 	}
 
 	.links > div {
