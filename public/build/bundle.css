@@ -64,7 +64,7 @@ button:focus {
 	border-color: #666;
 }
 :root {
-    --highlight-color: hsla(356, 87%, 70%, 0.9);
+    --highlight-color: hsl(356, 94%, 60%);
 }
 
 .kurshok {
@@ -97,23 +97,21 @@ section.books img:hover {
 }
 
 footer {
-    display: inline-block;
-    display: inline-flex;
+    display: flex;
     align-items: flex-start;
     align-content: center;
     justify-content: space-between;
     flex-flow: row wrap;
-    width: 95vw;
-    margin: .5em 2.5vw .5em 2.5vw;
+    width: 92vw;
+    margin: .5em auto .5em auto;
     padding: .5em;
     border-top: 1px solid var(--highlight-color);
-    box-shadow: inset 0 5px 4px -5px rgb(207, 32, 32, .2), 0 -3.5em 3em -2.9em rgba(217, 94, 94, 0.25);
+    box-shadow: inset 0 5px 4px -5px rgba(207, 32, 32, .2), 0 -3.5em 3em -2.9em rgba(217, 94, 94, 0.25);
     transition: all 260ms ease-in;
 }
 
 footer:hover {
-    filter: drop-shadow(0, 3.4em, -2.9em, rgba(217, 94, 94, 0.45));
-    box-shadow: 0 3.5em 3em -2.9em rgba(217, 94, 94, 0.45);
+    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.5));
 }
 
 .footer-section {
