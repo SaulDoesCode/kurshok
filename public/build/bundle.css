@@ -131,7 +131,8 @@ footer:hover {
 .footer-section>header {
     margin-left: .4em;
     max-width: 95%;
-    font-size: 1.1em;
+    font-size: 1em;
+    white-space: nowrap;
 }
 
 header {
@@ -143,7 +144,12 @@ header {
 }
 
 .footer-section>div {
-    margin-left: 1em;
+    margin-left: .8em;
+    margin-bottom: .25em;
+}
+
+.footer-section>div:last-of-type {
+    margin-bottom: 0;
 }
 
 @media (min-width: 640px) {
