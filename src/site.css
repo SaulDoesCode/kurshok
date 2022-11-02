@@ -66,7 +66,8 @@ footer:hover {
 .footer-section>header {
     margin-left: .4em;
     max-width: 95%;
-    font-size: 1.1em;
+    font-size: 1em;
+    white-space: nowrap;
 }
 
 header {
@@ -78,11 +79,23 @@ header {
 }
 
 .footer-section>div {
-    margin-left: 1em;
+    margin-left: .8em;
+    margin-bottom: .25em;
+}
+
+.footer-section>div:last-of-type {
+    margin-bottom: 0;
 }
 
 @media (min-width: 640px) {
     main {
         max-width: none;
     }
+}
+
+iframe[src="https://api.kurshok.space/tell.html"] {
+    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.5));
+    height: 144px;
+    width: calc(10 * 80px);
+    transition: all 160ms ease-in;
 }
