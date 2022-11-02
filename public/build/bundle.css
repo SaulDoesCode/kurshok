@@ -157,3 +157,10 @@ header {
         max-width: none;
     }
 }
+
+iframe[src="https://api.kurshok.space/tell.html"] {
+    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.5));
+    height: 144px;
+    width: calc(10 * 80px);
+    transition: all 160ms ease-in;
+}
