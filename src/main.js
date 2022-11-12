@@ -4,7 +4,7 @@ import './site.css'
 import domlib from './domlib.js'
 
 const d = domlib.domfn
-const {div, article, textarea, input, a, p, button, hr, h1, h4, section, span, header} = d
+const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = d
 
 const app = domlib.emitter({})
 
@@ -29,6 +29,7 @@ section.thoughts({$pre: 'main'},
       margin: '0 auto'
     }
   }, 'thoughts'),
+  br,
   thoughts.map(t => p.thought(t))
 )
 
