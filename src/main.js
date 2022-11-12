@@ -12,9 +12,11 @@ const thoughts = `
   Reality demonstrates itself in a tone of absoluteness. There is no true control, normativity reigns supreme.
 
   Slowing down colors attention like a filter and ram clear on what time feels like. Slow breath makes time thick, because we forget we are alive, and suddenly realize what a complex contrap all this truly is, our concerns are so narrow at times, that our own bodies and thoughts pass us by.
+
+  Consequence is a meta-temporal concept, and has little traction upon non-static non-type/object oriented thinking, it is physical and proccessual not narrativistic or semantic.
 `
   .trim()
-  .split(",,")
+  .split("\n")
   .map(t => t.trim())
   .filter(t => t != '')
 
