@@ -1,4 +1,135 @@
-html, body {
+:root {
+    --highlight-color: hsl(349, 83%, 53%);
+}
+
+.kurshok {
+    display: inline-block;
+    font-size: 1.45em;
+    font-weight: 800;
+    color: var(--highlight-color);
+    padding: .2em .4em;
+}
+
+main {
+    text-align: center;
+    padding: 1em;
+    margin: 0 auto;
+    min-height: 70vh;
+}
+
+section.books img {
+    max-width: 240px;
+    margin: .75em .75em;
+    box-shadow: 0 .5em 3em -1em rgba(213, 124, 124, 0.2);
+    border-bottom: 1px solid rgba(110, 110, 100, .1);
+    transition: all 240ms ease-in;
+}
+
+section.books img:hover {
+    transform: scale(1.1, 1.1);
+}
+
+section.thoughts {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin: .5em auto;
+    margin-top: 1em;
+    padding: .5em;
+    min-height: 2cm;
+}
+
+section.thoughts .thought {
+    display: inline-flex;
+    flex-flow: row wrap;
+    background: #fff;
+    color: #000;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    margin: .5em auto;
+    margin-top: 1em;
+    padding: .5em 1em;
+    border-left: 1px solid rgba(255, 223, 223, 0.2);
+    border-right: 1px solid rgba(244, 201, 201, 0.2);
+    min-height: 1cm;
+    max-width: 333px;
+    font-size: 1.1em;
+    text-shadow: 0 .5em 3em -1em rgb(207, 32, 32, .2);
+    box-shadow: 0 0 4px -1px rgba(0, 0, 0, .2);
+}
+
+footer {
+    display: flex;
+    align-items: flex-start;
+    align-content: center;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    width: 92vw;
+    margin: .5em auto .5em auto;
+    padding: .5em;
+    border-top: 1px solid var(--highlight-color);
+    box-shadow: inset 0 5px 4px -5px rgba(132, 64, 64, 0.2), 0 -3.5em 3em -2.9em rgba(174, 152, 152, 0.25);
+    transition: all 260ms ease-in;
+}
+
+footer:hover {
+    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.5));
+}
+
+.footer-section {
+    font-size: .8em;
+    display: inline-block;
+    padding: .5em .5em;
+    margin: .5em;
+    border: .1em solid rgba(255, 96, 96, 0.25);
+    border-radius: .25em;
+    max-width: fit-content;
+    transition: all 240ms ease-in;
+}
+
+.footer-section:hover {
+    border: .1em solid rgba(255, 96, 96, 0.75);
+}
+
+.footer-section>header {
+    margin-left: .4em;
+    max-width: 95%;
+    font-size: 1em;
+    white-space: nowrap;
+}
+
+header {
+    max-width: 80%;
+    font-weight: bold;
+    margin: .25em auto .25em auto;
+    padding-bottom: .25em;
+}
+
+.footer-section>div {
+    margin-left: .8em;
+    margin-bottom: .25em;
+}
+
+.footer-section>div:last-of-type {
+    margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+    main {
+        max-width: none;
+    }
+}
+
+iframe[src="https://api.kurshok.space/tell.html"] {
+    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.5));
+    height: 162px;
+    width: 280px;
+    box-sizing: border-box;
+    transition: all 160ms ease-in;
+}html, body {
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -7,7 +138,8 @@ html, body {
 
 body {
 	display: block;
-	color: #333;
+	color: rgb(153, 119, 119);
+	background: rgb(255, 212, 207);
 	margin: 0;
 	padding: .25em;
 	box-sizing: border-box;
@@ -15,7 +147,7 @@ body {
 }
 
 a {
-	color: rgb(0,100,200);
+	color: rgb(177, 72, 72);
 	text-decoration: none;
 }
 
@@ -24,7 +156,7 @@ a:hover {
 }
 
 a:visited {
-	color: rgb(0,80,160);
+	color: rgb(220, 57, 133);
 }
 
 label {
@@ -62,105 +194,4 @@ button:not(:disabled):active {
 
 button:focus {
 	border-color: #666;
-}
-:root {
-    --highlight-color: hsl(356, 94%, 60%);
-}
-
-.kurshok {
-    display: inline-block;
-    font-size: 1.35em;
-    background: var(--highlight-color);
-    color: #fff;
-    padding: .25em .35em;
-    border-radius: .25em;
-    box-shadow: 0 .5em 3em -1em rgb(207, 32, 32, .2);
-}
-
-main {
-    text-align: center;
-    padding: 1em;
-    margin: 0 auto;
-    min-height: 70vh;
-}
-
-section.books img {
-    max-width: 240px;
-    margin: .75em .75em;
-    box-shadow: 0 .5em 3em -1em rgb(207, 32, 32, .2);
-    border-bottom: 1px solid rgba(110, 110, 100, .1);
-    transition: all 240ms ease-in;
-}
-
-section.books img:hover {
-    transform: scale(1.1, 1.1);
-}
-
-footer {
-    display: flex;
-    align-items: flex-start;
-    align-content: center;
-    justify-content: space-between;
-    flex-flow: row wrap;
-    width: 92vw;
-    margin: .5em auto .5em auto;
-    padding: .5em;
-    border-top: 1px solid var(--highlight-color);
-    box-shadow: inset 0 5px 4px -5px rgba(207, 32, 32, .2), 0 -3.5em 3em -2.9em rgba(217, 94, 94, 0.25);
-    transition: all 260ms ease-in;
-}
-
-footer:hover {
-    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.5));
-}
-
-.footer-section {
-    font-size: .8em;
-    display: inline-block;
-    padding: .5em .5em;
-    margin: .5em;
-    border: .1em solid rgba(255, 96, 96, 0.25);
-    border-radius: .25em;
-    transition: all 240ms ease-in;
-}
-
-.footer-section:hover {
-    border: .1em solid rgba(255, 96, 96, 0.75);
-}
-
-.footer-section>header {
-    margin-left: .4em;
-    max-width: 95%;
-    font-size: 1em;
-    white-space: nowrap;
-}
-
-header {
-    max-width: 80%;
-    font-weight: bold;
-    margin: .25em auto .25em auto;
-    padding-bottom: .25em;
-    border-bottom: 1px solid rgba(0, 0, 0, .15);
-}
-
-.footer-section>div {
-    margin-left: .8em;
-    margin-bottom: .25em;
-}
-
-.footer-section>div:last-of-type {
-    margin-bottom: 0;
-}
-
-@media (min-width: 640px) {
-    main {
-        max-width: none;
-    }
-}
-
-iframe[src="https://api.kurshok.space/tell.html"] {
-    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.5));
-    height: 144px;
-    width: calc(10 * 80px);
-    transition: all 160ms ease-in;
 }
