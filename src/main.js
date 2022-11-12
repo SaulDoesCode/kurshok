@@ -29,7 +29,7 @@ section.thoughts({$pre: 'main'},
       margin: '0 auto'
     }
   }, 'thoughts'),
-  thoughts.map(t => section.thought(t))
+  thoughts.map(t => p.thought(t))
 )
 
 
