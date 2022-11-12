@@ -108,6 +108,18 @@ section.thoughts {
     min-height: 2cm;
 }
 
+main > section > header {
+    text-shadow: 0 1px 2px rgba(91, 51, 51, 0.4);
+}
+
+div.spacer {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: .5em .5em;
+    padding: .25em;
+}
+
 section.thoughts .thought {
     display: inline-flex;
     flex-flow: row wrap;
@@ -126,6 +138,12 @@ section.thoughts .thought {
     font-size: 1.1em;
     text-shadow: 0 .5em 3em -1em rgb(207, 32, 32, .2);
     box-shadow: 0 0 4px -1px rgba(0, 0, 0, .2);
+    transform: scale(0.9);
+    transition: all 420ms ease-in;
+}
+
+section.thoughts .thought:hover, section.thoughts .thought:focus {
+    transform: scale(1);
 }
 
 footer {

@@ -29,7 +29,7 @@ section.thoughts({$pre: 'main'},
       margin: '0 auto'
     }
   }, 'thoughts'),
-  br,
+  div.spacer,
   thoughts.map(t => p.thought(t))
 )
 
