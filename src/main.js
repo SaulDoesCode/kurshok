@@ -14,6 +14,10 @@ const thoughts = `
   Slowing down colors attention like a filter and ram clear on what time feels like. Slow breath makes time thick, because we forget we are alive, and suddenly realize what a complex contrap all this truly is, our concerns are so narrow at times, that our own bodies and thoughts pass us by.
 
   Consequence is a meta-temporal concept, and has little traction upon non-static non-type/object oriented thinking, it is physical and proccessual not narrativistic or semantic.
+
+  The right music at the right time, mends old wounds and bring release.
+
+  
 `
   .trim()
   .split("\n")
