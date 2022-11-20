@@ -17,7 +17,7 @@ const thoughts = `
 
   The right music at the right time, mends old wounds and bring release.
 
-  
+  Returning to aesthetics, like a corpse to the sublimity of rebirth, from out of atelic duty with a new found loss of the sense of the trancendent sourced from pragmatic, utilitarian, and instrumental interest.  
 `
   .trim()
   .split("\n")
