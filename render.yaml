@@ -3,5 +3,5 @@ services:
   name: kurshok-space
   env: static
   plan: starter
-  # buildCommand: npm install && npm run build
+  buildCommand: npm install && npm run build
   staticPublishPath: dist
