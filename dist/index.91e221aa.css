@@ -312,6 +312,7 @@ iframe[src="https://api.kurshok.space/tell.html"] {
 }
 
 .small-idea:hover {
+  color: #fff;
   filter: drop-shadow(0 .3em .5em #03020221);
   scale: 1.5;
 }

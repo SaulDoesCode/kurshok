@@ -322,5 +322,6 @@ iframe[src="https://api.kurshok.space/tell.html"] {
 
 .small-idea:hover {
     scale: 1.5;
+    color: rgb(255, 255, 255);
     filter: drop-shadow(0 .3em .5em hsla(0, 30%, 1%, .13));
 }
