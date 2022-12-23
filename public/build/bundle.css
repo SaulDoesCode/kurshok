@@ -7,8 +7,8 @@ html, body {
 
 body {
 	display: block;
-	color: rgb(153, 119, 119);
-	background: rgb(255, 212, 207);
+	color: rgb(183, 131, 131);
+	background: rgb(107, 43, 53);
 	margin: 0;
 	padding: .25em;
 	box-sizing: border-box;
@@ -65,7 +65,7 @@ button:focus {
 	border-color: #666;
 }
 :root {
-    --highlight-color: hsl(349, 83%, 53%);
+    --highlight-color: hsl(349, 45%, 71%);
 }
 
 .kurshok {
@@ -181,7 +181,7 @@ footer {
 }
 
 footer:hover {
-    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.5));
+    filter: drop-shadow(0 .3em 1em hsla(0, 57%, 41%, 0.5));
 }
 
 .footer-section {
@@ -189,10 +189,12 @@ footer:hover {
     display: inline-block;
     padding: .5em .5em;
     margin: .5em;
-    border: .1em solid rgba(255, 96, 96, 0.25);
+    border: .1em solid rgba(83, 18, 18, 0.25);
+    background: rgb(0, 0, 0);
     border-radius: .25em;
     max-width: fit-content;
     transition: all 240ms ease-in;
+    font-weight: 600;
 }
 
 .footer-section:hover {
@@ -234,4 +236,58 @@ iframe[src="https://api.kurshok.space/tell.html"] {
     width: 280px;
     box-sizing: border-box;
     transition: all 160ms ease-in;
+}
+
+.mouseboard {
+    position: fixed;
+    display: block;
+    left: 0;
+    top: 0;
+    max-width: 220px;
+    border-radius: 6px;
+    background: rgba(137, 136, 136, 0.541);
+}
+
+.mouseboard .output {
+    border-radius: 4px;
+    padding: .12em .24em;
+    margin: .12em;
+    background: #fff;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.12));
+}
+
+.mouseboard .letters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-flow: row wrap;
+}
+
+.mouseboard .letters span {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-flow: row wrap;
+    margin: .1em .05em;
+    padding: 0 .22em;
+    border-radius: 4px;
+    background: #fff;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.12));
+    cursor: grabbing;
+    user-select: none;
+}
+
+
+.mouseboard .letters span:hover {
+    transform: scale(1.25);
+}
+
+.small-idea {
+    display: inline-block;
+    margin: .25em .25em;
+    padding: .5em .5em;
+    background: rgb(54, 35, 35);
+    max-width: 200px;
 }

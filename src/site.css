@@ -1,5 +1,73 @@
+html, body {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+}
+
+body {
+	display: block;
+	color: #1a1212;
+	background: rgb(22, 20, 21);
+	margin: 0;
+	padding: .25em;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+a {
+	color: rgb(50, 36, 36);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:visited {
+	color: rgb(220, 57, 133);
+}
+
+label {
+	display: block;
+}
+
+input, button, select, textarea {
+	font-family: inherit;
+	font-size: inherit;
+	-webkit-padding: 0.4em 0;
+	padding: 0.4em;
+	margin: 0 0 0.5em 0;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+}
+
+input:disabled {
+	color: #ccc;
+}
+
+button {
+	color: #333;
+	background-color: #f4f4f4;
+	outline: none;
+}
+
+button:disabled {
+	color: #999;
+}
+
+button:not(:disabled):active {
+	background-color: #ddd;
+}
+
+button:focus {
+	border-color: #666;
+}
+
+
 :root {
-    --highlight-color: hsl(349, 83%, 53%);
+    --highlight-color: rgb(253, 53, 53);
 }
 
 .kurshok {
@@ -21,7 +89,7 @@ section.books img {
     max-width: 240px;
     margin: .75em .75em;
     margin-bottom: 1em;
-    box-shadow: 0 .5em 3em -1em rgba(213, 124, 124, 0.2);
+    box-shadow: 0 .5em 3em -.5em rgba(74, 52, 52, 0.2);
     border-bottom: 1px solid rgba(110, 110, 100, .1);
     transition: all 240ms ease-in;
 }
@@ -37,13 +105,15 @@ section.thoughts {
     align-items: center;
     align-content: center;
     margin: .5em auto;
-    margin-top: 1em;
     padding: .5em;
     min-height: 2cm;
 }
 
 main > section > header {
+    color: #ccc;
     text-shadow: 0 1px 2px rgba(91, 51, 51, 0.4);
+    font-size: 1.2em;
+    padding-bottom: 1em;
 }
 
 .toast {
@@ -77,19 +147,20 @@ div.spacer {
 section.thoughts .thought {
     display: inline-flex;
     flex-flow: row wrap;
-    background: #fff;
-    color: #000;
+    background: rgb(134, 119, 122);
+    color: rgb(22, 20, 21);
     justify-content: space-evenly;
     align-items: center;
     align-content: center;
-    margin: .5em auto;
+    margin: .5em .25em;
     margin-top: 1em;
     padding: .5em 1em;
     border-left: 1px solid rgba(255, 223, 223, 0.2);
     border-right: 1px solid rgba(244, 201, 201, 0.2);
     min-height: 1cm;
-    max-width: 333px;
+    max-width: 280px;
     font-size: 1.1em;
+    line-height: 1.1;
     text-shadow: 0 .5em 3em -1em rgb(207, 32, 32, .2);
     box-shadow: 0 0 4px -1px rgba(0, 0, 0, .2);
     transform: scale(0.9);
@@ -109,13 +180,15 @@ footer {
     width: 92vw;
     margin: .5em auto .5em auto;
     padding: .5em;
-    border-top: 1px solid var(--highlight-color);
-    box-shadow: inset 0 5px 4px -5px rgba(132, 64, 64, 0.2), 0 -3.5em 3em -2.9em rgba(174, 152, 152, 0.25);
+    border-top: 1px solid rgba(255, 223, 223, 0.2);
+    box-shadow: 0 -4px 155px -2px rgba(0, 0, 0, .25), 0 -4px 4px -2px rgba(0, 0, 0, .25);
+    border-radius: 1em;
     transition: all 260ms ease-in;
 }
 
 footer:hover {
-    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.5));
+    filter: drop-shadow(0 .3em 1em hsla(0, 57%, 41%, 0.196));
+    
 }
 
 .footer-section {
@@ -123,10 +196,12 @@ footer:hover {
     display: inline-block;
     padding: .5em .5em;
     margin: .5em;
-    border: .1em solid rgba(255, 96, 96, 0.25);
+    border: .1em solid rgba(83, 18, 18, 0.25);
+    background: rgba(62, 48, 48, 0.819);
     border-radius: .25em;
     max-width: fit-content;
     transition: all 240ms ease-in;
+    font-weight: 600;
 }
 
 .footer-section:hover {
@@ -168,4 +243,84 @@ iframe[src="https://api.kurshok.space/tell.html"] {
     width: 280px;
     box-sizing: border-box;
     transition: all 160ms ease-in;
+}
+
+.mouseboard {
+    position: fixed;
+    display: block;
+    left: 0;
+    top: 0;
+    max-width: 220px;
+    border-radius: 6px;
+    background: rgba(137, 136, 136, 0.541);
+}
+
+.mouseboard .output {
+    border-radius: 4px;
+    padding: .12em .24em;
+    margin: .12em;
+    background: #fff;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.12));
+}
+
+.mouseboard .letters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-flow: row wrap;
+}
+
+.mouseboard .letters span {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-flow: row wrap;
+    margin: .1em .05em;
+    padding: 0 .22em;
+    border-radius: 4px;
+    background: #fff;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.12));
+    cursor: grabbing;
+    user-select: none;
+}
+
+
+.mouseboard .letters span:hover {
+    transform: scale(1.25);
+}
+
+.short-ideas {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-flow: row wrap;
+    margin: .5em .5em;
+    padding: .5em .5em;
+    background: rgb(54, 35, 35);
+    max-width: 1820px;
+    line-height: 1;
+    transition: all 130ms ease-in;
+}
+
+.small-idea {
+    display: inline-block;
+    margin: .5em .5em;
+    padding: .5em .5em;
+    background: rgb(54, 35, 35);
+    max-width: 200px;
+    line-height: 1;
+    transition: all 130ms ease-in;
+}
+
+.small-idea > header {
+    display: block;
+    width: 100%;
+}
+
+.small-idea:hover {
+    scale: 1.5;
+    filter: drop-shadow(0 .3em .5em hsla(0, 30%, 1%, .13));
 }

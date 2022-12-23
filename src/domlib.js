@@ -512,7 +512,7 @@ export default (d => {
 
   domfn.class = (node, c, state) => {
     if (node && c != null && node.classList) {
-      if (d.isArr(node)) {
+      if (Array.isArray(node)) {
         for (const n of node) domfn.class(n, c, state)
       } else if (c.constructor === Object) {
         for (const name in c) {
@@ -627,9 +627,7 @@ export default (d => {
           el[prop] = val
         } else if (prop === 'accessors') {
           for (const key in val) {
-            const {
-              set = val[key], get = val[key]
-            } = val[key]
+            const {set = val[key], get = val[key]} = val[key]
             const accessors = {}
             if (set instanceof Function) {
               accessors.set = set.bind(el, el)

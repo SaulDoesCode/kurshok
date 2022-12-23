@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Audio Recorder</title>
+    <style>
+        button.recorder-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+  </head>
+
+  <body>
+    <button id="record-button">Start Recording</button>
+    <button id="play-button" disabled>Play</button>
+    <button id="download-button" disabled>Download</button>
+    <script>
+        const recordButton = document.getElementById('record-button');
+        const playButton = document.getElementById('play-button');
+        const downloadButton = document.getElementById('download-button');
+
+        let audioCtx = new AudioContext();
+        let recorder;
+        let recording = false;
+        let recordedBlob;
+
+        recordButton.addEventListener('click', () => {
+        if (recording) {
+            // Stop recording
+            recorder.stop();
+            audioCtx.close();
+            recording = false;
+            recordButton.textContent = 'Start Recording';
+            playButton.disabled = false;
+            downloadButton.disabled = false;
+        } else {
+            // Start recording
+            audioCtx = new AudioContext();
+            recordedBlob = new Blob();
+
+            recorder.ondataavailable = (event) => {
+            recordedBlob = new Blob([recordedBlob, event.data], { type: 'audio/mpeg' });
+            };
+
+            recorder.start();
+            recording = true;
+            recordButton.textContent = 'Stop Recording';
+            playButton.disabled = true;
+            downloadButton.disabled = true;
+        }
+        });
+
+        playButton.addEventListener('click', () => {
+        // Play the recorded audio
+        const audioUrl = URL.createObjectURL(recordedBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+        });
+
+        downloadButton.addEventListener('click', () => {
+        // Download the recorded audio
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = URL.createObjectURL(recordedBlob);
+        a.download = 'recording.mp3';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(a.href);
+        }, 100);
+        });
+
+        navigator.mediaDevices.getUserMedia({ audio: true })
+        .then((stream) => {
+            recordButton.disabled = false;
+            recorder = new MediaRecorder(audioCtx.createMediaStreamSource(stream));
+        })
+        .catch((error) => {
+            console.error('Error accessing microphone:', error);
+        });
+    </script>
+  </body>
+</html>
