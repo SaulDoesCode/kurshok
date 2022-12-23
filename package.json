@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "node ./node_modules/parcel/lib/bin.js build ./src/index.html --no-cache",
+    "build": "node ./node_modules/parcel/lib/bin.js build ./src/* --no-cache",
     "dev": "node ./node_modules/parcel/lib/bin.js ./src/index.html"
   },
   "devDependencies": {
