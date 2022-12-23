@@ -16,7 +16,7 @@ body {
 }
 
 a {
-	color: rgb(50, 36, 36);
+	color: rgb(180, 65, 76);
 	text-decoration: none;
 }
 
@@ -25,7 +25,7 @@ a:hover {
 }
 
 a:visited {
-	color: rgb(220, 57, 133);
+	color:rgb(134, 119, 122);
 }
 
 label {
@@ -303,6 +303,7 @@ iframe[src="https://api.kurshok.space/tell.html"] {
     max-width: 1820px;
     line-height: 1;
     transition: all 130ms ease-in;
+    z-index: 3;
 }
 
 .small-idea {
