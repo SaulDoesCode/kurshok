@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "npm parcel src/index.html"
+    "build": "node ./node_modules/parcel/lib/bin.js build ./src/index.html",
+    "dev": "node ./node_modules/parcel/lib/bin.js ./src/index.html"
   },
   "devDependencies": {
     "parcel": "^2.8.2"
