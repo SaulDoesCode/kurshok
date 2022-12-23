@@ -299,7 +299,7 @@ iframe[src="https://api.kurshok.space/tell.html"] {
     flex-flow: row wrap;
     margin: .5em .5em;
     padding: .5em .5em;
-    background: rgb(54, 35, 35);
+    background: rgb(49, 35, 35);
     max-width: 1820px;
     line-height: 1;
     transition: all 130ms ease-in;
@@ -309,7 +309,6 @@ iframe[src="https://api.kurshok.space/tell.html"] {
     display: inline-block;
     margin: .5em .5em;
     padding: .5em .5em;
-    background: rgb(54, 35, 35);
     max-width: 200px;
     line-height: 1;
     transition: all 130ms ease-in;
@@ -317,7 +316,12 @@ iframe[src="https://api.kurshok.space/tell.html"] {
 
 .small-idea > header {
     display: block;
+    color: rgb(76, 54, 54);
     width: 100%;
+}
+
+.small-idea:hover > header {
+    color: rgb(255, 255, 255);
 }
 
 .small-idea:hover {

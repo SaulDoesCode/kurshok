@@ -200,10 +200,6 @@ div.spacer,
    The search for the fundamental building blocks,
    the secrets of the universe revealed.
    |
-   String theory:
-   The attempt to unify,
-   the laws of the large and the small.
-   |
    Non-standard philosophy:
    A different approach,
    to understanding the world.

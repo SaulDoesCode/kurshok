@@ -114,3 +114,132 @@ GIven the following code example in javascript, write a similar curried function
     } ```
 
 */
+
+function brainfuckEval(code) {
+    const memory = new Uint8Array(30000)
+    let pointer = 0
+    let output = ''
+    let input = ''
+    let inputPointer = 0
+    let loopStack = []
+
+    for (let i = 0; i < code.length; i++) {
+        switch (code[i]) {
+            case '>':
+                pointer++
+                break
+            case '<':
+                pointer--
+                break
+            case '+':
+                memory[pointer]++
+                break
+            case '-':
+                memory[pointer]--
+                break
+            case '.':
+                output += String.fromCharCode(memory[pointer])
+                break
+            case ',':
+                memory[pointer] = input.charCodeAt(inputPointer++)
+                break
+            case '[':
+                loopStack.push(i)
+                break
+            case ']':
+                if (memory[pointer]) {
+                    i = loopStack[loopStack.length - 1]
+                } else {
+                    loopStack.pop()
+                }
+                break
+            case 'g':
+                if (code[i + 1] == 'o') {
+                    if (code[i + 2] == 't') {
+                        if (code[i + 3] == 'o') {
+                            if (code[i + 4] == ' ') {
+                                let label = ''
+                                for (let j = i + 5; j < code.length; j++) {
+                                    if (code[j] == ' ') {
+                                        break
+                                    } else {
+                                        label += code[j]
+                                    }
+                                }
+                                i = labels[label]
+                            }
+                        }
+                    }
+                }
+                break
+            case 'l':
+                if (code[i + 1] == 'a') {
+                    if (code[i + 2] == 'b') {
+                        if (code[i + 3] == 'e') {
+                            if (code[i + 4] == 'l') {
+                                if (code[i + 5] == ' ') {
+                                    let label = ''
+                                    for (let j = i + 6; j < code.length; j++) {
+                                        if (code[j] == ' ') {
+                                            break
+                                        } else {
+                                            label += code[j]
+                                        }
+                                    }
+                                    labels[label] = i
+                                }
+                            }
+                        }
+                    }
+                }
+                break
+            case '&':
+                if (code[i + 1] == 'r') {
+                    if (code[i + 2] == 'e') {
+                        if (code[i + 3] == 'f') {
+                            if (code[i + 4] == ' ') {
+                                let label = ''
+                                for (let j = i + 5; j < code.length; j++) {
+                                    if (code[j] == ' ') {
+                                        break
+                                    } else {
+                                        label += code[j]
+                                    }
+                                }
+                                memory[pointer] = memory[labels[label]]
+                            }
+                        }
+                    }
+                }
+                break
+            case '*':
+                if (code[i + 1] == 'd') {
+                    if (code[i + 2] == 'e') {
+                        if (code[i + 3] == 'r') {
+                            if (code[i + 4] == 'e') {
+                                if (code[i + 5] == 'f') {
+                                    if (code[i + 6] == ' ') {
+                                        let label = ''
+                                        for (let j = i + 7; j < code.length; j++) {
+                                            if (code[j] == ' ') {
+                                                break
+                                            } else {
+                                                label += code[j]
+                                            }
+                                        }
+                                        memory[labels[label]] = memory[pointer]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break
+                
+        }
+    }
+
+    return output
+}
+
+console.log(brainfuckEval(`+++++>-----<++.`))
