@@ -18,8 +18,6 @@ const thoughts = `
   Returning to aesthetics, like a corpse to the sublimity of rebirth, from out of atelic duty with a new found loss of the sense of the trancendent sourced from pragmatic, utilitarian, and instrumental interest.  
 
   A dreadful thought, to count all the times one must essentially start over in life, be it with relationships, a move, or change of business.. so much waste, so much hurt, the repetition is torturous. Stronger not dead, sure, but at what cost?
-
-  
 `
   .trim()
   .split("\n")
@@ -409,7 +407,10 @@ app.toast('...loaded')
 ;(async () => {
   if (location.hash === "#experimental") {
     app.toast('experimental mode script loading...')
+    app.on('experiments-loaded', () => {
+        app.toast('...experiments loaded')
+    })
     const ex = (await import("./experimental.js")).default
-    ex(app)
+    return await ex(app)
   }
 })();

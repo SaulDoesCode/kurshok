@@ -10,7 +10,6 @@ body {
 	color: #1a1212;
 	background: rgb(22, 20, 21);
 	margin: 0;
-	padding: .25em;
 	box-sizing: border-box;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
@@ -80,21 +79,30 @@ button:focus {
 
 main {
     text-align: center;
-    padding: 1em;
-    margin: 0 auto;
-    min-height: 70vh;
+    padding: .75em;
+    min-height: 110vh;
+}
+
+section.books {
+    display: inline-block;
+    background: rgb(28, 24, 26);
+    max-width: fit-content;
+    margin: .5em auto;
+    padding: 1em 1.5em;
+    min-height: 2cm;
 }
 
 section.books img {
     max-width: 240px;
-    margin: .75em .75em;
+    margin: .75em 1.5em;
     margin-bottom: 1em;
-    box-shadow: 0 .5em 3em -.5em rgba(74, 52, 52, 0.2);
+    box-shadow: 0 2px 5px -1px rgba(31, 18, 18, 0.541), 0 1px 3px -1px rgba(77, 61, 61, 0.541);
     border-bottom: 1px solid rgba(110, 110, 100, .1);
     transition: all 240ms ease-in;
 }
 
 section.books img:hover {
+    filter: drop-shadow(0 0 6px rgba(48, 23, 23, 0.5));
     transform: scale(1.1, 1.1);
 }
 
@@ -113,7 +121,7 @@ main > section > header {
     color: #ccc;
     text-shadow: 0 1px 2px rgba(91, 51, 51, 0.4);
     font-size: 1.2em;
-    padding-bottom: 1em;
+    padding-bottom: .75em;
 }
 
 .toast {
@@ -144,22 +152,33 @@ div.spacer {
     padding: .25em;
 }
 
+section.thoughts {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    margin: .5em .5em;
+    padding: .5em;
+    min-height: 2cm;
+    background: rgb(40, 29, 29);
+}
+
 section.thoughts .thought {
     display: inline-flex;
     flex-flow: row wrap;
-    background: rgb(134, 119, 122);
-    color: rgb(22, 20, 21);
-    justify-content: space-evenly;
+    background: hsla(345, 10%, 8%, 0.8);
+    color: rgb(89, 68, 64);
+    justify-content: space-around;
     align-items: center;
     align-content: center;
     margin: .5em .25em;
-    margin-top: 1em;
     padding: .5em 1em;
-    border-left: 1px solid rgba(255, 223, 223, 0.2);
-    border-right: 1px solid rgba(244, 201, 201, 0.2);
+    border-left: 1px solid rgba(74, 38, 38, 0.2);
+    border-right: 1px solid rgba(74, 38, 38, 0.2);
     min-height: 1cm;
-    max-width: 280px;
-    font-size: 1.1em;
+    max-width: 420px;
+    font-size: 1.15em;
     line-height: 1.1;
     text-shadow: 0 .5em 3em -1em rgb(207, 32, 32, .2);
     box-shadow: 0 0 4px -1px rgba(0, 0, 0, .2);
@@ -169,6 +188,8 @@ section.thoughts .thought {
 
 section.thoughts .thought:hover, section.thoughts .thought:focus {
     transform: scale(1);
+    background: rgb(79, 38, 38);
+    color: rgb(225, 215, 215);
 }
 
 footer {
@@ -180,9 +201,8 @@ footer {
     width: 92vw;
     margin: .5em auto .5em auto;
     padding: .5em;
-    border-top: 1px solid rgba(255, 223, 223, 0.2);
-    box-shadow: 0 -4px 155px -2px rgba(0, 0, 0, .25), 0 -4px 4px -2px rgba(0, 0, 0, .25);
-    border-radius: 1em;
+    border-top: 1px solid rgba(218, 199, 199, 0.2);
+    box-shadow: 0 0 4px -1px rgba(0, 0, 0, .22);
     transition: all 260ms ease-in;
 }
 
@@ -237,11 +257,9 @@ header {
     }
 }
 
-iframe[src="https://api.kurshok.space/tell.html"] {
+iframe[src="https://kurshok-api.fly.dev/tell"] {
     filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.5));
-    height: 162px;
-    width: 280px;
-    box-sizing: border-box;
+    height: auto;
     transition: all 160ms ease-in;
 }
 
@@ -312,13 +330,21 @@ iframe[src="https://api.kurshok.space/tell.html"] {
     padding: .5em .5em;
     max-width: 200px;
     line-height: 1;
-    transition: all 130ms ease-in;
+    transition: all 100ms ease-in;
+}
+
+.small-idea > span {
+    display: inline-block;
+    margin: .25em .5em;
+    max-width: 166px;
+    line-height: 1;
 }
 
 .small-idea > header {
     display: block;
     color: rgb(76, 54, 54);
     width: 100%;
+    transition: all 130ms ease-in;
 }
 
 .small-idea:hover > header {
