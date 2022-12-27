@@ -180,7 +180,7 @@ section.thoughts .thought {
     display: inline-flex;
     flex-flow: row wrap;
     background: hsla(345, 10%, 8%, 0.8);
-    color: rgb(89, 68, 64);
+    color: rgb(172, 127, 119);
     justify-content: space-around;
     align-items: center;
     align-content: center;
@@ -212,14 +212,15 @@ footer {
     width: 92vw;
     margin: .5em auto .5em auto;
     padding: .5em;
-    border-top: 1px solid rgba(218, 199, 199, 0.2);
+    background: rgba(40, 29, 29, 0.86);
+    border-left: 1px solid rgba(218, 199, 199, 0.2);
+    border-right: 1px solid rgba(218, 199, 199, 0.2);
     box-shadow: 0 0 4px -1px rgba(0, 0, 0, .22);
     transition: all 260ms ease-in;
 }
 
 footer:hover {
-    filter: drop-shadow(0 .3em 1em hsla(0, 57%, 41%, 0.196));
-    
+    box-shadow: 0 0 4px -1px rgba(0, 0, 0, .22), 0 .3em .7em hsla(0, 57%, 41%, 0.15), 0 .1em .5em hsla(0, 8%, 59%, 0.1);
 }
 
 .footer-section {
@@ -236,7 +237,7 @@ footer:hover {
 }
 
 .footer-section:hover {
-    border: .1em solid rgba(255, 96, 96, 0.75);
+    border: .1em solid rgba(165, 68, 68, 0.766);
 }
 
 .footer-section>header {
@@ -269,8 +270,8 @@ header {
 }
 
 iframe[src="https://kurshok-api.fly.dev/tell"] {
-    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.5));
-    width: fit-content;
+    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.25));
+    width: 360px;
     transition: all 160ms ease-in;
 }
 
@@ -328,7 +329,7 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
     flex-flow: row wrap;
     margin: .5em .5em;
     padding: .5em .5em;
-    background: rgb(49, 35, 35);
+    background: rgb(53, 38, 38);
     max-width: 1820px;
     line-height: 1;
     transition: all 130ms ease-in;
@@ -347,13 +348,14 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
 .small-idea > span {
     display: inline-block;
     margin: .25em .5em;
+    font-size: 1.1em;
     max-width: 166px;
     line-height: 1;
 }
 
 .small-idea > header {
     display: block;
-    color: rgb(76, 54, 54);
+    color: rgb(97, 68, 68);
     width: 100%;
     transition: all 130ms ease-in;
 }
