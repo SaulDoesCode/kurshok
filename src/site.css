@@ -6,7 +6,11 @@ html, body {
 }
 
 body {
-	display: block;
+	display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: space-around;
 	color: #1a1212;
 	background: rgb(22, 20, 21);
 	margin: 0;
@@ -77,16 +81,46 @@ button:focus {
     padding: .2em .4em;
 }
 
+.breathing-circle {
+    position: relative;
+    display: inline-block;
+    top: -.25em;
+    width: .5em;
+    height: .5em;
+    margin-left: 1em;
+    border-radius: 100%;
+    background: #fff;
+    filter: blur(1);
+    animation: breathing-circle 4s ease-in-out infinite;
+}
+
+@keyframes breathing-circle {
+    0% {
+        transform: scale(.05, .05);
+        background: var(--highlight-color);
+        opacity: .7;
+    }
+    50% {
+        transform: scale(2, 2);
+        background: rgba(255, 255, 255, 0.69);
+        filter: blur(4) drop-shadow(0 0 6px rgba(48, 23, 23, 0.5));
+    }
+    100% {
+        transform: scale(.05, .05);
+        background: var(--highlight-color);
+        opacity: .7;
+    }
+}
+
 main {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    align-items: flex-start;
-    align-content: center;
+    align-items: center;
+    align-content: flex-start;
     margin: 0 auto;
     text-align: center;
     padding: .75em;
-    min-height: 110vh;
 }
 
 main > * {
@@ -104,16 +138,31 @@ section.books {
 
 section.books img {
     max-width: 240px;
-    margin: .75em 1.5em;
-    margin-bottom: 1em;
-    box-shadow: 0 2px 5px -1px rgba(31, 18, 18, 0.541), 0 1px 3px -1px rgba(77, 61, 61, 0.541);
+    margin: .5em 1em;
+    margin-bottom: .5em;
+    box-shadow: 0 2px 5px -1px rgba(31, 18, 18, 0.541), 0 1px 3px -1px rgba(49, 39, 39, 0.541);
     border-bottom: 1px solid rgba(110, 110, 100, .1);
     transition: all 240ms ease-in;
+    animation: book-img 8s ease-in-out infinite;
+}
+
+@keyframes book-img {
+    0% {
+        transform: scale(1, 1);        
+    }
+    50% {
+        transform: scale(.97, .97);
+        filter: drop-shadow(0 2px 6px rgba(26, 2, 2, 0.3));
+    }
+    100% {
+        transform: scale(1, 1);
+    }
 }
 
 section.books img:hover {
     filter: drop-shadow(0 0 6px rgba(48, 23, 23, 0.5));
-    transform: scale(1.1, 1.1);
+    animation: none;
+    scale: 1.1;
 }
 
 section.thoughts {
@@ -159,8 +208,8 @@ div.spacer {
     position: relative;
     display: block;
     width: 100%;
-    margin: .5em .5em;
-    padding: .25em;
+    margin: .45em .45em;
+    padding: .2em;
 }
 
 section.thoughts {
@@ -172,6 +221,7 @@ section.thoughts {
     max-width: 333px;
     margin: .25em .25em;
     padding: .25em;
+    padding-top: 1em;
     min-height: 2cm;
     background: rgb(40, 29, 29);
 }
@@ -189,12 +239,16 @@ section.thoughts .thought {
     border-left: 1px solid rgba(74, 38, 38, 0.2);
     border-right: 1px solid rgba(74, 38, 38, 0.2);
     min-height: 1cm;
-    font-size: 1.1em;
+    font-size: 1.08em;
     line-height: 1.1;
     text-shadow: 0 .5em 3em -1em rgb(207, 32, 32, .2);
     box-shadow: 0 0 4px -1px rgba(0, 0, 0, .2);
     transform: scale(0.9);
     transition: all 420ms ease-in;
+}
+
+section.thoughts .thought:first-of-type {
+    margin-top: -.5em;
 }
 
 section.thoughts .thought:hover, section.thoughts .thought:focus {
@@ -205,12 +259,13 @@ section.thoughts .thought:hover, section.thoughts .thought:focus {
 
 footer {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     align-content: center;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-flow: row wrap;
     width: 92vw;
     margin: .5em auto .5em auto;
+    margin-bottom: 1.45em;
     padding: .5em;
     background: rgba(40, 29, 29, 0.86);
     border-left: 1px solid rgba(218, 199, 199, 0.2);
@@ -272,6 +327,7 @@ header {
 iframe[src="https://kurshok-api.fly.dev/tell"] {
     filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.25));
     width: 360px;
+    min-height: 245px;
     transition: all 160ms ease-in;
 }
 
@@ -323,15 +379,20 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
 
 .short-ideas {
     display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
+    justify-content: space-around;
+    align-items: space-between;
+    align-content: flex-start;
     flex-flow: row wrap;
     margin: .5em .5em;
     padding: .5em .5em;
+    padding-bottom: 1em;
     background: rgb(53, 38, 38);
-    max-width: 1820px;
+    max-width: 46pc;
+    max-height: 50vh;
+    overflow: scroll;
+    overflow-x: hidden;
     line-height: 1;
+    border-radius: 2px;
     transition: all 130ms ease-in;
     z-index: 3;
 }

@@ -6,6 +6,18 @@ const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, spa
 
 const app = domlib.emitter({domlib, d})
 
+Array.prototype.randomize = function () {
+  const newList = []
+  const len = this.length
+  while (newList.length != len) {
+    const i = Math.floor(Math.random() * this.length)
+    newList.push(this[i])
+    this.splice(i, 1)
+  }
+  this.splice(0, this.length, ...newList)
+  return this
+}
+
 const thoughts = `
   Reality demonstrates itself in a tone of absoluteness. There is no true control, normativity reigns supreme.
 
@@ -22,8 +34,8 @@ const thoughts = `
   .trim()
   .split("\n")
   .map(t => t.trim())
+  .randomize()
   .filter(t => t != '')
-
 
 
 section.thoughts({$: 'main'},
@@ -378,7 +390,7 @@ const shortIdeasList = `Reason:
    .map(s => {
       const [t, c] = s.split(':')
       return article.small_idea(header(t, ':'), span(c))
-   });
+   }).randomize();
 
 (async () => {
   let si
@@ -391,7 +403,6 @@ const shortIdeasList = `Reason:
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
-
 
 app.toasts = new Set()
 
