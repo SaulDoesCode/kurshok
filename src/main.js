@@ -38,8 +38,8 @@ section.thoughts({$: 'main'},
 )
 
 
-section.short_ideas({$: 'main'},
-div.spacer,
+const shortIdeasContainer = section.short_ideas({$: 'main'},
+  div.spacer,
   header({
       css: {
         width: '100%',
@@ -49,8 +49,10 @@ div.spacer,
     'short ideas'
   ),
   br,
-  div.spacer,
-   `Reason:
+  div.spacer
+);
+
+const shortIdeasList = `Reason:
    The mind is a tool,
    to be used for truth and understanding.
    |
@@ -376,8 +378,20 @@ div.spacer,
    .map(s => {
       const [t, c] = s.split(':')
       return article.small_idea(header(t, ':'), span(c))
-   })
-)
+   });
+
+(async () => {
+  let si
+  while (si = shortIdeasList.pop()) {
+    await sleep(60)
+    shortIdeasContainer.append(si)
+  }
+})()
+
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 
 app.toasts = new Set()
 
