@@ -38,7 +38,7 @@ const thoughts = `
   .filter(t => t != '')
 
 
-section.thoughts({$: 'main'},
+section.thoughts({$pre: 'main'},
   header({
     css: {
       width: '100%',
@@ -393,6 +393,7 @@ const shortIdeasList = `Reason:
    }).randomize();
 
 (async () => {
+  await sleep(40)
   let si
   while (si = shortIdeasList.pop()) {
     await sleep(60)
@@ -422,20 +423,35 @@ app.on('toast', evt => {
   toast.onclick = ct
 })
 
-app.toast = (...msgs) => {
-  app.emit('toast', ...msgs)
-}
+app.toast = app.emit.toast
 
 
 app.toast('...loaded')
 
 ;(async () => {
-  if (location.hash === "#experimental") {
+  app.once('experimental-mode', async () => {
     app.toast('experimental mode script loading...')
     app.on('experiments-loaded', () => {
         app.toast('...experiments loaded')
     })
     const ex = (await import("./experimental.js")).default
-    return await ex(app)
+    ex(app)
+  })
+
+  if (location.hash === "#experimental") {
+    app.emit('experimental-mode')
+  } else {
+    window.onhashchange = e => {
+      if (location.hash === "#experimental") {
+        app.emit('experimental-mode')
+      }
+    }
   }
 })();
+
+domlib.runAsync(() => {
+  const bc = document.querySelector('.breathing-circle')
+  bc.onclick = e => {
+    location.hash = '#experimental'
+  }
+})
