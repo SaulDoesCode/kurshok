@@ -13,36 +13,9 @@ export default async function(app) {
             }
         }, 
             section.letters(
-                span.a('a'),
-                span.b('b'),
-                span.c('c'),
-                span.d('d'),
-                span.e('e'),
-                span.f('f'),
-                span.g('g'),
-                span.h('h'),
-                span.i('i'),
-                span.j('j'),
-                span.k('k'),
-                span.l('l'),
-                span.m('m'),
-                span.n('n'),
-                span.o('o'),
-                span.p('p'),
-                span.q('q'),
-                span.r('r'),
-                span.s('s'),
-                span.t('t'),
-                span.u('u'),
-                span.v('v'),
-                span.w('w'),
-                span.x('x'),
-                span.y('y'),
-                span.z('z'),
-                span.enter('enter'),
-                span.space('space'),
-                span.backspace('del'),
-                // span.capslock('caps')
+                'abcdefghijklmnopqrstuvwxyz1234567890'.split('').map(l => span[l](l)),
+                div.spacer,
+                'enter,space,del,copy'.split(',').map(l => span[l](l))
             ),
             section.output(mbstr)
         )
@@ -68,6 +41,7 @@ export default async function(app) {
         }
 
         document.onpointerup = function(e) {
+            if (e.which == 2) return
             if (e.target.parentNode.classList.contains('letters')) {
                 if (e.target.textContent == 'del') {
                     mbstr.textContent = mbstr.textContent.slice(0, -1)
@@ -75,6 +49,8 @@ export default async function(app) {
                     mbstr.textContent += ' '
                 } else if (e.target.textContent == 'enter') {
                     mbstr.textContent += '\n'
+                } else if (e.target.textContent == 'copy') {
+                    navigator.clipboard.writeText(mbstr.textContent.trim())
                 } else {
                     mbstr.textContent += e.target.textContent
                 }
