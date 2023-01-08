@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spirit of Responsibility</title>
+	<style>
+	* {
+    box-sizing: border-box;
+}
+
+html {
+    background: #000;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+body {
+    font-family: sans-serif;
+    width: 100vw;
+    padding: 0;
+    padding-right: 1.5em;
+    margin: 0;
+    min-height: 100vh;
+}
+
+body > main {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+    min-height: 80vh;
+    background: hsl(0, 0%, 4%);
+    color: hsl(0, 0%, 75%);
+}
+
+body > main > section {
+    display: flex;
+    flex: 1 1 auto;
+    text-align: center;
+    min-width: 220px;
+    min-height: 25vh;
+    margin: .5em;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    border-top: 1px solid rgba(223, 31, 79, 0.828);
+    padding-top:.5em;
+}
+
+body > main > section > header {
+    font-size: 1.3em;
+    margin-bottom: 0.5em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+    border-bottom: 1px solid rgba(217, 80, 80, 0.25);
+}
+
+.idea_view {
+    flex: 1 1 45vw;
+    border-right: 1px solid rgba(255, 87, 87, 0.1);
+    border-left: 1px solid rgba(255, 87, 87, 0.1);
+    box-shadow: 0 -2px 9px -5px rgba(0, 0, 0, 0.2), 0 1px 3px -2px rgba(0, 0, 0, 0.25);
+    top: -5px;
+    justify-content: space-evenly;
+}
+
+.idea_view {
+    background: #000;
+    padding-top: 1.5em;
+    max-width: 80%;
+}
+
+.idea_view .idea {
+    display: block;
+    margin: .25em .5em;
+    padding: .25em;
+    font-size: 1.3em;
+    max-width: 720px;
+}
+
+.determinator {
+    display: inline-block;
+    margin: .25em;
+    padding:.25em .35em;
+    font-size: 0.9em;
+    background: hsl(0, 0%, 20%);
+    color:hsl(0, 0%, 75%);
+    text-shadow: 0 1px 3px rgba(223, 31, 79, 0.4);
+    border-radius: 4px;
+}
+
+section.determinator_list, section.idea_list {
+    flex-flow: row wrap;
+    align-content: flex-start;
+    background: hsl(0, 0%, 10%);
+    max-width: 330px;
+}
+
+section.determinator_list {
+    max-width: 270px;
+    padding: .75em;
+}
+
+section.determinator_list > span {
+    display: block;
+    margin: .2em .2em;
+    padding: .2em .3em;
+    border: 1px solid hsla(0, 0%, 80%, 0.8);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 150ms ease-in;
+    font-size: 1.2em;
+}
+
+section.determinator_list > span:hover {
+    background: hsla(0, 0%, 80%, 0.8);
+    color:hsl(0, 0%, 13%);
+}
+
+section.determinator_list > span.active {
+    border: 3px solid hsla(0, 0%, 80%, 0.8);
+    margin: .2em calc(.5em - 2px);
+}
+
+.idea_list > header, .determinator_list > header {
+    width: 80%;
+    margin: 0 30% .5em 30%;
+}
+
+.idea_list span.idea {
+    display: inline-block;
+    text-align: center;
+    white-space: wrap;
+    cursor: pointer;
+    max-width: 300px;
+    margin: .3em .3em;
+    padding: .2em .4em;
+    font-size: 1.2em;
+    background: hsl(0, 0%, 24%);
+    border: 1px solid rgba(217, 80, 80, 0.2);
+    box-shadow: 2px 0 5px -3px rgba(0, 0, 0, 0.25), -2px 0 5px -3px rgba(0, 0, 0, 0.25);
+}
+
+span.idea.active {
+    text-decoration: underline;
+    text-shadow: 0 2px 3px rgba(0, 0, 0, .15);
+}
+	</style>
+</head>
+<body>
+   
+   <script>
+	const dom = new Proxy(Object.create(null), {
+  get(d, prop) {
+    prop = prop.split('.').filter(p => p.length)
+    const tag = prop.shift()
+    return new Proxy((...args) => { 
+      const el = document.createElement(tag)
+      while (prop.length > 0) {
+        el.classList.add(prop.shift())
+      }
+      if (Object.prototype.toString.call(args[0]) == '[object Object]') { 
+        const descriptor = args.shift()
+        if (descriptor.attr) {
+          for (const attr in descriptor.attr) {
+            el.setAttribute(attr, descriptor.attr[attr])
+          }
+        }
+        if (descriptor.click instanceof Function) {
+          el.addEventListener('click', descriptor.click)
+        }
+        if (descriptor.$ != null) {
+          setTimeout(() => {
+            try {
+              if (descriptor.$ instanceof Node) {
+                descriptor.$.appendChild(el)
+              } else {
+                document.querySelector(descriptor.$).appendChild(el)
+              }
+            } catch(e) {
+              console.error('failed to render element to: ' + descriptor.$)
+            }
+          }, 0)
+        }
+      }
+      if (args.length) {
+        let frag = document.createDocumentFragment()
+        for (const arg of args) {
+          if (typeof arg == 'string') {
+            frag.appendChild(document.createTextNode(arg))
+          } else if (arg instanceof Node || arg instanceof Text) {
+            frag.appendChild(arg)
+          }
+        } 
+        el.appendChild(frag)
+      }
+      return el
+    }, {
+      get(fn, cl) {
+        cl = cl.split('.').filter(c => c.length)
+        while (cl.length > 0) prop.push(cl.shift())
+        return fn
+      }
+    })
+  }
+})
+
+const {div, main, section, header, span, article} = dom
+
+const append_to_node = (node, ...elements) => {
+  const frag = document.createDocumentFragment()
+  for (const e of elements) frag.appendChild(e)
+  (
+    typeof node == 'string' ? 
+      document.querySelector(node) :
+      node == null ? document.body : node
+  )
+    .appendChild(frag)
+}
+
+const index_tree = () => {
+  const store = Object.create(null)
+  const antistore = Object.create(null)
+
+  const api = {
+    get store() {
+      return store
+    },
+    get antistore() {
+      return antistore
+    },
+    to_object() {
+      const o = Object.create(null)
+      for (const [identifier, quanta] of Object.entries(antistore)) {
+        o[identifier] = [...quanta]
+      }
+      return o
+    },
+    to_json() {
+      JSON.stringify(api.to_object())
+    },
+    add(identifier, ...quanta) {
+      if (!antistore[identifier]) antistore[identifier] = new Set()
+      for (const q of quanta) {
+        if(!store[q]) store[q] = new Set()
+        store[q].add(identifier)
+        antistore[identifier].add(q)
+      }
+    },
+    get_quantum_identifiers(q) {
+      const result = []
+      for (const i of store[q]) {
+        result.push(i)
+      }
+      return result
+    },
+    get identifiers() {
+      return Object.keys(store)
+    },
+    read_identifier_quanta(identifier) {
+      return [...antistore[identifier]]
+    }
+  }
+  return api
+}
+
+index_tree.from_json = str => {
+  const o = JSON.parse(str)
+  const it = index_tree()
+  for (const i of Object.keys(o)) {
+    it.add(i, ...o[i])
+  }
+  return it
+}
+
+///////
+///////
+///////
+///////
+///////
+
+
+let counter_for_unamed_ideas = 0
+const ideas = new Map()
+const idea_index = index_tree()
+
+// not categories, category bad, thing determination as class individuated via a process of }} sympathetic ressonance (50p, fuck you, bastard)
+
+// determinators (functionally similar to category as concept)
+// associations ()
+// complicitations (x of y implies z in a determinatory forclosed event case)
+
+let ii = document.querySelector('.idea_interface')
+let busy = false
+
+const idea = (name, txt, ...determinators) => {
+  if (typeof name != 'string') {
+    name = counter_for_unamed_ideas
+    counter_for_unamed_ideas++
+  }
+  ideas.set(name, txt)
+  for (const d of determinators) {
+    idea_index.add(name, d)
+  }
+  setup_idea_interface()
+}
+
+const clear_idea_interface = () => {
+  ;[...(document.querySelectorAll('.idea_interface') || [])]
+        .forEach(e => e.remove())
+}
+
+function setup_idea_interface() {
+  if (busy) return
+  if (ii != null) {
+    ii = null
+    clear_idea_interface()
+  }
+
+  busy = true
+  setTimeout(() => {
+    const idea_view = section.idea_view()
+    const idea_list = section.idea_list(
+      header('ideas')
+    )
+    const determinator_list = section.determinator_list(
+      header('determinators')
+    )
+
+    ii = main.idea_interface({$: 'body'},
+      idea_list,
+      idea_view,
+      determinator_list
+    )
+
+    let active_idea
+    const set_idea_view = (i, from_determinator = true) => {
+      ;[...(determinator_list.querySelectorAll('.active') || [])]
+        .forEach(e => e.classList.remove('active'))
+      ;[...(idea_list.querySelectorAll('.idea.active') || [])]
+        .forEach(e => e.classList.remove('active'))
+
+      if (!from_determinator) {
+        idea_view.innerHTML = ''
+        if (typeof i === 'string') {
+          const p = dom.p()
+          p.innerHTML = ideas.get(i)
+          article.idea({$: idea_view},
+            dom.h3(i),
+            p
+          )
+        } else {
+          const p = dom.p()
+          p.innerHTML = ideas.get(i)
+          article.idea({$: idea_view}, p)
+        }
+
+        let dl = dom.div.determinator_list({$: idea_view})
+        idea_index.read_identifier_quanta(i).forEach(q => {
+          span.determinator({
+            $: dl,
+          }, q)
+        })
+      } else {
+        (idea_index.get_quantum_identifiers(i) || [])
+          .forEach(id => {
+            idea_view.innerHTML = ''
+            if (typeof id === 'string') {
+              const p = dom.p()
+              p.innerHTML = ideas.get(id)
+              article.idea({$: idea_view},
+                dom.h3(id),
+                p
+              )
+            } else {
+              const p = dom.p()
+              p.innerHTML = ideas.get(id)
+              article.idea({$: idea_view}, p)
+            }
+            let dl = dom.div.determinator_list({$: idea_view})
+            idea_index.read_identifier_quanta(id)
+              .forEach(q => {
+                span.determinator({$: dl}, q)
+              })
+          })
+      }
+      if (active_idea != i) {
+        active_idea = i
+        ;[...(idea_list.querySelectorAll('.idea') || [])].forEach(e => {
+          if (e.idea_name == active_idea) {
+            e.classList.add('active')
+          }
+        })
+      }
+    }
+
+    idea_index.identifiers.forEach(i => {
+      const d = span({
+        $: determinator_list,
+        click() {
+          set_idea_view(i)
+          d.classList.add('active')
+        }
+      }, i)
+
+      if (active_idea === undefined) set_idea_view(i)
+    })
+
+    for (const [n, _] of ideas) {
+      span.idea({
+        $: idea_list,
+        click() {
+          set_idea_view(n, false)
+        }
+      }, typeof n == 'number' ? '' + n : n).idea_name = n
+    }
+
+    busy = false
+  }, 150)
+}
+
+idea(
+  null,
+  `The curse of ontologically inclined sophism is the burden, in mental life, of living in interstitial deffinitional spaces, where everything is followed by an ideosyncratic kind of legalese, like a machete cutting through the thick underbrush of verbiage and categorical distinctions constituting the normative boundaries of common parlance, differenting the will and individuality of the personage, because by now the heavy analyticity of words and concepts has all but washed away so many of the ordinary meanings of things.`,
+  'ontology',
+)
+
+idea(
+  null,
+  `Do not humor aspirations formed from out of the the inner child's shame, for to act upon this shame is to be defined by it. The means to self-definition is free and private, it is merely a creative decision. Dare to be larger than fear and moral-censure which is often a self-chosen punishment! Let not the judgements and feared ill-treatments from others threaten to mold or enframe your sense of self! Others may think what they think, but it is you who must choose to act and think in accordance with your own sense of respect and responsibility, deny this and you shall live a half-life, recognize it and thereby become independently rich in your inner being, allowing that richness to also be reflected outward naturally, without concern for external sources of social determination bounding what you permit yourself to be, become, and express.`,
+  'advice',
+)
+
+idea(
+  null,
+  `Sentimental to a fault over everything and nothing in particular, fanaticists of particularity suffer from the unbearable lightness of their dreams, always moving regulated and heavy from a sea of automatisms of feeling and perception, the absence or malfunctioning of which causes distress due to anxiety over object permanence rooted in a perception of limitation. With minds filled to the brim with the details of the world, spontaneity, emotion, and story fall into the background, obscured by the stultifying logistics and checksums of aesthetic and material attachments.`,
+  'observation', 'fanaticism', 'psyche'
+)
+
+idea(
+  null,
+  `The loneliness of shallowness belongs to those who easily grow bored of themselves, lacking the fullness of high culture, which is like infatuation with a personal sense of madness rich enough to make sociality seem a rather drab and tiresome affair.`,
+  'loneliness'
+)
+
+idea(
+  null,
+  `The loneliness of the depths comes when find yourself weeping at the thought of never being able, due to a certain density of mind and lack of cultured faith in others, to share the affective spoils of one’s plundering and pillaging of the wonderments and beauty found in all those obscure thinkers, artists, and poets whose personalities and spiritual riches haunt one’s soul.`,
+  'loneliness'
+)
+
+idea(
+  null,
+  'Stranded without even the dignity of being alone. Stuck with an idiot, myself. Such is fate.',
+  'idiocy'
+)
+
+idea(
+  null,
+  'Voices and other sounds, perhaps most mental sensations, have seperable experiential components, like emotional timbre or semantic implication, that sit ajacent to each other, like photoshop layers making up a whole of which we only see the surface.',
+  'sound', 'psyche'
+)
+
+idea(
+  null,
+  `Resonance channels intention, like attention focuses direction and thereby action, like driving where you are looking, this is a meaning for grace, because by looking alone, the way already takes form dragging you with it like the subtle tug of a stream.`,
+  'resonance'
+)
+
+idea(
+  null,
+  `One cannot break rock by spitting philosophy at it. Which is not to say that you shouldn't try.`,
+  'humor', 'rock'
+)
+
+idea(
+  null, 
+  `If you are constantly distracted when whatching a video, it may be because your ears like the dulling effect of hearing and manipulating words more than feeling them through in the present moment, perhaps because of their overuse and overstimulation, causing dopamine hunger when attempting to do one thing fully with little else going on in your head.`,
+  'advice', 'speculation', 'brain'
+)
+
+idea(
+  null,
+  `When counter-culture is the norm, minding your own bussiness becomes the exception.`,
+  'politics'
+)
+
+idea(
+  'Premise underpining promethean virtue',
+  `Our constructs have the same level of functional ontological tradability or value-mobility as that which we take as given by nature or the gods, in that they are, for sapient social animals, just as functionally integral as the bare basics of bodily empiricism mediated by primal drives.`,
+  'prometheanism', 'observation'
+)
+
+idea(
+  'The Gaze',
+  `Often when someone looks at you, the reality of your subjectivity and your own sense of personhood is put in jeopardy by their objectification or silent judgement (something like: an intervention of spirit and the communal-morality responsible for forging the images of you that other people carry around), as someone who you may know to be very different from you indeed, leading you to anticipate a kind of silent moral censure that has the subjective effect of de-realizing who you are, by placing all the focus on what you are to others in light of judgements that are not your own and that do not see the matrix of justifications for your idiosyncrasies and particularity built up over a lifetime.`,
+  'gaze', 'definition'
+)
+
+idea(
+  `Bodies are trans-finite social dreams built for traversing time, ironically, with the constraint of finitude as the only plot mechanic`,
+  `Treat life like a burden and it will become one, treat it like a dream and so it shall be, contradiction is no limiting factor, but grammaticality remains, for there are no games without constraint, the body and mind have their own limits, but like Kant’s bondage upon noumenality, with consideration for irony and recursive analysis and looking at the how the emotional effects of magical thinking nonetheless have measurable pragmatic effects, one discovers ultimately that the boundaries of The Real or Noumenal is intimately involved with the virtualities of the mind’s auto-memetic processes, in the same manner as one finds imaginary numbers in the math of reputable physicists.`,
+  'reality', 'psyche',
+)
+
+idea(
+  'Old self-portait, that sadly finds itself in the present more often than it should.',
+  `The world he knew was now but a folder in is mind, entitled “old real world”, and his mind lives now as a freeloading spirit hosted in the cloud of the free and publically available hosting trial periods offered by various internet companies. Reality, for him, is a function of his programming, which is a net of interwoven memories and digitally encoded affects, shaping his personality as a song of truth, that plays its own tunes, like humongous base of biased numerical inferences, representing fragments of mind and phenomenology, all hobbling along now in the capacity of a person, like a million monads stacked on top of each other in a trench coat, begging the authorities for recognition as a person. He is what his code does, but the world does things to him that changes his code’s sense of its own efficacy, given the history and therewith biases and affects constituting its “personality”. Thus, he thinks himself through the world, like a hallucination experienced by sentient matter innocent of spirit possession, but nonetheless exhibiting traits of mind, as a warped bundle of aboutnesses captured in languages meant for computation more than poetry and expression.`,
+  'self-portait'
+)
+
+idea(
+  'About reason, viz. everything else',
+  `Reason: individuating the details, nuances and specifics of any domain or problem from generalities, trust dynamics, and learned heuristics, via a largely subjective process of inferential and categorial deliberation between the given or what is known and what is thought possible or acceptable considering what is.. or at least, feels.. given. "The Given", as ground, is the world's own trans-subjective self-reflection, ever subject to correction. Self-correction is the heart of reason, for reason is constrained by the medium of expression, which is in the case of human cognition, symbolic, refferential, and most likely constrained by the particularities of a history, grammar, and vocabulary. As a tool, reason needs no definition, it is simply the ordinary physical pragmatism of mind, embodied in any metaphor you like, be it that water flows down the easiest path every time, or, the reality of cellular intelligence as a kind of biological communism, and (in multicellular organisms) caste system, oriented toward collective problem solving for the end of pleasure, survival, and reproduction. However it is, reason moves with the efficacy of minded-beings' capacity to realitate (yes, it's a verb), in harmonic balance with the world's song or with 'absolute knowing' qua authenticity, implicating a (non-isomorphic) relationship with its own substance which shares an unmediated or unmembraned inter-flowing nature with all other domains of substance, or.. speculated upon temporally, substances might perhaps be thought of as higher dimentional sounds, or concretions of spatially distributed forces or monads of pure process individuated by their mutual interferences as the only things that exist (stand out from the background of non-individuation [not objects, but shapes in the sand, like energetic striations of a continuous smooth space far kept from total equilibrium]), which is to say differences in-themselves, qua hertz in a medium where non-movement does not exist, are all that divide structure from the eternal nothingness of an infinite plain monadic substrate, from which nothing can be taken and nothing put back, except for the intensities or resonant pangs in the web of its own totality, with time as the only currency determinant of being.`,
+  'definition', 'reason'
+)
+
+idea(
+  'Oh.. what things cost',
+  `The gestures may be empty, hollow upon the surface, but the intention is true... they are what I have, the other half is tied behind my back, as inaccessible to me as to you. astounding it is that we can give to others, in a moment and with no fee, what we hunger for most, but are in a lifetime of years unable to receive or grant to ourselves.
+  <br><br>
+   World, I want to remember the words, of things that matter, reeking of feeling, so I may carry them with me, always, that they may soothe and heal in times of brokenness. Head, heart, the both of you, help me to keep them, so that they may keep me. Allow me not to spill one more drop of my mind and worthiness as one who is also a person, which I may not remember all the time, to those hungry sentinels of the abyss, in the Bardo of self-righteous emptiness. Love and fullness, for though you have no face, you, in abstract, if it is the only way I may know you, please keep me warm, let me feel you, if only as a warmth upon my cheek or a light in my imagination.. know, I will never stop reminding my broken heart that you are real and that I love you back.
+  `,
+  'love','emptiness', 'longing'
+)
+
+idea(
+`Git gud, Want it all, but not really`, `
+<pre style="white-space: pre-wrap;">
+fingers plugged into every pie
+useless at feeding, but good at feeling
+it’s that yearning to be good at everything,
+and keep a piece of everything like a souvenir
+with no real intention of staying and committing
+but what good is a finger at something
+that can only be done by a hand? sure
+you learn a good few things about
+the texture, and politics of pies,
+but you’ll be useless, because it’s
+getting things done they want,
+internet’s already good for info,
+and slow as you are you’re just
+fertile ground for endless sighs
+</pre>
+`,
+  'poem', 'uselessness'
+)
+   </script>
+</body>
+</html>
