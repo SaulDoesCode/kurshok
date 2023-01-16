@@ -2,21 +2,23 @@ import './site.css'
 import domlib from './domlib.js'
 
 const d = domlib.domfn
+const {queryAsync, runAsync} = domlib
 const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = d
 
 const app = domlib.emitter({domlib, d})
 
 Array.prototype.randomize = function () {
-  const newList = []
-  const len = this.length
-  while (newList.length != len) {
+  const l = [], ln = this.length
+  while (l.length != ln) {
     const i = Math.floor(Math.random() * this.length)
-    newList.push(this[i])
+    l.push(this[i])
     this.splice(i, 1)
   }
-  this.splice(0, this.length, ...newList)
+  this.splice(0, this.length, ...l)
   return this
 }
+
+const sleep = async ms => new Promise(r => setTimeout(r, ms))
 
 const thoughts = `
   Reality demonstrates itself in a tone of absoluteness. There is no true control, normativity reigns supreme.
@@ -25,17 +27,21 @@ const thoughts = `
 
   Consequence is a meta-temporal concept, and has little traction upon non-static non-type/object oriented thinking, it is physical and proccessual not narrativistic or semantic.
 
-  The right music at the right time, mends old wounds and bring release. 
+  The right music at the right time, mends old wounds and brings release. 
 
   Returning to aesthetics, like a corpse to the sublimity of rebirth, from out of atelic duty with a new found loss of the sense of the trancendent sourced from pragmatic, utilitarian, and instrumental interest.  
 
   A dreadful thought, to count all the times one must essentially start over in life, be it with relationships, a move, or change of business.. so much waste, so much hurt, the repetition is torturous. Stronger not dead, sure, but at what cost?
+
+  It hurts to be alive. You can have whatever. It still hurts.
+
+  Someone loses a part of their body, and it doesn't grow back, the future of their existence is marked by that. The absolute unabsoluteness of the future, the absolute unabsoluteness of the past, the absolute unabsoluteness of the circumstances facilitating what it is like to be alive frightens.
 `
   .trim()
   .split("\n")
   .map(t => t.trim())
-  .randomize()
   .filter(t => t != '')
+  .randomize()
 
 
 section.thoughts({$pre: 'main'},
@@ -44,7 +50,9 @@ section.thoughts({$pre: 'main'},
       width: '100%',
       margin: '0 auto'
     }
-  }, 'thoughts'),
+  }, 
+    'thoughts'
+  ),
   div.spacer,
   thoughts.map(t => p.thought(t))
 )
@@ -392,66 +400,40 @@ const shortIdeasList = `Reason:
       return article.small_idea(header(t, ':'), span(c))
    }).randomize();
 
-(async () => {
-  await sleep(40)
+runAsync(async () => {
+  await sleep(60)
   let si
   while (si = shortIdeasList.pop()) {
-    await sleep(60)
+    await sleep(50)
     shortIdeasContainer.append(si)
   }
-})()
-
-async function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
+})
 
 app.toasts = new Set()
+const toast = app.toast = app.emit.toast
 
 app.on('toast', evt => {
-  const toast = div.toast({$:'body'}, evt)
-  toast.style.top = "calc(1vh + 1.5cm * " + app.toasts.size + ")"
-  app.toasts.add(toast)
-  const ct = (action => {
-      const to = setTimeout(action, 10000)
-      return () => {
-          clearTimeout(to)
-          action()
-      }
-  })(() => {
-    toast.remove()
-  })
-  toast.onclick = ct
+  const t = div.toast({$:'body'}, evt)
+  t.style.top = "calc(1vh + 1.5cm * " + app.toasts.size + ")"
+  app.toasts.add(t)
+  t.onclick = ((action, to = setTimeout(action, 10000)) =>
+    _=> (clearTimeout(to), action()))(() => t.remove())
 })
-
-app.toast = app.emit.toast
-
-
 app.toast('...loaded')
-
-;(async () => {
-  app.once('experimental-mode', async () => {
-    app.toast('experimental mode script loading...')
-    app.on('experiments-loaded', () => {
-        app.toast('...experiments loaded')
-    })
-    const ex = (await import("./experimental.js")).default
-    ex(app)
+const lhi = (h, s) => (h[0] != '#' ? '#' + h : h) === location.hash
+const lhs = h => location.hash = (h[0] != '#' ? '#' + h : h)
+runAsync(async _ => {
+  const {once, on, emit} = app
+  once('experimental-mode', async _ => {
+    toast('experimental mode script loading...')
+    on('experiments-loaded', _ => toast('...experiments loaded'))
+    ;(await import("./experimental.js")).default(app)
   })
-
-  if (location.hash === "#experimental") {
-    app.emit('experimental-mode')
-  } else {
-    window.onhashchange = e => {
-      if (location.hash === "#experimental") {
-        app.emit('experimental-mode')
-      }
-    }
-  }
-})();
-
-domlib.runAsync(() => {
-  const bc = document.querySelector('.breathing-circle')
-  bc.onclick = e => {
-    location.hash = '#experimental'
-  }
+  lhi("experimental") ?
+    emit('experimental-mode') :
+    window.onhashchange = e =>
+      lhi('experimental') && emit('experimental-mode')
+      ;(await queryAsync('.breathing-circle'))
+        .onclick = e => lhs('experimental')
 })
+

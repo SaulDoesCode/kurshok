@@ -658,9 +658,7 @@ export default (d => {
 
     const template = document.createElement('template')
     template.innerHTML = result
-    const {
-      content
-    } = template
+    const {content} = template
 
     content.collect = ({
       attr = 'ref',
@@ -810,9 +808,7 @@ export default (d => {
       }
 
       const host = ops.$ || ops.render || ops.$pre
-      if (host) {
-        d.attach(host, host == ops.$pre ? 'prepend' : 'appendChild', el)
-      }
+      if (host) d.attach(host, host == ops.$pre ? 'prepend' : 'appendChild', el)
     }
 
     if (el.nodeType !== 3) {
