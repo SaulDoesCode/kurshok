@@ -218,7 +218,8 @@ section.thoughts {
     justify-content: space-around;
     align-items: center;
     align-content: center;
-    max-width: 333px;
+    max-width: 33vw;
+    min-width: 333px;
     margin: .25em .25em;
     padding: .25em;
     padding-top: .7em;
@@ -234,8 +235,8 @@ section.thoughts .thought {
     justify-content: space-around;
     align-items: center;
     align-content: center;
-    margin: 0 0 .2em 0;
-    padding: .2em .5em;
+    margin: .05em 0 .05em 0;
+    padding: .1em .5em;
     border-left: 1px solid rgba(74, 38, 38, 0.2);
     border-right: 1px solid rgba(74, 38, 38, 0.2);
     min-height: 1cm;
@@ -253,7 +254,7 @@ section.thoughts .thought:first-of-type {
 
 section.thoughts .thought:hover, section.thoughts .thought:focus {
     transform: scale(1);
-    background: rgb(79, 38, 38);
+    background: rgb(105, 76, 76);
     color: rgb(225, 215, 215);
 }
 
@@ -328,8 +329,8 @@ header {
 
 iframe[src="https://kurshok-api.fly.dev/tell"] {
     filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.25));
-    width: 360px;
-    min-height: 245px;
+    width: 345px;
+    min-height: 230px;
     transition: all 160ms ease-in;
 }
 
