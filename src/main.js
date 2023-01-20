@@ -36,6 +36,10 @@ const thoughts = `
   It hurts to be alive. You can have whatever. It still hurts.
 
   Someone loses a part of their body, and it doesn't grow back, the future of their existence is marked by that. The absolute unabsoluteness of the future, the absolute unabsoluteness of the past, the absolute unabsoluteness of the circumstances facilitating what it is like to be alive frightens.
+
+  Condemed to freedom? Hah, condemed to making due with limitation, freedom being what is indivudated in a negative sense. Someone define some positive content for be-ing!
+
+  To choose from a pile of mediocrity is hardly choosing at all. Such freedom, wow, shitpost equivalent of spiritual nourishment.
 `
   .trim()
   .split("\n")
@@ -43,16 +47,10 @@ const thoughts = `
   .filter(t => t != '')
   .randomize()
 
+const w100mauto = {width: '100%', margin: '0 auto'}
 
 section.thoughts({$pre: 'main'},
-  header({
-    css: {
-      width: '100%',
-      margin: '0 auto'
-    }
-  }, 
-    'thoughts'
-  ),
+  header({css: w100mauto}, 'expressions'),
   div.spacer,
   thoughts.map(t => p.thought(t))
 )
@@ -60,14 +58,7 @@ section.thoughts({$pre: 'main'},
 
 const shortIdeasContainer = section.short_ideas({$: 'main'},
   div.spacer,
-  header({
-      css: {
-        width: '100%',
-        margin: '0 auto'
-      }
-    },
-    'short ideas'
-  ),
+  header({css: w100mauto}, 'short ideas'),
   br,
   div.spacer
 );
@@ -400,40 +391,33 @@ const shortIdeasList = `Reason:
       return article.small_idea(header(t, ':'), span(c))
    }).randomize();
 
-runAsync(async () => {
+app.toasts = new Set()
+const
+  toast = app.toast = app.emit.toast,
+  {once, on, emit, toasts} = app,
+  xpmtl = 'experimental',
+  hl = h => h[0] != '#' ? '#' + h : h,
+  lhi = h => hl(h) === location.hash,
+  lhs = h => location.hash = hl(h)
+
+on.toast(e => toasts.add(div.toast({
+  $:'body',
+  css: {top: `calc(1vh + 1.5cm * ${toasts.size})`},
+  onclick(e, t) {
+    t.remove()
+    toasts.delete(t)
+    clearTimeout(t.to)
+  }
+}, e, t => {t.to = setTimeout(_ => t.remove(), 5000)})))
+on.experiments_loaded(_=> toast('experiments loaded'))
+once.xpm(async _ => (await import("./experimental.js")).default(app))
+runAsync(async si => {
+  (await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
+  ;(onhashchange= _=>lhi(xpmtl)&&emit.xpm())()
   await sleep(60)
-  let si
+  toast('loaded')
   while (si = shortIdeasList.pop()) {
     await sleep(50)
     shortIdeasContainer.append(si)
   }
 })
-
-app.toasts = new Set()
-const toast = app.toast = app.emit.toast
-
-app.on('toast', evt => {
-  const t = div.toast({$:'body'}, evt)
-  t.style.top = "calc(1vh + 1.5cm * " + app.toasts.size + ")"
-  app.toasts.add(t)
-  t.onclick = ((action, to = setTimeout(action, 10000)) =>
-    _=> (clearTimeout(to), action()))(() => t.remove())
-})
-app.toast('...loaded')
-const lhi = (h, s) => (h[0] != '#' ? '#' + h : h) === location.hash
-const lhs = h => location.hash = (h[0] != '#' ? '#' + h : h)
-runAsync(async _ => {
-  const {once, on, emit} = app
-  once('experimental-mode', async _ => {
-    toast('experimental mode script loading...')
-    on('experiments-loaded', _ => toast('...experiments loaded'))
-    ;(await import("./experimental.js")).default(app)
-  })
-  lhi("experimental") ?
-    emit('experimental-mode') :
-    window.onhashchange = e =>
-      lhi('experimental') && emit('experimental-mode')
-      ;(await queryAsync('.breathing-circle'))
-        .onclick = e => lhs('experimental')
-})
-
