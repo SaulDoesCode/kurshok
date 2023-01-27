@@ -414,8 +414,7 @@ once.xpm(async _ => (await import("./experimental.js")).default(app))
 runAsync(async si => {
   (await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
   ;(onhashchange= _=>lhi(xpmtl)&&emit.xpm())()
-  await sleep(60)
-  toast('loaded')
+  await sleep(60); toast('loaded')
   while (si = shortIdeasList.pop()) {
     await sleep(50)
     shortIdeasContainer.append(si)

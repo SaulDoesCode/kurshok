@@ -538,7 +538,7 @@ export default (d => {
     if (attr.constructor === Object) {
       for (const a in attr) {
         const present = attr[a] == null
-        node[present ? 'removeAttribute' : 'setAttribute'](a, attr[a])
+        node[(present ? 'remove' : 'set') + 'Attribute'](a, attr[a])
       }
     } else if (typeof attr === 'string') {
       const old = node.getAttribute(attr)

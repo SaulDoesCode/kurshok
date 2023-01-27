@@ -391,7 +391,7 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
     padding-bottom: 1em;
     background: rgb(53, 38, 38);
     max-width: 60pc;
-    max-height: 40vh;
+    max-height: 700px;
     overflow: scroll;
     overflow-x: hidden;
     line-height: 1;
