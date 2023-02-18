@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="retro.css">
+    <title>Remember</title>
+</head>
+<body>
+    <section>
+        <ul class="reminders">
+
+        </ul>
+    </section>
+    <script defer>
+        const list = document.querySelector('.reminders')
+        const reminders = {}
+        const remind = (time, text) => {
+            const o = {time, text}
+            const r = document.createElement('li')
+            r.update = () => (r.innerHTML = `
+                <span class="time">${o.time}</span>
+                <span> | </span>
+                <span class="text">${o.text}</span>
+            `, r)
+            list.appendChild(r.update())
+            return {
+                get time() {
+                    return o.time
+                },
+                set time(time) {
+                    o.time = time
+                    r.update()
+                },
+                get text() {
+                    return o.text
+                },
+                set text(text) {
+                    o.text = text
+                    r.update()
+                },
+                delete() {
+                    r.remove()
+                    delete reminders[o.text]
+                }
+            }
+        }
+
+        const now = new Date()
+        // monday, wednesday, friday, sunday
+        if ([1, 3, 5, 7].includes(now.getDay())) {
+            remind(now.toLocaleString(), 'remember to water the trees and plants')
+        }
+    </script>
+</body>
+</html>
