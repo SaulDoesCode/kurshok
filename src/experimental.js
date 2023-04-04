@@ -1,66 +1,77 @@
-export default async function(app) {
+export default async function(app, dl) {
     console.log('experiments...')
-    const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = app.d
+    const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = dl.domfn
 
+    const gEl = tag => cl => {
+        const el = document.createElement(tag)
+        el.classList.add(cl)
+        el.innerText = cl
+        return el
+    }
+    const sma = (str, el, s = '') => str.split(s).map(gEl('span'))
+    const cssOp = (op, opacity = op ? 1 : 0, pointerEvents = op ? 'auto' : 'none') => ({opacity, pointerEvents})  
+    const affix = (affix, fn) => (...args) => fn(...args.map(arg => arg + affix))
+    const setMBPos = affix('px', (left, top) => Object.assign(mb.style, {left, top}))
+    const setMBOp = op => Object.assign(mb.style, cssOp(op))
+    const parHasClass = (e, cl) => (e instanceof Node ? e : e.target).parentNode.classList.contains(cl)
+    
+    let busy = false
     let mbstr = new Text()
-
-    let mb = div.mouseboard({
-        $: 'body',
-        css: {
-            opacity: '0',
-            pointerEvents: 'none'
-        }
-    }, 
+    let mb = div.mouseboard(
+        {$: 'body', css: cssOp()}, 
         section.letters(
-            'abcdefghijklmnopqrstuvwxyz1234567890'.split('').map(l => span[l](l)),
+            sma('abcdefghijklmnopqrstuvwxyz1234567890', span),
             div.spacer,
-            'enter,space,del,copy'.split(',').map(l => span[l](l))
+            sma('enter space del copy', span, ' ')
         ),
         section.output(mbstr)
     )
 
-    let is_busy = false
+    const ptrgs = Object.assign(t => mbstr.textContent += t, {
+        del() { ptrgs(mbstr.textContent.slice(0, -1)) },
+        space() { ptrgs(' ') },
+        enter() { ptrgs('\n') },
+        copy() { navigator.clipboard.writeText(mbstr.textContent.trim()) }
+    })
 
-    const setMBPos = (x, y) => {
-        mb.style.left = x + 'px'
-        mb.style.top = y + 'px'
-    }
-
-    document.onpointerdown = function(e) {
-        if (e.which == 2) {
-            is_busy = true
-            setMBPos(e.clientX - 50, e.clientY - 50)
-            e.preventDefault()
-            mb.style.opacity = '1'
-            mb.style.pointerEvents = 'all'
-        } else if (!e.target.parentNode.classList.contains('letters') && e.target != mb) {
-            mb.style.opacity = '0'
-            mb.style.pointerEvents = 'none'
+    Object.assign(document, {
+        onpointerdown(e) {
+            if (e.which == 2) {
+                e.preventDefault()
+                setMBOp(busy = true)
+                setMBPos(e.clientX - 60, e.clientY - 50)
+            } else if (e.target != mb && !parHasClass(e, 'letters')) 
+                setMBOp()
+        },
+        onpointerup(e) {
+            if (e.which == 2 || !parHasClass(e, 'letters')) return
+            (ptrgs[e.target.textContent] || ptrgs)(e.target.textContent)
+            busy = false
         }
-    }
-
-    document.onpointerup = function(e) {
-        if (e.which == 2) return
-        if (e.target.parentNode.classList.contains('letters')) {
-            if (e.target.textContent == 'del') {
-                mbstr.textContent = mbstr.textContent.slice(0, -1)
-            } else if (e.target.textContent == 'space') {
-                mbstr.textContent += ' '
-            } else if (e.target.textContent == 'enter') {
-                mbstr.textContent += '\n'
-            } else if (e.target.textContent == 'copy') {
-                navigator.clipboard.writeText(mbstr.textContent.trim())
-            } else {
-                mbstr.textContent += e.target.textContent
-            }
-            is_busy = false
-        }
-    }
-
+    })
     app.emit('experiments_loaded')
 
 
-    /*function curried_summing_function(...numbers_to_sum) {
+/*
+    const bindReflectorProp = (o, r, p, gfn, sfn) => {
+        Object.defineProperty(r, p, {
+            get() {
+                const v = Reflect.get(o, p)
+                return gfn instanceof Function ? gfn(v) : v
+            },
+            set(v) {
+                Reflect.set(o, p, sfn instanceof Function ? sfn(v) : v)
+                return v
+            },
+        })
+        return r
+    }
+
+    const facFn = (o, fn) => {
+        const r = Object.create(null)
+        return fn(o, r)
+    }
+    function curried_summing_function(...numbers_to_sum) {
         let sum = 0
         numbers_to_sum.forEach(n => sum += n)
 

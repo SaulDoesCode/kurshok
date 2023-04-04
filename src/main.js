@@ -1,11 +1,10 @@
 import './site.css'
 import domlib from './domlib.js'
 
-const d = domlib.domfn
 const {queryAsync, runAsync} = domlib
-const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = d
+const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = domlib.domfn
 
-const app = domlib.emitter({domlib, d})
+const app = domlib.emitter()
 
 Array.prototype.randomize = function () {
   const l = [], ln = this.length
@@ -410,7 +409,7 @@ on.toast(e => toasts.add(div.toast({
   }
 }, e, t => {t.to = setTimeout(_ => t.remove(), 5000)})))
 on.experiments_loaded(_=> toast('experiments loaded'))
-once.xpm(async _ => (await import("./experimental.js")).default(app))
+once.xpm(async _ => (await import("./experimental.js")).default(app, domlib))
 runAsync(async si => {
   (await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
   ;(onhashchange= _=>lhi(xpmtl)&&emit.xpm())()
