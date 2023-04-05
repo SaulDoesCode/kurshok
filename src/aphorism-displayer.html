@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Aphorisms</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        text-align: center;
+        margin: 2rem 0;
+      }
+      .aphorism {
+        margin: 1rem 0;
+        padding: 1rem;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+      }
+      .aphorism p:first-child {
+        font-style: italic;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .aphorism p:last-child {
+        margin-top: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Aphorisms</h1>
+    <div id="aphorisms"></div>
+    <script>
+      fetch('https://gist.githubusercontent.com/SaulDoesCode/e8e06d09af9c203b2b4f298ff6c7a85a/raw/3da49540a60262b019d0e84caed34ee4180df148/aphorisms.json')
+        .then(response => response.json())
+        .then(data => {
+          const aphorismsDiv = document.getElementById('aphorisms');
+          data.forEach(topic => {
+            const topicDiv = document.createElement('div');
+            topicDiv.innerHTML = `<h2>${topic[0]}</h2>`;
+            topic.slice(1).forEach(aphorism => {
+              const aphorismDiv = document.createElement('div');
+              aphorismDiv.classList.add('aphorism');
+              aphorismDiv.innerHTML = `
+                <p>${aphorism}</p>
+              `;
+              topicDiv.appendChild(aphorismDiv);
+            });
+            aphorismsDiv.appendChild(topicDiv);
+          });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    </script>
+  </body>
+</html>
