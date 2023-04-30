@@ -208,9 +208,9 @@ section.thoughts {
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    max-width: 444px;
-    height: 12cm;
-    margin: .45em auto;
+    max-width: 474px;
+    height: 10cm;
+    margin: .5em auto;
     overflow: auto;
     background: rgb(48, 39, 39);
   }
@@ -224,11 +224,11 @@ section.thoughts {
     align-items: center;
     align-content: center;
     margin: .03em 0 .03em 0;
-    padding: .1em .25em;
+    padding: .12em .25em;
     border-left: 1px solid rgba(74, 38, 38, 0.2);
     border-right: 1px solid rgba(74, 38, 38, 0.2);
     min-height: 1cm;
-    font-size: 1.1em;
+    font-size: 1.15em;
     line-height: 1.1;
     text-shadow: 0 .5em 3em -1em rgb(207, 32, 32, .2);
     box-shadow: 0 0 4px -1px rgba(0, 0, 0, .2);

@@ -70,7 +70,7 @@ const thoughts = `
 
   Existence in the face of normativity, one can not deny their subjective experience. The process of individuation demands the disintegration of the symbolic order, leaving one to face the void.
 
-To live in the world is to be bound by normativity, yet individuality can only emerge in the realization of the subjective experience that is delimited by the symbolic order.
+To live in the world is to be bound by normativity, yet individuality emerges in the realization of the subjective experience that is delimited by the symbolic order, a kind of freeom through the law againt itself into a new meta-stable shape bound to an individual or as a compehensive set of traits/aboutnesses if we're avoiding object talk.
 
 The subjective experience of the individual is both bounded and liberated by the symbolic order, which creates the possibility of transcendence while simultaneously hemming in individuality.
 
@@ -97,6 +97,8 @@ The self is not a static entity, but a process of becoming. Through the experien
 The external world in many ways has the quality of being a mirror of subjectivity's setup and valence proportions, reflecting our own desires and fears back to us. Through introspection and self-reflection, we can come to a deeper understanding of ourselves and our place in the universe.
 
 The dialectic of love and reason can renew the bread and butter of subjectivity. Love, as a subjective feeling, is the immediate expression of the subject, but reason, as objective mediation, allows a reconcilation with the other and the world.
+
+Desperation is a poor substitute for integrity; it may gain you something in the short term, but ultimately it will cost you everything.
 `
   .trim()
   .split("\n")
@@ -143,7 +145,7 @@ Nonchalance:
 A cool demeanor,
 hides a passion within.
 The illusion of control: 
-Control is an illusion created by the mind. To truly live, we must learn to let go of the need for control.
+Control is an illusion created by the mind; to truly live, we must learn to let go of the need for control.
 Attitude:
 A choice to make,
 determines the path ahead.
@@ -159,7 +161,7 @@ The concept of time:
 A seemingly constant flow,
 yet relative to each individual.
 The paradox of individuality: 
-Individuality is a prison without walls. To be truly free, we must transcend our individuality.
+Individuality is a prison without walls; being truly free means transcending individuality.
 The fragility of relationships: 
 Relationships are like sandcastles on the beach, they can be beautiful and intricate, but they are also easily washed away by the tides of time.
 The power of language:
@@ -427,6 +429,296 @@ Reason, a boundary for love:
 Reason can help us avoid making impulsive decisions in love and set healthy boundaries for ourselves.
 Love and reason, a delicate balance:
 Finding the right balance between our emotions and rational thinking is key to making healthy choices in love and in life.
+The paternal function:
+The symbolic authority,
+that structures our identities.
+The Law of the Father:
+The order that maintains,
+the stability of society.
+The Oedipus complex:
+The child's desire,
+for the opposite-sex parent.
+The phallus:
+The symbol of power,
+and authority in society.
+The castration complex:
+The fear of losing,
+one's power and identity.
+The death drive:
+The destructive impulse,
+that opposes the life force.
+The pleasure principle:
+The drive towards pleasure,
+and avoidance of pain.
+The reality principle:
+The recognition,
+of the constraints of reality.
+The id:
+The primal, unconscious,
+and instinctual part of the psyche.
+The ego:
+The conscious,
+and rational part of the psyche.
+The superego:
+The internalized moral,
+and ethical values of society.
+The unconscious:
+The realm of repressed,
+and forgotten thoughts and memories.
+The collective unconscious:
+The shared, inherited,
+and universal aspects of the unconscious.
+Archetypes:
+The universal symbols,
+of the collective unconscious.
+Individuation:
+The process of integrating,
+the conscious and unconscious aspects of the psyche.
+Transcendence:
+The realization of the self,
+beyond the limitations of the ego.
+Existentialism:
+The philosophy of individual,
+and subjective experience.
+Absurdism:
+The recognition,
+of the meaningless of existence.
+Authenticity:
+The pursuit of living,
+according to one's true self.
+Nihilism:
+The rejection of meaning,
+and values in life.
+Phenomenology:
+The study of subjective,
+experience and perception.
+Intentionality:
+The inherent directedness,
+of consciousness towards objects.
+Existential phenomenology:
+The investigation,
+of the human condition through subjective experience.
+Hermeneutics:
+The study of interpretation,
+and understanding of texts.
+Deconstruction:
+The critique of language,
+and the uncovering of hidden assumptions.
+Postmodernism:
+The rejection of grand narratives,
+and a focus on individual experience.
+Critical theory:
+The examination of power,
+and social structures that perpetuate inequality.
+Object-oriented ontology:
+The recognition,
+of the independent existence of objects.
+Speculative realism:
+The exploration,
+of the nature of reality beyond human perception.
+Pharmakon:
+The paradoxical nature,
+of substances as both poison and cure.
+Sociobiology:
+The study of the biological,
+basis of social behavior.
+Ecocriticism:
+The analysis,
+of literary works in relation to the environment.
+Animal studies:
+The interdisciplinary study,
+of human-animal relationships.
+Affect theory:
+The exploration of emotions,
+and their role in shaping experience.
+Posthumanism:
+The recognition,
+of the blurring boundaries between human and non-human entities.
+Queer theory:
+The critique,
+of traditional notions of gender and sexuality.
+Feminist philosophy:
+The examination,
+of the role of gender in society and the world.
+Transcendental Realism: Our perceptions and language are not obstacles to truth, but tools for unlocking the hidden potential of reality.
+The posthuman: not a new category of existence, but a radical reconfiguration of what it means to be human and what is possible for humanity.
+The cognitive unconscious:
+The unseen force,
+that drives our thoughts and actions.
+Cognitive dissonance:
+The uncomfortable feeling,
+of holding two conflicting beliefs.
+Cognitive load:
+The mental burden,
+of processing information.
+Schemas:
+The mental frameworks,
+that shape our understanding of the world.
+Working memory:
+The limited capacity,
+to hold and manipulate information.
+Attentional spotlight:
+The selective focus,
+of our awareness.
+Episodic memory:
+The autobiographical record,
+of our personal experiences.
+Semantic memory:
+The knowledge base,
+of facts and concepts.
+Priming:
+The unconscious influence,
+of prior stimuli on subsequent behavior.
+Hindsight bias:
+The tendency to believe,
+that events were predictable after they have occurred.
+Confirmation bias:
+The selective attention,
+to information that confirms our beliefs.
+False memories:
+The reconstruction of,
+a distorted past.
+Encoding specificity:
+The context-dependent,
+retrieval of information.
+Flashbulb memories:
+The vivid recollection,
+of emotionally significant events.
+Source monitoring:
+The attribution of,
+memories to their correct source.
+Procedural memory:
+The unconscious knowledge,
+of how to perform a task.
+Repression:
+The unconscious defense mechanism,
+of pushing unwanted thoughts or memories out of awareness.
+Retroactive interference:
+The disruption,
+of memory consolidation by new information.
+Amnesia:
+The loss of memory,
+due to brain damage or disease.
+Executive functioning:
+The cognitive processes,
+that govern goal-directed behavior.
+The planning fallacy:
+The tendency to underestimate,
+the time and effort required for a task.
+Working backwards:
+The problem-solving strategy,
+of starting with the desired outcome and working backwards.
+The sunk cost fallacy:
+The irrational tendency,
+to continue investing in a project because of past investments.
+The framing effect:
+The influence,
+of the way information is presented on decision making.
+The availability heuristic:
+The bias,
+of judging likelihood based on easily recalled examples.
+The anchoring effect:
+The bias,
+of being influenced by an initial value when making estimates.
+The halo effect:
+The tendency to generalize,
+from one positive characteristic to the overall impression of a person.
+The fundamental attribution error:
+The tendency to attribute,
+behavior to internal factors rather than situational factors.
+The self-serving bias:
+The tendency to take credit,
+for success and attribute failure to external factors.
+The false consensus effect:
+The overestimation,
+of the extent to which others share our beliefs and behaviors.
+The Dunning-Kruger effect:
+The cognitive bias,
+of overestimating one's own abilities and knowledge.
+The Flynn effect:
+The increase,
+in average intelligence test scores over time.
+The bystander effect:
+The tendency to not intervene,
+in an emergency situation when others are present.
+The mere exposure effect:
+The increase,
+in liking for a stimulus due to repeated exposure.
+The Zeigarnik effect:
+The tendency to remember,
+unfinished tasks better than completed tasks.
+The philosophy of impermanence:
+The acceptance that everything,
+is constantly in a state of flux.
+The fragility of life:
+A reminder that our time is finite,
+and should be cherished accordingly.
+The fluidity of identity:
+A recognition that who we are,
+is subject to change over time.
+Synchronicity:
+There are no coincidences, only the synchronicity of events that lead us to where we need to be. Or is it just blind chance?
+Eternalism:
+Yesterday is a memory, tomorrow is a possibility, but today is just an illusion.
+Presentism:
+If the present is a gift, then why do we keep returning it unopened?
+Atemporalism:
+Time is an illusion, lunchtime doubly so.
+Alienating Friends:
+When you try too hard to keep someone in your life, you risk pushing them away; sometimes the best way to hold onto something is to let it go.
+Ruining Love:
+Love is fragile, like a bird in flight; if you try to cage it, it will wither and die, but if you set it free, it may come back to you on its own.
+Destroying Opportunities:
+Desperation is the enemy of opportunity; it blinds you to the possibilities that surround you and drives away the very things you desire.
+Losing Yourself:
+When you sacrifice your values and principles for the sake of another person, you may win their affection, but you will lose yourself in the process.
+Betraying Trust:
+Trust is like a mirror; once it's broken, it can never be fully repaired, and the cracks will always be visible, reminding you of your mistake.
+Foolish Love:
+To love someone who doesn't love you back is like trying to drink from a well that's already run dry; it may quench your thirst for a moment, but you'll always be left wanting more.
+Unrequited Devotion:
+Loving someone who keeps you around for entertainment is like being a puppet on a string; they'll pull you close when they want to play, but they'll let you go when they're done.
+False Hope:
+Hope is a double-edged sword; it can give you strength to persevere, but it can also blind you to the truth and keep you trapped in a cycle of unrequited love.
+Entertaining Illusions:
+When you're in love with someone who doesn't love you back, it's easy to mistake their amusement for affection; but in the end, you're just a temporary distraction.
+
+One-Sided Love:
+Love that's not reciprocated is like a flower that's never watered; it may bloom for a while, but eventually it will wither and die.
+
+Living in Denial:
+It's easy to deceive yourself when you're in love; but the longer you cling to false hope, the more you'll suffer when you finally face the truth.
+Commitment:
+A relationship without commitment is like a tree without roots; it may stand for a while, but it will never grow deep enough to weather the storms.
+
+Intimacy:
+True intimacy is not just about physical touch; it's about the moments of vulnerability and connection that we share with another person.
+
+Communication:
+The most important language in a relationship is not spoken; it's the silent understanding that comes from truly listening to each other.
+
+Balance:
+In a healthy relationship, both partners give and take in equal measure, like dancers in a graceful tango.
+
+Trust:
+Trust is the foundation of any relationship; it takes time to build, but can be shattered in an instant if it's not respected.
+Empathy:
+To repair a damaged relationship, you must be willing to see things from the other person's perspective and understand how your actions affected them.
+Respect:
+Love without respect is like a ship without a rudder; it may drift for a while, but it will eventually crash upon the rocks.
+Compatibility:
+Chemistry is important, but compatibility is essential; in dating, it's not just about finding someone you're attracted to, but someone who complements you in all the right ways.
+The Phoenix: Just like the mythical bird that rises from the ashes, a break up can be an opportunity for rebirth and transformation; embrace the pain and use it as fuel to become a stronger, better version of yourself.
+The Road Trip: Sometimes a change of scenery is all you need to gain a new perspective on life; take a solo road trip or adventure with friends to explore new places and create new memories.
+
+The Creative Outlet: Pour your heartbreak into a creative outlet, whether it's painting, writing, music, or any other form of expression. Turn your pain into something beautiful that you can be proud of.
+
+The Self-Discovery Journey: Take some time to focus on yourself and rediscover who you are outside of a relationship; try new things, take up new hobbies, and learn to enjoy your own company.
+
+The Support Network: Surround yourself with people who love and support you, whether it's family, friends, or a therapist; take support where needed.
+
+The Healing Ritual: Create a ritual that honors the end of the relationship and symbolizes your commitment to moving forward; could be lighting a candle, burying a memento, or anything else that feels meaningful to you.
+
 `.split('.').map(s => s.trim()).filter(s => s.length > 0)
    .map(s => {
       const [t, c] = s.split(':')
