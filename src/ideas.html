@@ -152,51 +152,28 @@ span.idea.active {
 }
 	</style>
 </head>
-<body>
-   
-   <script>
-	const dom = new Proxy(Object.create(null), {
+<body> 
+<script>
+const dom = new Proxy(Object.create(null), {
   get(d, prop) {
     prop = prop.split('.').filter(p => p.length)
     const tag = prop.shift()
     return new Proxy((...args) => { 
       const el = document.createElement(tag)
-      while (prop.length > 0) {
-        el.classList.add(prop.shift())
-      }
+      while (prop.length > 0) el.classList.add(prop.shift())
       if (Object.prototype.toString.call(args[0]) == '[object Object]') { 
         const descriptor = args.shift()
-        if (descriptor.attr) {
-          for (const attr in descriptor.attr) {
-            el.setAttribute(attr, descriptor.attr[attr])
-          }
-        }
-        if (descriptor.click instanceof Function) {
-          el.addEventListener('click', descriptor.click)
-        }
-        if (descriptor.$ != null) {
-          setTimeout(() => {
-            try {
-              if (descriptor.$ instanceof Node) {
-                descriptor.$.appendChild(el)
-              } else {
-                document.querySelector(descriptor.$).appendChild(el)
-              }
-            } catch(e) {
-              console.error('failed to render element to: ' + descriptor.$)
-            }
-          }, 0)
-        }
+        if (descriptor.attr) for (const attr in descriptor.attr) el.setAttribute(attr, descriptor.attr[attr])
+        if (descriptor.click instanceof Function) el.addEventListener('click', descriptor.click)
+        if (descriptor.$ != null) setTimeout(() => (descriptor.$ instanceof Node ? descriptor.$ : document.querySelector(descriptor.$)).appendChild(el), 0)
       }
       if (args.length) {
         let frag = document.createDocumentFragment()
-        for (const arg of args) {
-          if (typeof arg == 'string') {
-            frag.appendChild(document.createTextNode(arg))
-          } else if (arg instanceof Node || arg instanceof Text) {
-            frag.appendChild(arg)
-          }
-        } 
+        for (const arg of args) if (typeof arg == 'string') {
+          frag.appendChild(document.createTextNode(arg))
+        } else if (arg instanceof Node || arg instanceof Text) {
+          frag.appendChild(arg)
+        }
         el.appendChild(frag)
       }
       return el
@@ -217,8 +194,7 @@ const append_to_node = (node, ...elements) => {
   for (const e of elements) frag.appendChild(e)
   (
     typeof node == 'string' ? 
-      document.querySelector(node) :
-      node == null ? document.body : node
+      document.querySelector(node) : node == null ? document.body : node
   )
     .appendChild(frag)
 }
@@ -226,19 +202,12 @@ const append_to_node = (node, ...elements) => {
 const index_tree = () => {
   const store = Object.create(null)
   const antistore = Object.create(null)
-
   const api = {
-    get store() {
-      return store
-    },
-    get antistore() {
-      return antistore
-    },
+    get store() { return store },
+    get antistore() { return antistore },
     to_object() {
       const o = Object.create(null)
-      for (const [identifier, quanta] of Object.entries(antistore)) {
-        o[identifier] = [...quanta]
-      }
+      for (const [identifier, quanta] of Object.entries(antistore)) o[identifier] = [...quanta]
       return o
     },
     to_json() {
@@ -254,9 +223,7 @@ const index_tree = () => {
     },
     get_quantum_identifiers(q) {
       const result = []
-      for (const i of store[q]) {
-        result.push(i)
-      }
+      for (const i of store[q]) result.push(i)
       return result
     },
     get identifiers() {
@@ -269,28 +236,16 @@ const index_tree = () => {
   return api
 }
 
-index_tree.from_json = str => {
-  const o = JSON.parse(str)
-  const it = index_tree()
-  for (const i of Object.keys(o)) {
-    it.add(i, ...o[i])
-  }
+index_tree.from_json = (o, it = index_tree()) => {
+  for (const i of Object.keys(o = JSON.parse(o))) it.add(i, ...o[i])
   return it
 }
-
-///////
-///////
-///////
-///////
-///////
-
 
 let counter_for_unamed_ideas = 0
 const ideas = new Map()
 const idea_index = index_tree()
 
 // not categories, category bad, thing determination as class individuated via a process of }} sympathetic ressonance (50p, fuck you, bastard)
-
 // determinators (functionally similar to category as concept)
 // associations ()
 // complicitations (x of y implies z in a determinatory forclosed event case)
@@ -304,24 +259,15 @@ const idea = (name, txt, ...determinators) => {
     counter_for_unamed_ideas++
   }
   ideas.set(name, txt)
-  for (const d of determinators) {
-    idea_index.add(name, d)
-  }
+  for (const d of determinators) idea_index.add(name, d)
   setup_idea_interface()
 }
 
-const clear_idea_interface = () => {
-  ;[...(document.querySelectorAll('.idea_interface') || [])]
-        .forEach(e => e.remove())
-}
+const clear_idea_interface = () => [...(document.querySelectorAll('.idea_interface') || [])].forEach(e => e.remove())
 
 function setup_idea_interface() {
   if (busy) return
-  if (ii != null) {
-    ii = null
-    clear_idea_interface()
-  }
-
+  if (ii != null) clear_idea_interface(ii = null)
   busy = true
   setTimeout(() => {
     const idea_view = section.idea_view()
@@ -340,61 +286,27 @@ function setup_idea_interface() {
 
     let active_idea
     const set_idea_view = (i, from_determinator = true) => {
-      ;[...(determinator_list.querySelectorAll('.active') || [])]
-        .forEach(e => e.classList.remove('active'))
-      ;[...(idea_list.querySelectorAll('.idea.active') || [])]
+      ;[...(determinator_list.querySelectorAll('.active') || []), ...(idea_list.querySelectorAll('.idea.active') || [])]
         .forEach(e => e.classList.remove('active'))
 
+      idea_view.innerHTML = ''
       if (!from_determinator) {
-        idea_view.innerHTML = ''
-        if (typeof i === 'string') {
-          const p = dom.p()
-          p.innerHTML = ideas.get(i)
-          article.idea({$: idea_view},
-            dom.h3(i),
-            p
-          )
-        } else {
-          const p = dom.p()
-          p.innerHTML = ideas.get(i)
-          article.idea({$: idea_view}, p)
-        }
-
+        const p = dom.p()
+        p.innerHTML = ideas.get(i)
+        article.idea({$: idea_view}, typeof i === 'string' ? dom.h3(i) : null, p)
         let dl = dom.div.determinator_list({$: idea_view})
-        idea_index.read_identifier_quanta(i).forEach(q => {
-          span.determinator({
-            $: dl,
-          }, q)
-        })
-      } else {
-        (idea_index.get_quantum_identifiers(i) || [])
-          .forEach(id => {
-            idea_view.innerHTML = ''
-            if (typeof id === 'string') {
-              const p = dom.p()
-              p.innerHTML = ideas.get(id)
-              article.idea({$: idea_view},
-                dom.h3(id),
-                p
-              )
-            } else {
-              const p = dom.p()
-              p.innerHTML = ideas.get(id)
-              article.idea({$: idea_view}, p)
-            }
-            let dl = dom.div.determinator_list({$: idea_view})
-            idea_index.read_identifier_quanta(id)
-              .forEach(q => {
-                span.determinator({$: dl}, q)
-              })
-          })
-      }
+        idea_index.read_identifier_quanta(i).forEach(q => span.determinator({$: dl}, q))
+      } else (idea_index.get_quantum_identifiers(i) || []).forEach(id => {
+        const p = dom.p()
+        p.innerHTML = ideas.get(id)
+        article.idea({$: idea_view}, typeof i === 'string' ? dom.h3(i) : null, p)
+        let dl = dom.div.determinator_list({$: idea_view})
+        idea_index.read_identifier_quanta(id).forEach(q => span.determinator({$: dl}, q))
+      })
       if (active_idea != i) {
         active_idea = i
         ;[...(idea_list.querySelectorAll('.idea') || [])].forEach(e => {
-          if (e.idea_name == active_idea) {
-            e.classList.add('active')
-          }
+          if (e.idea_name == active_idea) e.classList.add('active')
         })
       }
     }
