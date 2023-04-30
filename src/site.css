@@ -208,7 +208,7 @@ section.thoughts {
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    max-width: 440px;
+    max-width: 444px;
     height: 12cm;
     margin: .45em auto;
     overflow: auto;
@@ -380,7 +380,7 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
     padding: .5em .5em;
     padding-bottom: 1em;
     background: var(--theme-color);
-    max-width: 700px;
+    max-width: 727px;
     max-height: 13.6cm;
     overflow: scroll;
     overflow-x: hidden;

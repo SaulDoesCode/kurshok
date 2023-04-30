@@ -66,7 +66,37 @@ const thoughts = `
 
   It is easy to see love as a form of possession, as something we can own or control. But true love, like the will to a sense of freedom, is a force that transcends ownership.
 
-  When we love, we risk everything. We risk our hearts, our minds, our very souls. It is worth it to feel. 
+  When we love, we risk everything. We risk our hearts, our minds, our very souls. It is worth it to feel.
+
+  Existence in the face of normativity, one can not deny their subjective experience. The process of individuation demands the disintegration of the symbolic order, leaving one to face the void.
+
+To live in the world is to be bound by normativity, yet individuality can only emerge in the realization of the subjective experience that is delimited by the symbolic order.
+
+The subjective experience of the individual is both bounded and liberated by the symbolic order, which creates the possibility of transcendence while simultaneously hemming in individuality.
+
+To be a self is to be situated within a symbolic order that is both enabling and constraining. It is only by confronting the limits of this order that the individual can emerge as a subjective entity.
+
+The process of individuation is a journey towards the realization of one's subjective experience, which is both bounded and facilitated by the symbolic order.
+
+The heart is a maze of contradictions, a labyrinth of desires and fears that can never be fully mapped or understood. Love is the thread that leads us out of the maze, but it can also tangle us up in knots.
+
+Freedom lies not in the absolute absence of constraint, but in the ability to creatively navigate the boundaries of what is given. Knowing full well that the bounds of giveness might not be fixed, but renegotiable given as it is a myth that givenness is given givenly.
+
+The symbolic order shapes our subjective experience in ways that are often invisible to us, but nonetheless profound. To challenge it is to enter into a struggle that may require the upending of cherished beliefs and habits.
+
+To be human is to live with the awareness of our own mortality, and to confront the anxiety that it engenders. But it is also to embrace the urgency of our limited time, and to find meaning in the small moments that make up our lives.
+
+The pain of love sickness is the price we pay for the privilege of loving, the tax on our hearts for the joy of connection.
+
+The metamodern subject is one who embraces the paradoxical nature of trauma and love sickness, who finds beauty in the midst of pain and meaning in the face of despair.
+
+In a digital abyss of hyperreality, love becomes an algorithm that computes and models our desires and their meta-rationality.
+
+The self is not a static entity, but a process of becoming. Through the experience of love and pain, we are constantly transformed and remade. Only by embracing this process can we fully realize our potential and our place in the world.
+
+The external world in many ways has the quality of being a mirror of subjectivity's setup and valence proportions, reflecting our own desires and fears back to us. Through introspection and self-reflection, we can come to a deeper understanding of ourselves and our place in the universe.
+
+The dialectic of love and reason can renew the bread and butter of subjectivity. Love, as a subjective feeling, is the immediate expression of the subject, but reason, as objective mediation, allows a reconcilation with the other and the world.
 `
   .trim()
   .split("\n")
@@ -99,6 +129,10 @@ feared only by the ignorant.
 Disappointment with people:
 We are all human,
 flawed and imperfect.
+Ego and identity:
+always-already deferred and yet always implicated in the symbolic order.
+Norms: an ever-present force shaping subjectivity, operating through discursive practices that regulate behavior and thought.
+The Other: a fundamental alterity that is both necessary for subjectivity and threatening to its stability.
 Homosexuality:
 Love knows no bounds,
 it cannot be contained by labels.
@@ -108,6 +142,8 @@ is to be free from societal norms.
 Nonchalance:
 A cool demeanor,
 hides a passion within.
+The illusion of control: 
+Control is an illusion created by the mind. To truly live, we must learn to let go of the need for control.
 Attitude:
 A choice to make,
 determines the path ahead.
@@ -117,9 +153,15 @@ able to explore new ideas.
 The nature of reality:
 A puzzle to solve,
 whose pieces are constantly shifting.
+The limits of language: 
+Language is a tool for communication, but it can also be a prison for the mind, go beyond.
 The concept of time:
 A seemingly constant flow,
 yet relative to each individual.
+The paradox of individuality: 
+Individuality is a prison without walls. To be truly free, we must transcend our individuality.
+The fragility of relationships: 
+Relationships are like sandcastles on the beach, they can be beautiful and intricate, but they are also easily washed away by the tides of time.
 The power of language:
 A tool for communication,
 but also a source of misunderstanding.
