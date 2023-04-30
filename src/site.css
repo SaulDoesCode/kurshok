@@ -1,3 +1,9 @@
+
+:root {
+    --highlight-color: rgb(253, 53, 53);
+    --theme-color: rgba(60, 49, 49, 0.86);
+}
+
 html, body {
 	position: relative;
 	width: 100%;
@@ -68,11 +74,6 @@ button:focus {
 	border-color: #666;
 }
 
-
-:root {
-    --highlight-color: rgb(253, 53, 53);
-}
-
 .kurshok {
     display: inline-block;
     font-size: 1.45em;
@@ -115,7 +116,7 @@ button:focus {
 main {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     align-content: flex-start;
     margin: 0 auto;
@@ -126,6 +127,41 @@ main {
 main > * {
  display: inline-flex;
  margin: .5em .5em;
+}
+
+main > section > header {
+    color: #ccc;
+    text-shadow: 0 1px 2px rgba(91, 51, 51, 0.4);
+    font-size: 1.2em;
+    padding-bottom: .5em;
+}
+
+.toast {
+    position: fixed;
+    top: 1vh;
+    right: 1vw;
+    background: #fff;
+    border-radius: 4px;
+    padding: .5em;
+    cursor: pointer;
+    box-shadow: 0 0 3px rgb(207, 32, 32, .2);
+    border-left: .5em solid rgb(119, 125, 134);
+}
+
+.toast.error {
+    border-left: .5em solid rgb(253, 53, 53);
+}
+
+.toast.warn {
+    border-left: .5em solid rgb(253, 216, 53);
+}
+
+div.spacer {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: .45em .45em;
+    padding: .2em;
 }
 
 section.books {
@@ -166,87 +202,40 @@ section.books img:hover {
 }
 
 section.thoughts {
-    display: inline-flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: center;
-    align-content: center;
-    max-width: 99vw;
-    margin: .5em auto;
-    padding: .5em;
-    min-height: 2cm;
-}
-
-main > section > header {
-    color: #ccc;
-    text-shadow: 0 1px 2px rgba(91, 51, 51, 0.4);
-    font-size: 1.2em;
-    padding-bottom: .5em;
-}
-
-.toast {
-    position: fixed;
-    top: 1vh;
-    right: 1vw;
-    background: #fff;
-    border-radius: 4px;
-    padding: .5em;
-    cursor: pointer;
-    box-shadow: 0 0 3px rgb(207, 32, 32, .2);
-    border-left: .5em solid rgb(119, 125, 134);
-}
-
-.toast.error {
-    border-left: .5em solid rgb(253, 53, 53);
-}
-
-.toast.warn {
-    border-left: .5em solid rgb(253, 216, 53);
-}
-
-div.spacer {
     position: relative;
-    display: block;
-    width: 100%;
-    margin: .45em .45em;
-    padding: .2em;
-}
-
-section.thoughts {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    align-content: center;
-    max-width: 33vw;
-    min-width: 333px;
-    margin: .25em .25em;
-    padding: .25em;
-    padding-top: .7em;
-    min-height: 2cm;
-    background: rgb(40, 29, 29);
-}
-
-section.thoughts .thought {
+    box-sizing: border-box;
+    max-width: 440px;
+    height: 12cm;
+    margin: .45em auto;
+    overflow: auto;
+    background: rgb(48, 39, 39);
+  }
+  
+  section.thoughts .thought {
+    position: relative;
     display: inline-flex;
     flex-flow: row wrap;
-    background: hsla(345, 10%, 8%, 0.8);
-    color: rgb(172, 127, 119);
-    justify-content: space-around;
+    background: hsla(0, 5%, 12%, 0.907);
+    color: rgb(106, 84, 83);
     align-items: center;
     align-content: center;
-    margin: .05em 0 .05em 0;
-    padding: .1em .5em;
+    margin: .03em 0 .03em 0;
+    padding: .1em .25em;
     border-left: 1px solid rgba(74, 38, 38, 0.2);
     border-right: 1px solid rgba(74, 38, 38, 0.2);
     min-height: 1cm;
-    font-size: 1.08em;
+    font-size: 1.1em;
     line-height: 1.1;
     text-shadow: 0 .5em 3em -1em rgb(207, 32, 32, .2);
     box-shadow: 0 0 4px -1px rgba(0, 0, 0, .2);
-    transform: scale(0.9);
+    transform: scale(.9);
     transition: all 420ms ease-in;
-}
+  }
+  
 
 section.thoughts .thought:first-of-type {
     margin-top: -1.5em;
@@ -254,7 +243,7 @@ section.thoughts .thought:first-of-type {
 
 section.thoughts .thought:hover, section.thoughts .thought:focus {
     transform: scale(1);
-    background: rgb(105, 76, 76);
+    background: rgb(81, 65, 65);
     color: rgb(225, 215, 215);
 }
 
@@ -270,7 +259,7 @@ footer {
     text-shadow: 0 1px 2px rgba(117, 80, 80, 0.4), 0 -1px 2px rgba(235, 49, 49, 0.1);
     color: rgb(149, 117, 124);
     padding: .5em;
-    background: rgba(40, 29, 29, 0.86);
+    background: var(--theme-color);
     border-left: 1px solid rgba(218, 199, 199, 0.2);
     border-right: 1px solid rgba(218, 199, 199, 0.2);
     box-shadow: 0 0 4px -1px rgba(0, 0, 0, .22);
@@ -342,6 +331,7 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
     max-width: 220px;
     border-radius: 6px;
     background: rgba(137, 136, 136, 0.541);
+    z-index: 10;
 }
 
 .mouseboard .output {
@@ -389,9 +379,9 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
     margin: .5em .5em;
     padding: .5em .5em;
     padding-bottom: 1em;
-    background: rgb(53, 38, 38);
-    max-width: 60pc;
-    max-height: 700px;
+    background: var(--theme-color);
+    max-width: 700px;
+    max-height: 13.6cm;
     overflow: scroll;
     overflow-x: hidden;
     line-height: 1;
@@ -431,7 +421,7 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
 
 .small-idea > header {
     display: block;
-    color: rgb(97, 68, 68);
+    color: rgba(96, 73, 72, 0.912);
     width: 100%;
     transition: all 130ms ease-in;
 }
@@ -442,6 +432,6 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
 
 .small-idea:hover {
     scale: 1.5;
-    color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255) !important;
     filter: drop-shadow(0 .3em .5em hsla(0, 30%, 1%, .13));
 }
