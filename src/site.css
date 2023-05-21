@@ -1,7 +1,7 @@
 
 :root {
     --highlight-color: rgb(253, 53, 53);
-    --theme-color: rgba(60, 49, 49, 0.86);
+    --theme-color: rgba(62, 51, 51, 0.86);
 }
 
 html, body {
@@ -79,7 +79,7 @@ button:focus {
     font-size: 1.45em;
     font-weight: 800;
     color: var(--highlight-color);
-    padding: .2em .4em;
+    padding: .1em .4em;
 }
 
 .breathing-circle {
@@ -208,28 +208,28 @@ section.thoughts {
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    max-width: 474px;
-    height: 10cm;
-    margin: .5em auto;
+    max-width: 440px;
+    max-height: 9cm;
+    margin: .2em auto;
     overflow: auto;
-    background: rgb(48, 39, 39);
+    background: var(--theme-color);
   }
   
   section.thoughts .thought {
     position: relative;
     display: inline-flex;
     flex-flow: row wrap;
-    background: hsla(0, 5%, 12%, 0.907);
+    background: hsla(0, 5%, 12%, 0.852);
     color: rgb(106, 84, 83);
     align-items: center;
     align-content: center;
-    margin: .03em 0 .03em 0;
-    padding: .12em .25em;
+    margin: .02em 0 .02em 0;
+    padding: .3em .2em;
     border-left: 1px solid rgba(74, 38, 38, 0.2);
     border-right: 1px solid rgba(74, 38, 38, 0.2);
     min-height: 1cm;
-    font-size: 1.15em;
-    line-height: 1.1;
+    font-size: 1.1em;
+    line-height: 1;
     text-shadow: 0 .5em 3em -1em rgb(207, 32, 32, .2);
     box-shadow: 0 0 4px -1px rgba(0, 0, 0, .2);
     transform: scale(.9);
@@ -257,7 +257,7 @@ footer {
     margin: .5em auto .5em auto;
     margin-bottom: 1.45em;
     text-shadow: 0 1px 2px rgba(117, 80, 80, 0.4), 0 -1px 2px rgba(235, 49, 49, 0.1);
-    color: rgb(149, 117, 124);
+    color: rgba(156, 130, 132, 0.945);
     padding: .5em;
     background: var(--theme-color);
     border-left: 1px solid rgba(218, 199, 199, 0.2);
@@ -276,7 +276,7 @@ footer:hover {
     padding: .5em .5em;
     margin: .5em;
     border: .1em solid rgba(83, 18, 18, 0.25);
-    background: rgba(62, 48, 48, 0.819);
+    background: rgba(68, 58, 58, 0.819);
     border-radius: .25em;
     max-width: fit-content;
     transition: all 240ms ease-in;
@@ -371,16 +371,17 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
 }
 
 .short-ideas {
+    position: relative;
     display: inline-flex;
     justify-content: space-around;
     align-items: space-between;
     align-content: flex-start;
     flex-flow: row wrap;
-    margin: .5em .5em;
-    padding: .5em .5em;
+    margin: .5em .15em;
+    padding: .1em;
     padding-bottom: 1em;
     background: var(--theme-color);
-    max-width: 727px;
+    max-width: 700px;
     max-height: 13.6cm;
     overflow: scroll;
     overflow-x: hidden;
@@ -392,9 +393,8 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
 
 .small-idea {
     display: inline-block;
-    margin: .5em .5em;
-    padding: .5em .5em;
-    max-width: 200px;
+    margin: .4em .5em;
+    max-width: 180px;
     line-height: 1;
     transition: all 100ms ease-in;
     animation: fade-in 750ms ease-in;

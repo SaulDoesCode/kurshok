@@ -106,6 +106,13 @@ Desperation is a poor substitute for integrity; it may gain you something in the
   .filter(t => t != '')
   .randomize()
 
+const onHoverScroll = (el, dur = 1000) => {
+  let t
+  el.onmouseover = e => t = setTimeout(_=> (el.scrollIntoView({behavior:'smooth'}), el.classList.add('scrolled')), dur)
+  el.onmouseout = e => (clearTimeout(t), el.classList.remove('scrolled'))
+  return el
+}  
+
 const w100mauto = {width: '100%', margin: '0 auto'}
 const shortIdeasContainer = section.short_ideas({$pre: 'main'},
   div.spacer,
@@ -116,7 +123,7 @@ const shortIdeasContainer = section.short_ideas({$pre: 'main'},
 section.thoughts({$: 'main'},
   header({css: w100mauto}, 'expressions'),
   div.spacer,
-  thoughts.map(t => p.thought(t))
+  thoughts.map(t => onHoverScroll(p.thought(t)))
 )
 
 const shortIdeasList = `Reason:
@@ -682,24 +689,18 @@ False Hope:
 Hope is a double-edged sword; it can give you strength to persevere, but it can also blind you to the truth and keep you trapped in a cycle of unrequited love.
 Entertaining Illusions:
 When you're in love with someone who doesn't love you back, it's easy to mistake their amusement for affection; but in the end, you're just a temporary distraction.
-
 One-Sided Love:
 Love that's not reciprocated is like a flower that's never watered; it may bloom for a while, but eventually it will wither and die.
-
 Living in Denial:
 It's easy to deceive yourself when you're in love; but the longer you cling to false hope, the more you'll suffer when you finally face the truth.
 Commitment:
 A relationship without commitment is like a tree without roots; it may stand for a while, but it will never grow deep enough to weather the storms.
-
 Intimacy:
 True intimacy is not just about physical touch; it's about the moments of vulnerability and connection that we share with another person.
-
 Communication:
 The most important language in a relationship is not spoken; it's the silent understanding that comes from truly listening to each other.
-
 Balance:
 In a healthy relationship, both partners give and take in equal measure, like dancers in a graceful tango.
-
 Trust:
 Trust is the foundation of any relationship; it takes time to build, but can be shattered in an instant if it's not respected.
 Empathy:
@@ -710,20 +711,16 @@ Compatibility:
 Chemistry is important, but compatibility is essential; in dating, it's not just about finding someone you're attracted to, but someone who complements you in all the right ways.
 The Phoenix: Just like the mythical bird that rises from the ashes, a break up can be an opportunity for rebirth and transformation; embrace the pain and use it as fuel to become a stronger, better version of yourself.
 The Road Trip: Sometimes a change of scenery is all you need to gain a new perspective on life; take a solo road trip or adventure with friends to explore new places and create new memories.
-
-The Creative Outlet: Pour your heartbreak into a creative outlet, whether it's painting, writing, music, or any other form of expression. Turn your pain into something beautiful that you can be proud of.
-
+The Creative Outlet: Pour your heartbreak into a creative outlet, whether it's painting, writing, music, or any other form of expression; turn your pain into something beautiful that you can be proud of.
 The Self-Discovery Journey: Take some time to focus on yourself and rediscover who you are outside of a relationship; try new things, take up new hobbies, and learn to enjoy your own company.
-
 The Support Network: Surround yourself with people who love and support you, whether it's family, friends, or a therapist; take support where needed.
-
 The Healing Ritual: Create a ritual that honors the end of the relationship and symbolizes your commitment to moving forward; could be lighting a candle, burying a memento, or anything else that feels meaningful to you.
-
-`.split('.').map(s => s.trim()).filter(s => s.length > 0)
-   .map(s => {
-      const [t, c] = s.split(':')
-      return article.small_idea(header(t, ':'), span(c))
-   }).randomize();
+`
+  .split('.')
+  .map(s => s.trim())
+  .filter(s => s.length > 0)
+  .randomize()
+  .map(s => article.small_idea(header(s.split(':')[0], ':'), span(s.split(':')[1])))
 
 app.toasts = new Set()
 const
@@ -736,7 +733,7 @@ const
 
 on.toast(e => toasts.add(div.toast({
   $:'body',
-  css: {top: `calc(1vh + 1.5cm * ${toasts.size})`},
+  css: {top: `calc(1vh + 1.5cm * ${toasts.size})`, zIndex: 0},
   onclick(e, t) {
     t.remove()
     toasts.delete(t)
@@ -749,8 +746,5 @@ runAsync(async si => {
   (await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
   ;(onhashchange= _=>lhi(xpmtl)&&emit.xpm())()
   await sleep(60); toast('loaded')
-  while (si = shortIdeasList.pop()) {
-    await sleep(50)
-    shortIdeasContainer.append(si)
-  }
+  while (si = shortIdeasList.pop()) (shortIdeasList.length % 2 || await sleep(50), shortIdeasContainer.append(si))
 })
