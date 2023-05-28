@@ -245,7 +245,7 @@ section.thoughts .thought:hover, section.thoughts .thought:focus {
     transform: scale(1);
     background: rgb(81, 65, 65);
     color: rgb(225, 215, 215);
-    box-shadow: 0 0 3px rgba(207, 32, 32, .2);
+    box-shadow: 0 0 3px rgba(113, 18, 18, 0.065);
 }
 
 footer {

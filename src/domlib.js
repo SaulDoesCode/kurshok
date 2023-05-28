@@ -50,11 +50,7 @@ export default (d => {
   d.allare = (arr, like) => {
     if (!d.isArrlike(arr)) return false
     const isfn = like instanceof Function
-    for (let i = 0; i < arr.length; i++) {
-      if (!(isfn ? like(arr[i]) : arr[i] === like)) {
-        return false
-      }
-    }
+    for (let i = 0; i < arr.length; i++) if (!(isfn ? like(arr[i]) : arr[i] === like)) return false  
     return true
   }
 
@@ -83,8 +79,7 @@ export default (d => {
    */
   d.flatten = (arr, result = [], encaptulate = true) => {
     if (encaptulate && !d.isArr(arr)) return [arr]
-    for (let i = 0; i < arr.length; i++)
-      d.isArr(arr[i]) ? d.flatten(arr[i], result) : d.result.push(arr[i])
+    for (let i = 0; i < arr.length; i++) d.isArr(arr[i]) ? d.flatten(arr[i], result) : d.result.push(arr[i])
     return result
   }
 
@@ -100,9 +95,7 @@ export default (d => {
   d.run = function () {
     document.body || document.readyState === 'complete' ?
       d.runAsync.apply(undefined, arguments) :
-      window.addEventListener('DOMContentLoaded', e => {
-        d.runAsync.apply(undefined, arguments)
-      }, {once: true})
+      window.addEventListener('DOMContentLoaded', e => d.runAsync.apply(undefined, arguments), {once: true})
   }
 
   d.html = (input, ...args) => {
@@ -214,8 +207,7 @@ export default (d => {
 
   d.emitter = (host = Object.create(null), listeners = new Map()) => Object.assign(host, {
     emit: d.infinify((event, ...data) => d.runAsync(() => {
-      if (listeners.has(event))
-        for (const h of listeners.get(event)) h.apply(null, data)
+      if (listeners.has(event)) for (const h of listeners.get(event)) h.apply(null, data)
     })),
     on: d.infinify((event, handler) => {
       if (!listeners.has(event)) listeners.set(event, new Set())

@@ -1,7 +1,7 @@
 import './site.css'
 import domlib from './domlib.js'
 
-const {queryAsync, runAsync, render} = domlib
+const {queryAsync, query, runAsync, render} = domlib
 const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = domlib.domfn
 
 const app = domlib.emitter()
@@ -112,21 +112,38 @@ God is Nothing because the concept of truth is not the truth itself, leaving us 
   .filter(t => t != '')
   .randomize()
 
-const onHoverScroll = (el, dur = 1000) => {
-  let t
+const onHoverScroll = (el, dur = 1000, t) => {
   el.onmouseover = e => t = setTimeout(_=> (el.scrollIntoView({behavior:'smooth'}), el.classList.add('scrolled')), dur)
   el.onmouseout = e => (clearTimeout(t), el.classList.remove('scrolled'))
   return el
-}  
+}
+
+const shuffleChildren = (s, filter) => {
+  for (const c of [...(s = query(s)).children].randomize()) {
+    if (filter instanceof Function && !filter(c)) continue
+    c.remove()
+    s.appendChild(c)
+  }
+}
 
 const w100mauto = {width: '100%', margin: '0 auto'}
-const shortIdeasContainer = section.short_ideas({$pre: 'main'},
+const shortIdeasContainer = section.short_ideas({
+    $pre: 'main',
+    ondblclick(_, el) { 
+      shuffleChildren(el, c => c.classList.contains('small-idea'))
+    }
+  },
   div.spacer,
   header({css: w100mauto}, 'short ideas'),
   br,
   div.spacer
 )
-section.thoughts({$: 'main'},
+section.thoughts({
+  $: 'main',
+  ondblclick(_, el) {
+    shuffleChildren(el, c => c.classList.contains('thought'))
+  }
+},
   header({css: w100mauto}, 'expressions'),
   div.spacer,
   thoughts.map(t => onHoverScroll(p.thought(t)))
