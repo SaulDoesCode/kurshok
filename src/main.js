@@ -613,6 +613,10 @@ Retroactive interference:
 The disruption, of memory consolidation by new information.
 The Joy of Non-Personal Being:
 Engaging with the world in a childlike, meditative way, finding bliss in continuous being and doing without seeking recognition, glorifying the act itself rather than propping up the ego.
+The Narcissism of Self-Realization:
+Progress in art or praxis as a search for self, where the ultimate goal is unification with the world and acceptance of erasure, but we remain flawed and incomplete, collecting experiences to testify to our existence and prominence in the intersubjective fabric.
+The Silly Pursuit of Existence:
+Existence is not about proving oneself, but finding freedom within, living religiously in the world, valuing universals, understanding, and pure experience for their own sake, detached from ego and identification, embracing selfless and potentially useless engagement with the world.
 Amnesia:
 The loss of memory,
 due to brain damage or disease.
