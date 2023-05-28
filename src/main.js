@@ -1,7 +1,7 @@
 import './site.css'
 import domlib from './domlib.js'
 
-const {queryAsync, runAsync} = domlib
+const {queryAsync, runAsync, render} = domlib
 const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = domlib.domfn
 
 const app = domlib.emitter()
@@ -99,6 +99,14 @@ The external world in many ways has the quality of being a mirror of subjectivit
 The dialectic of love and reason can renew the bread and butter of subjectivity. Love, as a subjective feeling, is the immediate expression of the subject, but reason, as objective mediation, allows a reconcilation with the other and the world.
 
 Desperation is a poor substitute for integrity; it may gain you something in the short term, but ultimately it will cost you everything.
+
+Intuition, driven by life's blind force, enables problem-solving and negentropic growth in beings without subjectivity.
+
+The content of experience, whether real or simulated, must be determined by a reality outside itself, as simulations are simulated by something external to them.
+
+Possible constructions of intuitive logic inherit the consistency of the outside world, as the subject cannot be separate from itself as an object of actuality.
+
+God is Nothing because the concept of truth is not the truth itself, leaving us searching for more than a trace, unaware that reality is already present without being given to us.
 `
   .trim()
   .split("\n")
@@ -514,9 +522,6 @@ and the uncovering of hidden assumptions.
 Postmodernism:
 The rejection of grand narratives,
 and a focus on individual experience.
-Critical theory:
-The examination of power,
-and social structures that perpetuate inequality.
 Object-oriented ontology:
 The recognition,
 of the independent existence of objects.
@@ -597,12 +602,17 @@ memories to their correct source.
 Procedural memory:
 The unconscious knowledge,
 of how to perform a task.
+The Illusion of Separation:
+In our quest for individuality, we often forget the fundamental truth of our interconnectedness, blinding ourselves to the oneness of all things.
+The Silent Language of Symbols:
+Symbols, silent messengers of meaning, transcend language and speak directly to the depths of our consciousness.
 Repression:
 The unconscious defense mechanism,
 of pushing unwanted thoughts or memories out of awareness.
 Retroactive interference:
-The disruption,
-of memory consolidation by new information.
+The disruption, of memory consolidation by new information.
+The Joy of Non-Personal Being:
+Engaging with the world in a childlike, meditative way, finding bliss in continuous being and doing without seeking recognition, glorifying the act itself rather than propping up the ego.
 Amnesia:
 The loss of memory,
 due to brain damage or disease.
@@ -692,7 +702,7 @@ When you're in love with someone who doesn't love you back, it's easy to mistake
 One-Sided Love:
 Love that's not reciprocated is like a flower that's never watered; it may bloom for a while, but eventually it will wither and die.
 Living in Denial:
-It's easy to deceive yourself when you're in love; but the longer you cling to false hope, the more you'll suffer when you finally face the truth.
+Self deception is easy when it's about love or something larger than life; clinging drags out the pain, letting go is hard, but what should be there will remain.
 Commitment:
 A relationship without commitment is like a tree without roots; it may stand for a while, but it will never grow deep enough to weather the storms.
 Intimacy:
@@ -715,6 +725,83 @@ The Creative Outlet: Pour your heartbreak into a creative outlet, whether it's p
 The Self-Discovery Journey: Take some time to focus on yourself and rediscover who you are outside of a relationship; try new things, take up new hobbies, and learn to enjoy your own company.
 The Support Network: Surround yourself with people who love and support you, whether it's family, friends, or a therapist; take support where needed.
 The Healing Ritual: Create a ritual that honors the end of the relationship and symbolizes your commitment to moving forward; could be lighting a candle, burying a memento, or anything else that feels meaningful to you.
+Masked Identity:
+We wear countless masks, each concealing fragments of our true selves.
+A Mirror's Multitude:
+Reflections reveal the kaleidoscope of identities we embody within a single lifetime.
+Dancing with Demons:
+Through shattered dreams and tormented steps, we waltz with our inner demons.
+The Bell Jar Unsealed:
+Breaking free from the confines of melancholy, we find the light that mends our fractured souls.
+Threads of Reality Unraveled:
+In the tapestry of life, the frayed threads of illusion expose the underlying void.
+The Abyss Beckons:
+In the depths of despair, we discover the fathomless allure of oblivion.
+The Absurd in Limelight:
+Existence, an absurdist play, where laughter and tears share the same stage.
+The Illusion of Mirrors:
+In the theatre of self-discovery, we seek reflections in others, only to find shattered images of who we once were, caught in the parataxis of evolving desires.
+The Cruelty of Unknowing:
+Within the dense tapestry of our shifting selves, we long for a friend or lover, yet our elusive identity dissolves, leaving us in the barren theater of uncertainty.
+Labyrinths of Changing Desires:
+Navigating the intricate mazes of our evolving needs, we yearn for connection, but the script of our authenticity eludes us, lost in the intricate parataxis of our own transformations.
+Fractured Masks, Wounded Hearts:
+As the curtain falls on our former self, we wear fragmented masks, concealing our changing desires, while the echoes of our genuine yearnings resonate through the theatre of cruelty.
+Chimeric Longings:
+In the density of shifting desires, we chase elusive companionship, only to realize that the self we seek is an ever-changing chimera, disappearing into the labyrinth of paratactic uncertainty.
+The Melody of Transcendence:
+Amidst the discordant notes of shifting desires, we harmonize the symphony of our social being, transcending the confines of the self, weaving a tapestry of genuine connections that resonate beyond the boundaries of detachment.
+Truth qua Virtue:
+Truth reshapes our perception of the world, by prioritizing categorization, explanation, and narrative, we close the gaps in our scientific and socially mediated understanding, revealing the interconnectedness of objects and processes within and beyond ourselves.
+Exploring Functionally Correct Truths:
+Functionally correct metaphors, allegories, and religious ideas reveal insights into the underlying mechanisms that structure our conceptualizations; uncovering the psychology and processes that enable such belief systems helps us move toward fuller explanations, bridging the gaps between functional correctness and the pursuit of deeper truths.
+Embracing the Human Dimension:
+The human realm is not withdrawn from the world; studying our minds and behavior is as valid as studying any other natural phenomena; no sacred barriers hinder objective reflection on our relationship with the world, urging us to delve into abstract understanding beyond the limitations of tradition.
+Unveiling Subjective Objectivity:
+In valuing, we embrace the intersubjective nature of human existence, pondering the rules and patterns that govern our judgements; through explicit conceptualization, we unravel the complexities of value, formulating flexible yet objective heuristics for economies of meaning.
+Complex Value; A Web of Judgements:
+Value intertwines with emotional states, practical use, aesthetic effect, and even scientific knowledge; from sentimentality to speculative assessment, value navigates intricate webs of normative rules, serving as a compass for our intersubjective engagements.
+Domesticated Neutrality, Stripped Objects:
+Human cognizers shape the world for-us, stripping objects of their neutral essence, molding them into tools and vessels that serve our subjective ends, weaving them into the fabric of our self-centric existence.
+Sentimental Enchantment, Priceless Stories:
+Value emerges from connections to past experiences, weaving sentimental threads that transform ordinary objects into bridges to memory, imbuing them with the power to enchant and evoke priceless emotions.
+The Mirage of Certainty: Certainty, a mirage born from our longing for stability, dissolves when we confront the fragility of our foundational beliefs, leaving us adrift in a sea of existential questioning.
+The Ripples of Perception: Our perception shapes the contours of reality, and in questioning the necessity of existence, we ripple through the fabric of perception, forever altering the landscape of our understanding.
+Illusions of Necessity: The comforting notion of necessary existence shatters when we realize that what we thought was essential may be but a fabrication of our limited perception.
+Unspoken Echoes, Lingering Embers:
+In the silence between words, the true power of language lies, resonating with concealed emotions.
+Knowledge's Alchemical Touch:
+New vocabulary transforms, though alchemy's gold may be misunderstood or mistaken for fool's.
+The Liberation of Intrinsic Worth:
+When personal satisfaction becomes the yardstick, external validation loses its grip.
+Unleashing Creativity:
+Embrace the messy, amateur, and all-over-the-place nature of your writing to explore uncharted territories of self-expression.
+Freedom from Validation:
+Write for yourself, without seeking approval or validation from others, allowing your words to exist on their own terms.
+Subjectivity and Individual Perception:
+Recognize that the value and impact of your work will vary from person to person, highlighting the subjective nature of art and creativity.
+Defying Conventional Boundaries:
+Break free from the constraints imposed by others and explore new vocabulary and expressions, even if it challenges established norms and social standing.
+The Power of Self-Evaluation:
+Focus on how you personally feel about your work rather than solely relying on external opinions, understanding that your own assessment holds significance.
+Embracing Vulnerability:
+Accept the vulnerability of sharing your thoughts and ideas publicly, allowing your words to have a life of their own and fostering connections with others around the world.
+The Journey of Self-Transformation:
+Recognize that personal growth and expanding awareness require a delicate re-structuring of the self, enabling you to navigate a large, colorful, and confusing world.
+Listening and Understanding:
+Develop the ability to listen to others with love, empathy, and understanding, fostering meaningful connections and gaining insight into your own emotions.
+Mastering Your Spirit:
+Take control of your emotions by learning to navigate and process pain, allowing yourself to be fluid and adaptable in overcoming obstacles.
+The Power of Language:
+Explore different languages and their expressive capabilities, recognizing the unique qualities of English while appreciating the elegance, flexibility, and musicality it offers.
+The Art of Indirect Communication:
+Appreciate the subtlety of storytelling, using unsaid elements and obscured affective relations to convey deeper meanings without directly incriminating the writer.
+Patience and Constraint:
+Acknowledge that patience with constraint can lead to the refinement of clarity and elegance, transcending pure description and imagery to induce meta-narrative and evoke deeper emotions.
+The Art of Crafting Horror:
+Utilize suggestion, disruption, and the play with contradictions to create contained horror that induces ontological trauma and challenges perceptions of reality.
+Questioning Necessity and Meaning:
+Challenge the necessity and reality of established concepts, prompting a deeper examination of their existence and the intelligence influencing the world.
 `
   .split('.')
   .map(s => s.trim())
@@ -746,5 +833,5 @@ runAsync(async si => {
   (await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
   ;(onhashchange= _=>lhi(xpmtl)&&emit.xpm())()
   await sleep(60); toast('loaded')
-  while (si = shortIdeasList.pop()) (shortIdeasList.length % 2 || await sleep(50), shortIdeasContainer.append(si))
+  render(shortIdeasList, shortIdeasContainer)
 })
