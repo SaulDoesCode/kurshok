@@ -841,7 +841,7 @@ const
   xpmtl = 'experimental',
   hl = h => h[0] != '#' ? '#' + h : h,
   lhi = h => hl(h) === location.hash,
-  lhs = h => location.hash = hl(h)
+  lhs = h => location.hash = hl(h),
   rmT = t => {
     t.remove()
     toasts.delete(t)
