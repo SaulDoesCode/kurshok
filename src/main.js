@@ -126,6 +126,13 @@ const shuffleChildren = (s, filter) => {
   }
 }
 
+window.onkeyup = e => {
+  if (e.key == 'r') {
+    shuffleChildren(thoughtsContainer, c => c.classList.contains('thought'))
+    shuffleChildren(shortIdeasContainer, c => c.classList.contains('small-idea'))
+  }
+}
+
 const w100mauto = {width: '100%', margin: '0 auto'}
 const shortIdeasContainer = section.short_ideas({
     $pre: 'main',
@@ -138,7 +145,7 @@ const shortIdeasContainer = section.short_ideas({
   br,
   div.spacer
 )
-section.thoughts({
+const thoughtsContainer = section.thoughts({
   $: 'main',
   ondblclick(_, el) {
     shuffleChildren(el, c => c.classList.contains('thought'))
@@ -835,16 +842,17 @@ const
   hl = h => h[0] != '#' ? '#' + h : h,
   lhi = h => hl(h) === location.hash,
   lhs = h => location.hash = hl(h)
-
-on.toast(e => toasts.add(div.toast({
-  $:'body',
-  css: {top: `calc(1vh + 1.5cm * ${toasts.size})`, zIndex: 0},
-  onclick(e, t) {
+  rmT = t => {
     t.remove()
     toasts.delete(t)
     clearTimeout(t.to)
   }
-}, e, t => {t.to = setTimeout(_ => t.remove(), 5000)})))
+
+on.toast(e => toasts.add(div.toast({
+  $:'body',
+  css: {top: `calc(1vh + 1.5cm * ${toasts.size})`, zIndex: 0},
+  onclick(e, t) { rmT(t) }
+}, e, t => {t.to = setTimeout(_ => rmT(t), 5000)})))
 on.experiments_loaded(_=> toast('experiments loaded'))
 once.xpm(async _ => (await import("./experimental.js")).default(app, domlib))
 runAsync(async si => {
@@ -852,4 +860,7 @@ runAsync(async si => {
   ;(onhashchange= _=>lhi(xpmtl)&&emit.xpm())()
   await sleep(60); toast('loaded')
   render(shortIdeasList, shortIdeasContainer)
+  if (!(window.innerWidth <= 768)) {
+    await sleep(6000); toast('press r to randomize or dblclick on "short ideas" or "expressions"')
+  }
 })
