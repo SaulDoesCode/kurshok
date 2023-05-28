@@ -60,8 +60,6 @@ const thoughts = `
 
   We are all searching for purpose in life, but sometimes the journey is more important than the destination.
 
-  The abyss gazes back, and it does not like what it sees, or at least it feels that way.
-
   A love that is broken is not an end, but a beginning. It is the shattered fragments that become the seeds of a new growth, a new hope.
 
   It is easy to see love as a form of possession, as something we can own or control. But true love, like the will to a sense of freedom, is a force that transcends ownership.
@@ -611,15 +609,14 @@ The unconscious defense mechanism,
 of pushing unwanted thoughts or memories out of awareness.
 Retroactive interference:
 The disruption, of memory consolidation by new information.
-The Joy of Non-Personal Being:
+Joy of Non-Personal Being:
 Engaging with the world in a childlike, meditative way, finding bliss in continuous being and doing without seeking recognition, glorifying the act itself rather than propping up the ego.
-The Narcissism of Self-Realization:
+Narcissism of Self-Realization:
 Progress in art or praxis as a search for self, where the ultimate goal is unification with the world and acceptance of erasure, but we remain flawed and incomplete, collecting experiences to testify to our existence and prominence in the intersubjective fabric.
 Silly Pursuit:
 Existence is not about proving oneself, but finding freedom within, living religiously in the world, valuing universals, understanding, and pure experience for their own sake, detached from ego and identification, embracing selfless and potentially useless engagement with the world.
 Amnesia:
-The loss of memory,
-due to brain damage or disease.
+The loss of memory, due to brain damage or disease.
 Executive functioning:
 The cognitive processes,
 that govern goal-directed behavior.
