@@ -129,8 +129,9 @@ main > * {
 main > section > header {
     color: #ccc;
     text-shadow: 0 1px 2px rgba(91, 51, 51, 0.4);
-    font-size: 1.2em;
-    padding-bottom: .5em;
+    font-weight: 600;
+    padding-bottom: .25em;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
 .toast {
@@ -206,8 +207,9 @@ section.thoughts {
     align-items: center;
     box-sizing: border-box;
     max-width: 440px;
-    max-height: 9cm;
+    max-height: 10cm;
     margin: .2em auto;
+    padding-top: .1em;
     overflow: auto;
     background: var(--theme-color);
   }
@@ -216,7 +218,7 @@ section.thoughts {
     position: relative;
     display: inline-flex;
     flex-flow: row wrap;
-    background: hsla(0, 5%, 12%, 0.852);
+    background: hsla(0, 5%, 2%,.8);
     color: rgb(106, 84, 83);
     align-items: center;
     align-content: center;
@@ -224,6 +226,7 @@ section.thoughts {
     padding: .3em .2em;
     border-left: 1px solid rgba(74, 38, 38, 0.2);
     border-right: 1px solid rgba(74, 38, 38, 0.2);
+    border-radius: 4px;
     min-height: 1cm;
     font-size: 1.1em;
     line-height: 1;
@@ -268,12 +271,13 @@ footer:hover {
     box-shadow: 0 0 4px -1px rgba(0, 0, 0, .22), 0 .3em .7em hsla(0, 57%, 41%, 0.15), 0 .1em .5em hsla(0, 8%, 59%, 0.1);
 }
 
-.footer-section {
+footer>section {
     font-size: .8em;
     display: inline-flex;
-    align-items: center;
-    align-content: space-evenly;
-    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: center;
+    flex-flow: column wrap;
     padding: .5em .5em;
     margin: .5em;
     border: .1em solid rgba(83, 18, 18, 0.25);
@@ -284,12 +288,11 @@ footer:hover {
     max-width: 360px;
 }
 
-.footer-section:hover {
+footer>section:hover {
     border: .1em solid rgba(165, 68, 68, 0.766);
 }
 
-.footer-section>header {
-    margin: .2em auto;
+footer>section>header {
     margin-left: .4em;
     width: 100%;
     font-size: 1.05em;
@@ -297,37 +300,48 @@ footer:hover {
     font-weight: bold;
 }
 
-.footer-section>div {
-    margin-left: .8em;
-    margin: .25em auto;
-    max-width: 400px;
+footer .doodles {
+    flex-flow: row wrap;
 }
 
-.footer-section>div a {
+footer .doodles a {
+    background: #5e5252;
+    color:#ddd;
+}
+
+footer>section a {
     margin: .25em;
     border-radius: 4px;
     transition: 120ms ease-in;
     padding: .5em;
 }
 
-.footer-section>div a:hover {
+footer>section>a img {
+    filter: invert(100);
+}
+
+footer>section a:hover {
     background: #cbb3b3c4;
     color: #1a1212;
 }
 
-.footer-section div img {
-    margin-right: .25em;
+footer>section a:hover img {
+    filter: invert(0);
 }
 
-.footer-section div a, .footer-section>div {
+footer>section a, footer>section > div {
     display: inline-flex;
     align-items: center;
     align-content: space-evenly;
     flex-flow: row wrap;
 }
 
-.footer-section>div:last-of-type {
-    margin-bottom: 0;
+footer>section a > img:not(a:last-child) {
+    margin: 0 .35em 0 0;
+}
+
+footer>section>div {
+    margin: 0 .1em .1em .1em;
 }
 
 iframe[src="https://kurshok-api.fly.dev/tell"] {
@@ -335,53 +349,6 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
     width: 345px;
     min-height: 230px;
     transition: all 160ms ease-in;
-}
-
-.mouseboard {
-    position: fixed;
-    display: block;
-    left: 0;
-    top: 0;
-    max-width: 220px;
-    border-radius: 6px;
-    background: rgba(137, 136, 136, 0.541);
-    z-index: 10;
-}
-
-.mouseboard .output {
-    border-radius: 4px;
-    padding: .12em .24em;
-    margin: .12em;
-    background: #fff;
-    filter: drop-shadow(0 1px 3px rgba(0,0,0,.12));
-}
-
-.mouseboard .letters {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    flex-flow: row wrap;
-}
-
-.mouseboard .letters span {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    flex-flow: row wrap;
-    margin: .1em .05em;
-    padding: 0 .22em;
-    border-radius: 4px;
-    background: #fff;
-    filter: drop-shadow(0 1px 3px rgba(0,0,0,.12));
-    cursor: grabbing;
-    user-select: none;
-}
-
-
-.mouseboard .letters span:hover {
-    transform: scale(1.25);
 }
 
 .short-ideas {

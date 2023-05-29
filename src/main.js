@@ -17,14 +17,6 @@ Array.prototype.randomize = function () {
   return this
 }
 
-const sleep = async ms => new Promise(r => setTimeout(r, ms))
-
-const onHoverScroll = (el, dur = 1000, t) => {
-  el.onmouseover = e => t = setTimeout(_=> (el.scrollIntoView({behavior:'smooth'}), el.classList.add('scrolled')), dur)
-  el.onmouseout = e => (clearTimeout(t), el.classList.remove('scrolled'))
-  return el
-}
-
 const shuffleChildren = (s, filter) => {
   for (const c of [...(s = query(s)).children].randomize()) {
     if (filter instanceof Function && !filter(c)) continue
@@ -34,27 +26,23 @@ const shuffleChildren = (s, filter) => {
 }
 
 runAsync(async () => {
+const gisturl = 'https://gistcdn.githack.com/SaulDoesCode'
 
-const thoughts = (await (await fetch('https://gistcdn.githack.com/SaulDoesCode/56050a66371b928e50311adae52a6c8a/raw/90cfd7bf1dd6caa06d920be83712ddea2f4c6236/thoughts.txt')).text())
+const thoughts = (await (await fetch(gisturl + '/56050a66371b928e50311adae52a6c8a/raw/90cfd7bf1dd6caa06d920be83712ddea2f4c6236/thoughts.txt')).text())
   .trim()
   .split("\n")
   .map(t => t.trim())
   .filter(t => t != '')
   .randomize()
 
-window.onkeyup = e => {
-  if (e.key == 'r') {
-    shuffleChildren(thoughtsContainer, c => c.classList.contains('thought'))
-    shuffleChildren(shortIdeasContainer, c => c.classList.contains('small-idea'))
-  }
-}
+const shflIdeas = () => shuffleChildren(shortIdeasContainer, c => c.classList.contains('small-idea'))
+const shflExpressions = () => shuffleChildren(thoughtsContainer, c => c.classList.contains('thought'))
+window.onkeyup = e => e.key == 'r' && (shflIdeas(), shflExpressions())
 
 const w100mauto = {width: '100%', margin: '0 auto'}
 const shortIdeasContainer = section.short_ideas({
-    $: 'main',
-    ondblclick(_, el) { 
-      shuffleChildren(el, c => c.classList.contains('small-idea'))
-    }
+    $pre: 'main',
+    ondblclick() { shflIdeas() }
   },
   div.spacer,
   header({css: w100mauto}, 'short ideas'),
@@ -62,17 +50,15 @@ const shortIdeasContainer = section.short_ideas({
   div.spacer
 )
 const thoughtsContainer = section.thoughts({
-  $pre: 'main',
-  ondblclick(_, el) {
-    shuffleChildren(el, c => c.classList.contains('thought'))
-  }
+  $: 'main',
+  ondblclick() { shflExpressions() }
 },
   header({css: w100mauto}, 'expressions'),
   div.spacer,
-  thoughts.map(t => onHoverScroll(p.thought(t)))
+  thoughts.map(t => p.thought(t))
 )
 
-const shortIdeasList = (await (await fetch('https://gistcdn.githack.com/SaulDoesCode/56050a66371b928e50311adae52a6c8a/raw/90cfd7bf1dd6caa06d920be83712ddea2f4c6236/short-ideas.txt')).text())
+const shortIdeasList = (await (await fetch(gisturl + '/56050a66371b928e50311adae52a6c8a/raw/90cfd7bf1dd6caa06d920be83712ddea2f4c6236/short-ideas.txt')).text())
   .split('.')
   .map(s => s.trim())
   .filter(s => s.length > 0)
@@ -104,9 +90,4 @@ once.xpm(async _ => (await import("./experimental.js")).default(app, domlib))
 ;(onhashchange= _=>lhi(xpmtl)&&emit.xpm())()
 render(shortIdeasList, shortIdeasContainer)
 toast('loaded')
-if (!(window.innerWidth <= 768)) {
-  await sleep(6000); toast('press r to randomize or dblclick on "short ideas" or "expressions"')
-}
-
-
 })
