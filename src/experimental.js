@@ -1,6 +1,55 @@
 export default async function(app, dl) {
     console.log('experiments...')
-    const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = dl.domfn
+    const {div, article, textarea, input, a, p, button, style, br, hr, h1, h4, section, span, header} = dl.domfn
+
+    style({$: document.head}, `
+.mouseboard {
+    position: fixed;
+    display: block;
+    left: 0;
+    top: 0;
+    max-width: 220px;
+    border-radius: 6px;
+    background: rgba(137, 136, 136, 0.541);
+    z-index: 10;
+}
+
+.mouseboard .output {
+    border-radius: 4px;
+    padding: .12em .24em;
+    margin: .12em;
+    background: #fff;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.12));
+}
+
+.mouseboard .letters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-flow: row wrap;
+}
+
+.mouseboard .letters span {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-flow: row wrap;
+    margin: .1em .05em;
+    padding: 0 .22em;
+    border-radius: 4px;
+    background: #fff;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.12));
+    cursor: grabbing;
+    user-select: none;
+}
+
+
+.mouseboard .letters span:hover {
+    transform: scale(1.25);
+}
+    `)
 
     const gEl = tag => cl => {
         const el = document.createElement(tag)
@@ -28,7 +77,7 @@ export default async function(app, dl) {
     )
 
     const ptrgs = Object.assign(t => mbstr.textContent += t, {
-        del() { ptrgs(mbstr.textContent.slice(0, -1)) },
+        del() { mbstr.textContent = mbstr.textContent.slice(0, -1) },
         space() { ptrgs(' ') },
         enter() { ptrgs('\n') },
         copy() { navigator.clipboard.writeText(mbstr.textContent.trim()) }
@@ -50,6 +99,7 @@ export default async function(app, dl) {
         }
     })
     app.emit('experiments_loaded')
+
 
 
 /*
