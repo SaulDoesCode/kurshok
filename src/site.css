@@ -6,8 +6,6 @@
 
 html, body {
 	position: relative;
-	width: 100%;
-	height: 100%;
 	overflow-x: hidden;
 }
 
@@ -44,7 +42,6 @@ label {
 input, button, select, textarea {
 	font-family: inherit;
 	font-size: inherit;
-	-webkit-padding: 0.4em 0;
 	padding: 0.4em;
 	margin: 0 0 0.5em 0;
 	box-sizing: border-box;
@@ -121,7 +118,7 @@ main {
     align-content: flex-start;
     margin: 0 auto;
     text-align: center;
-    padding: .75em;
+    padding: .2em;
 }
 
 main > * {
@@ -232,7 +229,7 @@ section.thoughts {
     line-height: 1;
     text-shadow: 0 .5em 3em -1em rgba(207, 32, 32, .2);
     box-shadow: 0 0 4px -1px rgba(0, 0, 0, .2);
-    transform: scale(.9);
+    transform: scale(.95);
     transition: all 420ms ease-in;
   }
   
@@ -273,15 +270,18 @@ footer:hover {
 
 .footer-section {
     font-size: .8em;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    align-content: space-evenly;
+    flex-flow: row wrap;
     padding: .5em .5em;
     margin: .5em;
     border: .1em solid rgba(83, 18, 18, 0.25);
     background: rgba(68, 58, 58, 0.819);
     border-radius: .25em;
-    max-width: fit-content;
     transition: all 240ms ease-in;
     font-weight: 600;
+    max-width: 360px;
 }
 
 .footer-section:hover {
@@ -289,36 +289,49 @@ footer:hover {
 }
 
 .footer-section>header {
+    margin: .2em auto;
     margin-left: .4em;
-    max-width: 95%;
-    font-size: 1em;
+    width: 100%;
+    font-size: 1.05em;
     white-space: nowrap;
-}
-
-header {
-    max-width: 80%;
     font-weight: bold;
-    margin: .25em auto .25em auto;
-    padding-bottom: .25em;
 }
 
 .footer-section>div {
     margin-left: .8em;
-    margin-bottom: .25em;
+    margin: .25em auto;
+    max-width: 400px;
+}
+
+.footer-section>div a {
+    margin: .25em;
+    border-radius: 4px;
+    transition: 120ms ease-in;
+    padding: .5em;
+}
+
+.footer-section>div a:hover {
+    background: #cbb3b3c4;
+    color: #1a1212;
+}
+
+.footer-section div img {
+    margin-right: .25em;
+}
+
+.footer-section div a, .footer-section>div {
+    display: inline-flex;
+    align-items: center;
+    align-content: space-evenly;
+    flex-flow: row wrap;
 }
 
 .footer-section>div:last-of-type {
     margin-bottom: 0;
 }
 
-@media (min-width: 640px) {
-    main {
-        max-width: none;
-    }
-}
-
 iframe[src="https://kurshok-api.fly.dev/tell"] {
-    filter: drop-shadow(0 .3em 1em hsla(0, 79%, 58%, 0.25));
+    filter: drop-shadow(0 .3em 1em hsla(0, 84%, 58%, 0.2));
     width: 345px;
     min-height: 230px;
     transition: all 160ms ease-in;
@@ -374,31 +387,34 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
 .short-ideas {
     position: relative;
     display: inline-flex;
-    justify-content: space-evenly;
-    align-items: space-evenly;
+    justify-content: center;
+    align-items: center;
     align-content: flex-start;
     flex-flow: row wrap;
-    margin: .5em .15em;
-    padding: 1em;
+    margin: .2em 0;
+    padding: .9em;
     background: var(--theme-color);
-    max-width: 730px;
-    max-height: 13.6cm;
+    max-width: 720px;
+    max-height: 12cm;
     overflow-y: scroll;
     overflow-x: visible;
     line-height: 1;
     border-radius: 2px;
-    transition: all 130ms ease-in;
+    transition: all 120ms ease-in;
     z-index: 3;
 }
 
 .small-idea {
     display: inline-block;
     align-self: center;
-    margin: .4em .5em;
+    margin: .1em .1em;
+    padding: .12em;
     max-width: 200px;
+    overflow: hidden;
     line-height: 1;
-    transition: all 100ms ease-in;
-    animation: fade-in 750ms ease-in;
+    text-overflow: ellipsis;
+    transition: all 210ms ease-in;
+    animation: fade-in 840ms ease-in;
 }
 
 @keyframes fade-in {
@@ -418,17 +434,20 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
 
 .small-idea > span {
     display: inline-block;
-    font-size: 1.08em;
-    max-width: 180px;
+    font-size: 1em;
+    max-width: 100%;
     line-height: 1;
-    color:hsla(0, 0%, 0%, 0.938);
+    color:hsla(0, 0%, 0%, .9);
 }
 
 .small-idea > header {
+    font-weight: 400;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     display: block;
     color: rgba(110, 89, 88, .9);
     width: 100%;
-    transition: all 130ms ease-in;
+    margin: 0 0 0 0;
+    transition: all 120ms ease-in;
 }
 
 .small-idea:hover > header {
@@ -440,10 +459,43 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
 }
 
 .small-idea:hover {
-    scale: 1.4;
+    scale: 1.34;
     color: rgb(255, 255, 255) !important;
     filter: drop-shadow(0 .3em .5em hsla(0, 30%, 1%, .13));
     text-shadow: 0 1px 3px rgba(24, 23, 23, 0.1);
-    z-index: 23;
-    
+}
+
+@media (min-width: 640px) {
+    main {
+        max-width: none;
+    }
+
+}
+
+@media (max-width: 640px) {
+    .small-idea {
+        font-size: 0.92em;
+        max-width: 146px;
+    }
+
+    .small-idea:hover {
+        scale: 1.3;
+        color: rgb(255, 255, 255) !important;
+        filter: drop-shadow(0 .3em .5em hsla(0, 30%, 1%, .13));
+        text-shadow: 0 1px 3px rgba(24, 23, 23, 0.1);
+    }
+}
+
+@media (max-width: 700px) {
+    .small-idea {
+        font-size: 0.96em;
+        max-width: 155px;
+    }
+
+    .small-idea:hover {
+        scale: 1.4;
+        color: rgb(255, 255, 255) !important;
+        filter: drop-shadow(0 .3em .5em hsla(0, 30%, 1%, .13));
+        text-shadow: 0 1px 3px rgba(24, 23, 23, 0.1);
+    }
 }

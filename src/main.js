@@ -51,7 +51,7 @@ window.onkeyup = e => {
 
 const w100mauto = {width: '100%', margin: '0 auto'}
 const shortIdeasContainer = section.short_ideas({
-    $pre: 'main',
+    $: 'main',
     ondblclick(_, el) { 
       shuffleChildren(el, c => c.classList.contains('small-idea'))
     }
@@ -62,7 +62,7 @@ const shortIdeasContainer = section.short_ideas({
   div.spacer
 )
 const thoughtsContainer = section.thoughts({
-  $: 'main',
+  $pre: 'main',
   ondblclick(_, el) {
     shuffleChildren(el, c => c.classList.contains('thought'))
   }
@@ -77,7 +77,7 @@ const shortIdeasList = (await (await fetch('https://gistcdn.githack.com/SaulDoes
   .map(s => s.trim())
   .filter(s => s.length > 0)
   .randomize()
-  .map(s => article.small_idea(header(s.split(':')[0], ':'), span(s.split(':')[1])))
+  .map(s => article.small_idea(header(s.split(':')[0]), span(s.split(':')[1])))
 
 app.toasts = new Set()
 const
@@ -97,18 +97,16 @@ on.toast(e => toasts.add(div.toast({
   $:'body',
   css: {top: `calc(1vh + 1.5cm * ${toasts.size})`, zIndex: 0},
   onclick(e, t) { rmT(t) }
-}, e, t => {t.to = setTimeout(_ => rmT(t), 5000)})))
+}, e, t => {t.to = setTimeout(_ => rmT(t), 5500)})))
 on.experiments_loaded(_=> toast('experiments loaded'))
 once.xpm(async _ => (await import("./experimental.js")).default(app, domlib))
-runAsync(async si => {
-  (await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
-  ;(onhashchange= _=>lhi(xpmtl)&&emit.xpm())()
-  await sleep(60); toast('loaded')
-  render(shortIdeasList, shortIdeasContainer)
-  if (!(window.innerWidth <= 768)) {
-    await sleep(6000); toast('press r to randomize or dblclick on "short ideas" or "expressions"')
-  }
-})
+;(await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
+;(onhashchange= _=>lhi(xpmtl)&&emit.xpm())()
+render(shortIdeasList, shortIdeasContainer)
+toast('loaded')
+if (!(window.innerWidth <= 768)) {
+  await sleep(6000); toast('press r to randomize or dblclick on "short ideas" or "expressions"')
+}
 
 
 })
