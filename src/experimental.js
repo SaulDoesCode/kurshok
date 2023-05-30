@@ -1,8 +1,8 @@
-export default async function(app, dl) {
-    console.log('experiments...')
-    const {div, article, textarea, input, a, p, button, style, br, hr, h1, h4, section, span, header} = dl.domfn
+export default async function(app, {ready, style, domfn}) {
+    await ready; console.log('experiments...')
+    const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = domfn
 
-    style({$: document.head}, `
+    style`
 .mouseboard {
     position: fixed;
     display: block;
@@ -45,11 +45,9 @@ export default async function(app, dl) {
     user-select: none;
 }
 
-
 .mouseboard .letters span:hover {
     transform: scale(1.25);
-}
-    `)
+}`
 
     const gEl = tag => cl => {
         const el = document.createElement(tag)
@@ -100,7 +98,11 @@ export default async function(app, dl) {
     })
     app.emit('experiments_loaded')
 
-
+    const P = async (val, ...fns) => {
+        for (const f of fns) val = f.constructor.name === 'AsyncFunction' ? await f(val) : f(val)
+        return val
+    }
+      
 
 /*
     const bindReflectorProp = (o, r, p, gfn, sfn) => {
@@ -131,5 +133,9 @@ export default async function(app, dl) {
             numbers_to_sum.forEach(n => sum += n)
             return (...ns) => curried_summing_function(sum, ...ns)
         }
-    }*/
+    }
+
+    const trz = (o, get, set) => Object.defineProperty(o, {get,set})
+
+    */
 }

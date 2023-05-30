@@ -94,9 +94,22 @@ export default (d => {
    */
   d.run = function () {
     document.body || document.readyState === 'complete' ?
-      d.runAsync.apply(undefined, arguments) :
-      window.addEventListener('DOMContentLoaded', e => d.runAsync.apply(undefined, arguments), {once: true})
+      d.runAsync.apply(null, arguments) :
+      window.addEventListener('DOMContentLoaded', e => d.runAsync.apply(null, arguments), {once: true})
   }
+
+  Object.defineProperty(d, 'ready', {
+    get: _=>new Promise(r => d.run(_ => r(true)))
+  })
+
+  d.style = (strs, ...values) => {
+    const s = document.createElement('style')
+    s.textContent = strs.reduce((accumulator, currentString, index) => {
+        const value = values[index] ? values[index] : ''
+        return accumulator + currentString + value
+    }, '')
+    document.head.appendChild(s)
+}
 
   d.html = (input, ...args) => {
     if (args.length > 2) return d.h(input, ...args)

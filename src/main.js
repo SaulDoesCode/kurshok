@@ -26,9 +26,9 @@ const shuffleChildren = (s, filter) => {
 }
 
 runAsync(async () => {
-const gisturl = 'https://gistcdn.githack.com/SaulDoesCode'
+const gisturl = 'https://cdn.jsdelivr.net/gh/SaulDoesCode/resources/'
 
-const thoughts = (await (await fetch(gisturl + '/56050a66371b928e50311adae52a6c8a/raw/90cfd7bf1dd6caa06d920be83712ddea2f4c6236/thoughts.txt')).text())
+const thoughts = (await (await fetch(gisturl + 'expressions.txt')).text())
   .trim()
   .split("\n")
   .map(t => t.trim())
@@ -58,7 +58,7 @@ const thoughtsContainer = section.thoughts({
   thoughts.map(t => p.thought(t))
 )
 
-const shortIdeasList = (await (await fetch(gisturl + '/56050a66371b928e50311adae52a6c8a/raw/90cfd7bf1dd6caa06d920be83712ddea2f4c6236/short-ideas.txt')).text())
+const shortIdeasList = (await (await fetch(gisturl + 'short-ideas.txt')).text())
   .split('.')
   .map(s => s.trim())
   .filter(s => s.length > 0)
