@@ -47,6 +47,22 @@ export default async function(app, {ready, style, domfn}) {
 
 .mouseboard .letters span:hover {
     transform: scale(1.25);
+}
+
+.close {
+    position: absolute;
+    left: calc(100% - 2em);
+    top: 0;
+    color: red;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 100%;
+    padding: .5em;
+    transition: all 140ms ease;
+}
+
+.close:hover {
+    scale: 1.25;
 }`
 
     const gEl = tag => cl => {
@@ -111,10 +127,11 @@ export default async function(app, {ready, style, domfn}) {
 
     section({
         $: 'main',
-        css: {display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#fff', padding: '1em'},
+        css: {display: 'flex', position: 'relative', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#fff', padding: '1em'},
 
     }, 
         h1({css: {color: 'var(--highlight-color)'}}, 'Experiments'),
+        div.close({onclick(e, el) { el.parentNode.remove() }}, 'x'),
         article(
             h4('Mouseboard'),
             p('A mouseboard is a virtual keyboard that can be used with a mouse. It is activated by clicking the middle mouse button.'),
