@@ -151,7 +151,8 @@ export default async function(app, {ready, style, domfn}) {
                 p('On the del key will remove the last character from the mouseboard\'s output.'),
                 p('On the copy key will copy the mouseboard\'s output to the clipboard.'),
                 p('On the caps key will toggle caps lock on the mouseboard.')
-            )
+            ),
+            button({onclick: e => (e.preventDefault(), setMBOp(busy = true), setMBPos(e.clientX - 60, e.clientY - 50))}, "make it pop up")
         ),
         article(
             h4('future experiments and things?'),
