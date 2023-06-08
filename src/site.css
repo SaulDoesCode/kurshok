@@ -295,9 +295,14 @@ footer>section:hover {
 footer>section>header {
     margin-left: .4em;
     width: 100%;
-    font-size: 1.05em;
+    font-size: 1.08em;
     white-space: nowrap;
-    font-weight: bold;
+}
+
+footer>section>header::after {
+    content: ":";
+    display: inline-block;
+    color: #eebcbca4;
 }
 
 footer .doodles {
@@ -310,10 +315,10 @@ footer .doodles a {
 }
 
 footer>section a {
-    margin: .25em;
+    margin: .15em;
     border-radius: 4px;
     transition: 120ms ease-in;
-    padding: .5em;
+    padding: .25em;
 }
 
 footer>section>a img {
