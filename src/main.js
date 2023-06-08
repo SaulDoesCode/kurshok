@@ -3,7 +3,6 @@ import domlib from './domlib.js'
 
 const {queryAsync, query, runAsync, render} = domlib
 const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = domlib.domfn
-
 const app = domlib.emitter()
 
 Array.prototype.randomize = function () {
@@ -90,4 +89,6 @@ once.xpm(async()=>(await import("./experimental.js")).default(app, domlib))
 ;(onhashchange=_=>lhi(xpmtl)&&emit.xpm())()
 render(shortIdeasList,shortIdeasContainer)
 toast('loaded')
+shuffleChildren('.doodle-links')
+shuffleChildren('.links', c => c.tagName == 'A')
 })
