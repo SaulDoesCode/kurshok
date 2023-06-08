@@ -63,7 +63,12 @@ export default async function(app, {ready, style, domfn}) {
 
 .close:hover {
     scale: 1.25;
-}`
+}
+
+.exps p {
+    margin: .25em;
+}
+`
 
     const gEl = tag => cl => {
         const el = document.createElement(tag)
@@ -87,16 +92,21 @@ export default async function(app, {ready, style, domfn}) {
         section.letters(
             sma('abcdefghijklmnopqrstuvwxyz1234567890', span),
             div.spacer,
-            sma('enter space del copy', span, ' ')
+            sma('enter space del copy caps', span, ' ')
         ),
         section.output(mbstr)
     )
 
-    const ptrgs = Object.assign(t => mbstr.textContent += t, {
+    const ptrgs = Object.assign(t => mbstr.textContent += (!mbstr.caps ? t : t.toUpperCase()), {
         del() { mbstr.textContent = mbstr.textContent.slice(0, -1) },
         space() { ptrgs(' ') },
         enter() { ptrgs('\n') },
-        copy() { navigator.clipboard.writeText(mbstr.textContent.trim()) }
+        copy() { navigator.clipboard.writeText(mbstr.textContent.trim()) },
+        caps() {
+            const op = (mbstr.caps = !mbstr.caps) ? 'toUpperCase' : 'toLowerCase', tc = 'textContent'
+            document.querySelectorAll('.letters span')
+                .forEach(l => l[tc].length < 2 && (l[tc] = l[tc][op]()))
+        }
     })
 
     Object.assign(document, {
@@ -110,12 +120,9 @@ export default async function(app, {ready, style, domfn}) {
             setMBPos(e.clientX - 60, e.clientY - 50)
         },
         onpointerdown(e) {
-            if (e.which == 2) {
-                e.preventDefault()
-                setMBOp(busy = true)
-                setMBPos(e.clientX - 60, e.clientY - 50)
-            } else if (e.target != mb && !parHasClass(e, 'letters')) 
-                setMBOp()
+            e.which == 2 ? 
+                (e.preventDefault(), setMBOp(busy = true), setMBPos(e.clientX - 60, e.clientY - 50)) :
+                (e.target != mb && !parHasClass(e, 'letters')) && setMBOp()
         },
         onpointerup(e) {
             if (e.which == 2 || (e.target != mb && !parHasClass(e, 'letters'))) return
@@ -125,7 +132,7 @@ export default async function(app, {ready, style, domfn}) {
     })
     app.emit('experiments_loaded')
 
-    section({
+    section.exps({
         $: 'main',
         css: {display: 'flex', position: 'relative', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#fff', padding: '1em'},
 
@@ -137,12 +144,13 @@ export default async function(app, {ready, style, domfn}) {
             p('A mouseboard is a virtual keyboard that can be used with a mouse. It is activated by clicking the middle mouse button.'),
             div({css: {display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center'}},
                 header({css: {fontWeight: 'bold'}},'Clicking:'),
-                p('the middle mouse button again will deactivate the mouseboard.'),
-                p('Clicking on a letter will add that letter to the mouseboard\'s output.'),
-                p('Clicking on the enter key will add a new line to the mouseboard\'s output.'),
-                p('Clicking on the space key will add a space to the mouseboard\'s output.'),
-                p('Clicking on the del key will remove the last character from the mouseboard\'s output.'),
-                p('Clicking on the copy key will copy the mouseboard\'s output to the clipboard.')
+                p('The middle mouse button again will deactivate the mouseboard.'),
+                p('On a letter will add that letter to the mouseboard\'s output.'),
+                p('On the enter key will add a new line to the mouseboard\'s output.'),
+                p('On the space key will add a space to the mouseboard\'s output.'),
+                p('On the del key will remove the last character from the mouseboard\'s output.'),
+                p('On the copy key will copy the mouseboard\'s output to the clipboard.'),
+                p('On the caps key will toggle caps lock on the mouseboard.')
             )
         ),
         article(
