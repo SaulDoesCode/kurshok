@@ -160,6 +160,7 @@ div.spacer {
     width: 100%;
     margin: .45em .45em;
     padding: .2em;
+    pointer-events: none;
 }
 
 section.books {

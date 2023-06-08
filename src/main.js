@@ -26,9 +26,9 @@ const shuffleChildren = (s, filter) => {
 }
 
 runAsync(async () => {
-const gisturl = 'https://cdn.jsdelivr.net/gh/SaulDoesCode/resources/'
+const gurl = 'https://cdn.jsdelivr.net/gh/SaulDoesCode/resources/'
 
-const thoughts = (await (await fetch(gisturl + 'expressions.txt')).text())
+const thoughts = (await (await fetch(gurl + 'expressions.txt')).text())
   .trim()
   .split("\n")
   .map(t => t.trim())
@@ -58,7 +58,7 @@ const thoughtsContainer = section.thoughts({
   thoughts.map(t => p.thought(t))
 )
 
-const shortIdeasList = (await (await fetch(gisturl + 'short-ideas.txt')).text())
+const shortIdeasList = (await (await fetch(gurl + 'short-ideas.txt')).text())
   .split('.')
   .map(s => s.trim())
   .filter(s => s.length > 0)
@@ -85,9 +85,9 @@ on.toast(e => toasts.add(div.toast({
   onclick(e, t) { rmT(t) }
 }, e, t => {t.to = setTimeout(_ => rmT(t), 5500)})))
 on.experiments_loaded(_=> toast('experiments loaded'))
-once.xpm(async _ => (await import("./experimental.js")).default(app, domlib))
+once.xpm(async()=>(await import("./experimental.js")).default(app, domlib))
 ;(await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
-;(onhashchange= _=>lhi(xpmtl)&&emit.xpm())()
-render(shortIdeasList, shortIdeasContainer)
+;(onhashchange=_=>lhi(xpmtl)&&emit.xpm())()
+render(shortIdeasList,shortIdeasContainer)
 toast('loaded')
 })
