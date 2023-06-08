@@ -144,13 +144,15 @@ export default async function(app, {ready, style, domfn}) {
             p('A mouseboard is a virtual keyboard that can be used with a mouse. It is activated by clicking the middle mouse button.'),
             div({css: {display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center'}},
                 header({css: {fontWeight: 'bold'}},'Clicking:'),
-                p('The middle mouse button again will deactivate the mouseboard.'),
-                p('On a letter will add that letter to the mouseboard\'s output.'),
-                p('On the enter key will add a new line to the mouseboard\'s output.'),
-                p('On the space key will add a space to the mouseboard\'s output.'),
-                p('On the del key will remove the last character from the mouseboard\'s output.'),
-                p('On the copy key will copy the mouseboard\'s output to the clipboard.'),
-                p('On the caps key will toggle caps lock on the mouseboard.')
+                [
+                    p('The middle mouse button again will deactivate the mouseboard.'),
+                    p('On a letter will add that letter to the mouseboard\'s output.'),
+                    p('On the enter key will add a new line to the mouseboard\'s output.'),
+                    p('On the space key will add a space to the mouseboard\'s output.'),
+                    p('On the del key will remove the last character from the mouseboard\'s output.'),
+                    p('On the copy key will copy the mouseboard\'s output to the clipboard.'),
+                    p('On the caps key will toggle caps lock on the mouseboard.')
+                ].randomize()
             ),
             button({onclick: e => (e.preventDefault(), setMBOp(busy = true), setMBPos(e.clientX - 60, e.clientY - 50))}, "make it pop up")
         ),
