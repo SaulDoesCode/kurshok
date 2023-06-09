@@ -809,6 +809,8 @@ export default (d => {
           if (val !== el) ops[key] = val
         } else if (key in d.createElementPlugins) {
           d.createElementPlugins[key](val, el, ops)
+        } else if (val instanceof Function) {
+          el[key] = val.bind(el, el)
         }
       }
 

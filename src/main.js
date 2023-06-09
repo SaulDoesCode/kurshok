@@ -10,7 +10,7 @@ Array.prototype.randomize = function () {
   this.splice(0, this.length, ...l)
   return this
 }
-const 
+const
  {queryAsync, query, runAsync, render} = domlib,
  {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = domlib.domfn,
  app = domlib.emitter({toasts: new Set()}),
@@ -32,6 +32,7 @@ const
     .randomize(), 
   clh = cl => c => c.classList.contains(cl),
   j = (a, b, ...f) => a == b && (b = null, f.forEach(f => b = f(b))),
+  // w = (a, b) => (...A) => (...B) => (a(...A), b(...B)),
   shflIdeas = _ => shuffleChildren(shortIdeasContainer, clh('small-idea')),
   shflExpressions = _ => shuffleChildren(thoughtsContainer, clh('thought')),
   w100mauto = {width: '100%', margin: '0 auto'}, 
@@ -73,6 +74,12 @@ const
     clearTimeout(t.to)
   }
 window.onkeyup = e => j(e.key, 'r', shflIdeas, shflExpressions)
+document.addEventListener('pointerdown', async ({target}) => {
+  if (target.hasAttribute('copyable') && navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(target.textContent.trim())
+    toast('Copied to clipboard')
+  }
+})
 on.toast(e => toasts.add(div.toast({
   $:'body',
   css:{top:`calc(1vh + 1.5cm * ${toasts.size})`, zIndex: 0},
