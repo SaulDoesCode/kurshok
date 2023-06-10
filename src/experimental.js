@@ -130,7 +130,6 @@ export default async function(app, {ready, style, domfn}) {
             busy = false
         }
     })
-    app.emit('experiments_loaded')
 
     section.exps({
         $: 'main',
@@ -162,7 +161,7 @@ export default async function(app, {ready, style, domfn}) {
         )
     )
       
-
+    app.toast('experiments loaded')
 /*
 
 const P = async (val, ...fns) => {

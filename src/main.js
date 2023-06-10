@@ -17,8 +17,7 @@ const
   shuffleChildren = (s, filter) => {
     for (const c of [...(s = query(s)).children].randomize()) {
       if (filter instanceof Function && !filter(c)) continue
-      c.remove()
-      s.appendChild(c)
+      c.remove(); s.appendChild(c)
     }
   }, 
   gurl = 'https://cdn.jsdelivr.net/gh/SaulDoesCode/resources/',
@@ -34,12 +33,11 @@ const
    shflIdeas = _ => shuffleChildren(shortIdeasContainer, clh('small-idea')),
    shflExpressions = _ => shuffleChildren(thoughtsContainer, clh('thought')),
    sfhlFtr = _ => w(shuffleChildren)('.doodle-links')('.links', c => c.tagName == 'A'),
-   w100mauto = {width: '100%', margin: '0 auto'},
    thoughtsContainer = section.thoughts({
       $pre: 'main',
       ondblclick() { shflExpressions() }
     },
-      header({css: w100mauto}, 'expressions'),
+      header('expressions'),
       div.spacer,
       thoughts.map(t => p.thought(t))
     ),
@@ -48,7 +46,7 @@ const
        ondblclick() { shflIdeas() }
      },
      div.spacer,
-     header({css: w100mauto}, 'short ideas'),
+     header('short ideas'),
      br,
      div.spacer
    ), 
@@ -62,32 +60,30 @@ const
        return article.small_idea(header(h), span(c))
      }),
    toast = app.toast = app.emit.toast,
-   {once, on, emit, toasts} = app,
    xpmtl = 'experimental',
    hl = h => h[0] != '#' ? '#' + h : h,
    lhi = h => hl(h) === location.hash,
    lhs = h => location.hash = hl(h),
    rmT = t => {
      t.remove()
-     toasts.delete(t)
+     app.toasts.delete(t)
      clearTimeout(t.to)
    }
- window.onkeyup = e => j(e.key, 'r', shflIdeas, shflExpressions, sfhlFtr)
- document.addEventListener('pointerdown', async ({target}) => {
+ onkeyup = e => j(e.key, 'r', shflIdeas, shflExpressions, sfhlFtr)
+ document.onpointerdown = async ({target}) => {
    if (target.hasAttribute('copyable') && navigator.clipboard && window.isSecureContext) {
      await navigator.clipboard.writeText(target.textContent.trim())
      toast('Copied to clipboard')
    }
- })
- on.toast(e => toasts.add(div.toast({
+ }
+ app.on.toast(e => app.toasts.add(div.toast({
    $:'body',
-   css:{top:`calc(1vh + 1.5cm * ${toasts.size})`, zIndex: 0},
+   css:{top:`calc(1vh + 1.5cm * ${app.toasts.size})`, zIndex: 0},
    onclick(e,t){rmT(t)}
  }, e, t => {t.to = setTimeout(_=>rmT(t),5500)})))
- on.experiments_loaded(_=> toast('experiments loaded'))
- once.xpm(async()=>(await import("./experimental.js")).default(app, domlib))
+ app.once.xpm(async()=>(await import("./experimental.js")).default(app, domlib))
  ;(await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
- ;(onhashchange=_=>lhi(xpmtl)&&emit.xpm())()
+ ;(onhashchange=_=>lhi(xpmtl)&&app.emit.xpm())()
  render(shortIdeasList,shortIdeasContainer)
  toast('loaded; pressing r randomizes things'); sfhlFtr()
 })
