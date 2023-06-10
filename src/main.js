@@ -29,14 +29,15 @@ const
      .filter(t => t != '')
      .randomize(), 
    clh = cl => c => c.classList.contains(cl),
-   j = (a, b, ...f) => a == b && (b = null, f.forEach(f => b = f(b))),
+   j = (a, b, ...f) => a === b && (b = null, f.forEach(f => b = f(b)), b),
    w = fn => (...A) => (...B) => (fn(...A), fn(...B)),
    shflIdeas = _ => shuffleChildren(shortIdeasContainer, clh('small-idea')),
    shflExpressions = _ => shuffleChildren(thoughtsContainer, clh('thought')),
+   sfhlFtr = _ => w(shuffleChildren)('.doodle-links')('.links', c => c.tagName == 'A'),
    w100mauto = {width: '100%', margin: '0 auto'},
    thoughtsContainer = section.thoughts({
       $pre: 'main',
-      ondblclick: shflExpressions
+      ondblclick() { shflExpressions() }
     },
       header({css: w100mauto}, 'expressions'),
       div.spacer,
@@ -44,7 +45,7 @@ const
     ),
    shortIdeasContainer = section.short_ideas({
        $pre: 'main',
-       ondblclick: shflIdeas
+       ondblclick() { shflIdeas() }
      },
      div.spacer,
      header({css: w100mauto}, 'short ideas'),
@@ -71,7 +72,7 @@ const
      toasts.delete(t)
      clearTimeout(t.to)
    }
- window.onkeyup = e => j(e.key, 'r', shflIdeas, shflExpressions)
+ window.onkeyup = e => j(e.key, 'r', shflIdeas, shflExpressions, sfhlFtr)
  document.addEventListener('pointerdown', async ({target}) => {
    if (target.hasAttribute('copyable') && navigator.clipboard && window.isSecureContext) {
      await navigator.clipboard.writeText(target.textContent.trim())
@@ -88,6 +89,5 @@ const
  ;(await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
  ;(onhashchange=_=>lhi(xpmtl)&&emit.xpm())()
  render(shortIdeasList,shortIdeasContainer)
- toast('loaded')
- w(shuffleChildren)('.doodle-links')('.links', c => c.tagName == 'A')
+ toast('loaded; pressing r randomizes things'); sfhlFtr()
 })
