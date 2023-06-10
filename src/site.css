@@ -166,7 +166,6 @@ div.spacer {
 section.books {
     display: inline-block;
     background: rgb(28, 24, 26);
-    max-width: fit-content;
     padding: 1em 1.5em;
     min-height: 2cm;
 }
@@ -202,14 +201,14 @@ section.books img:hover {
 
 section.thoughts {
     position: relative;
-    display: flex;
+    display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
     max-width: 440px;
     max-height: 10cm;
-    margin: .2em auto;
+    margin: .1cm .1cm;
     padding-top: .1em;
     overflow: auto;
     background: var(--theme-color);
@@ -279,9 +278,9 @@ footer>section {
     align-items: flex-start;
     align-content: center;
     flex-flow: column wrap;
-    padding: .5em .5em;
-    margin: .5em;
-    border: .1em solid rgba(83, 18, 18, 0.25);
+    padding: .1cm .1cm;
+    margin: .1cm;
+    border: .04cm solid rgba(42, 18, 23, 0.372);
     background: rgba(68, 58, 58, 0.819);
     border-radius: .25em;
     transition: all 240ms ease-in;
@@ -294,9 +293,9 @@ footer>section:hover {
 }
 
 footer>section>header {
-    margin-left: .4em;
+    margin-left: .1cm;
     width: 100%;
-    font-size: 1.08em;
+    font-size: 1.1em;
     white-space: nowrap;
 }
 
@@ -315,9 +314,24 @@ footer .doodles a {
     color:#ddd;
 }
 
+footer .links {
+    background: #2d2929;
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+   /*grid-template-rows: 1fr 1fr 1fr;*/
+    grid-auto-rows: 1fr 1fr 1fr; 
+    gap: .1cm .1cm; 
+    grid-template-areas: 
+      ". ."
+      ". ."
+      ". .";
+    text-align: center;
+    align-items: space-evenly;
+}
+
 footer>section a {
-    margin: .15em;
-    border-radius: 4px;
+    margin: .1rem;
+    border-radius: .1cm;
     transition: 120ms ease-in;
     padding: .25em;
 }
@@ -364,11 +378,11 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
     align-items: center;
     align-content: flex-start;
     flex-flow: row wrap;
-    margin: .2em 0;
-    padding: .9em;
+    margin: .1cm .1cm;
+    padding: .15cm;
     background: var(--theme-color);
-    max-width: 720px;
-    max-height: 12cm;
+    max-width: 777px;
+    max-height: 14cm;
     overflow-y: scroll;
     overflow-x: visible;
     line-height: 1;
@@ -442,10 +456,13 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
     main {
         max-width: none;
     }
-
 }
 
 @media (max-width: 640px) {
+    footer .links {
+        display: inline-flex;
+    }
+
     .small-idea {
         font-size: 0.92em;
         max-width: 146px;
@@ -456,6 +473,10 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
         color: rgb(255, 255, 255) !important;
         filter: drop-shadow(0 .3em .5em hsla(0, 30%, 1%, .13));
         text-shadow: 0 1px 3px rgba(24, 23, 23, 0.1);
+    }
+
+    .books {
+        max-width: min-content;
     }
 }
 
