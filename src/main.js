@@ -81,7 +81,7 @@ const
    css:{top:`calc(1vh + 1.5cm * ${app.toasts.size})`, zIndex: 0},
    onclick(e,t){rmT(t)}
  }, e, t => {t.to = setTimeout(_=>rmT(t),5500)})))
- app.once.xpm(async()=>(await import("./experimental.js")).default(app, domlib))
+ app.once.xpm(async()=>(await import(location.hostname == 'localhost' ? "./experimental.js" : 'https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/experimental.js')).default(app, domlib))
  ;(await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
  ;(onhashchange=_=>lhi(xpmtl)&&app.emit.xpm())()
  render(shortIdeasList,shortIdeasContainer)
