@@ -37,6 +37,7 @@
             height: 100%;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/lazy-simon.js"></script>
 </head>
 <body>
     <main>
@@ -68,15 +69,15 @@
                 }
                 return [u, d]
             }).filter(([u, d]) => u && d)
-            urls.randomize().map(([u, d]) => fetch('https://' + u).then(async r => {
+            urls.randomize().map(([u, d]) => {
                 const art = document.createElement('article')
                 const img = document.createElement('img')
+                img.setAttribute('src', 'https://' + u)
                 const p = document.createElement('p')
                 p.textContent = d
-                img.src = URL.createObjectURL(await r.blob())
                 art.append(img, p)
                 imgGrid.appendChild(art)
-            }))
+            })
         }
         fetchPictures()
     </script>
