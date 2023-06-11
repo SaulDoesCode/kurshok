@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="module">
+        import domlib from './domlib.js'
+
+        const {div, h1, p, button} = domlib.domfn
+
+        div({$: 'body'},
+            h1('Hello World'),
+            p('This is a paragraph'),
+            button({
+                onpointerdown(e, btn) {
+                    // change button's text
+                    btn.textContent = 'Clicked!'
+                    btn.clickCount = (btn.clickCount || 0) + 1
+                    if (btn.to != null) {
+                        clearTimeout(btn.to)
+                        btn.to = null
+                        btn.textContent = 'Stay?'
+                        btn.clickCount = 0
+                    } else {
+                        if (btn.clickCount > 3) {
+                            // I'm leaving
+                            btn.textContent = 'Goodbye!'
+                            btn.to = setTimeout(() => {
+                                btn.remove()
+                            }, 1500)
+                        } else if (btn.clickCount > 2) {
+                            // thrice the charm
+                            btn.textContent = 'Stop clicking me!'
+                        } else if (btn.clickCount > 1) {
+                            // twice the charm
+                            btn.textContent = 'Stop it!'
+                        } else if (btn.clickCount > 0) {
+                            // once the charm
+                            btn.textContent = 'Stop!'
+                        } else if (btn.clickCount === 0) {
+                            // first click
+                            btn.textContent = 'Clicked!'
+                        }
+                    }
+                }
+            }, 'Click me')
+        )
+    </script>
+</body>
+</html>
+

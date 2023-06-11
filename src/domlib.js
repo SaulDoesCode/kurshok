@@ -537,7 +537,7 @@ export default (d => {
     return node
   }
 
-  domfn.hasClass = (node, name) => node.classList.contains(name)
+  domfn.hasClass = (node, name) => d.query(node).classList.contains(name)
 
   domfn.attr = (node, attr, val) => {
     if (attr.constructor === Object) {
