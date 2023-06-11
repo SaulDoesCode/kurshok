@@ -1,11 +1,10 @@
 import chokidar from 'chokidar'
-import postcss from 'postcss'
 import express from 'express'
 import compression from 'compression'
 import {minify} from 'terser'
 import path from 'path'
 import fs from 'fs'
-import cssnano from 'cssnano'
+import {transform} from 'lightningcss'
 import htmlnano from 'htmlnano'
 import { fileURLToPath } from 'url'
 
@@ -43,9 +42,10 @@ const handles = {
             return c
         }
     },
-    async css(name, c) {
+    async css(filename, c) {
         try {
-            return (await postcss([cssnano({preset: 'default'})]).process(c, {from: './src/' + name, to: './dist/' + name})).css
+             // return (await postcss([cssnano({preset: 'default'})]).process(c, {from: './src/' + name, to: './dist/' + name})).css
+             return transform({filename, code: Buffer.from(c), minify: true, sourceMap: false}).code
         } catch(e) {
             console.error('Error minifying CSS:', e)
             return c
@@ -89,7 +89,7 @@ async function handleFileContents(filePath, {js, html, css, svg, other}, content
         break;
         case '.css':
         console.log('Handling CSS file:', filePath);
-        result = await css(fileName + ext, contents)
+        result = await css('./src/' + fileName + ext, contents)
         break;
         case '.js':
         console.log('Handling JavaScript file:', filePath);
