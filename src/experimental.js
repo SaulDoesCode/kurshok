@@ -2,73 +2,8 @@ export default async function(app, {ready, style, domfn}) {
     await ready; console.log('experiments...')
     const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = domfn
 
-    style`
-.mouseboard {
-    position: fixed;
-    display: block;
-    left: 0;
-    top: 0;
-    max-width: 220px;
-    border-radius: 6px;
-    background: rgba(137, 136, 136, 0.541);
-    z-index: 10;
-}
-
-.mouseboard .output {
-    border-radius: 4px;
-    padding: .12em .24em;
-    margin: .12em;
-    background: #fff;
-    filter: drop-shadow(0 1px 3px rgba(0,0,0,.12));
-}
-
-.mouseboard .letters {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    flex-flow: row wrap;
-}
-
-.mouseboard .letters span {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    flex-flow: row wrap;
-    margin: .1em .05em;
-    padding: 0 .22em;
-    border-radius: 4px;
-    background: #fff;
-    filter: drop-shadow(0 1px 3px rgba(0,0,0,.12));
-    cursor: grabbing;
-    user-select: none;
-}
-
-.mouseboard .letters span:hover {
-    transform: scale(1.25);
-}
-
-.close {
-    position: absolute;
-    left: calc(100% - 2em);
-    top: 0;
-    color: red;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 100%;
-    padding: .5em;
-    transition: all 140ms ease;
-}
-
-.close:hover {
-    scale: 1.25;
-}
-
-.exps p {
-    margin: .25em;
-}
-`
+    const mbcss = await (await fetch(location.hostname == 'localhost' ? './mb.css' : 'https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/mb.css')).text()
+    style`${mbcss}`
 
     const gEl = tag => cl => {
         const el = document.createElement(tag)
