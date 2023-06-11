@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/png" href="https://bafybeic6u7hg2zuml3azq75byba4nvocgti65r7xsplrak2crwajlenhbq.ipfs.w3s.link/favicon.png"><title>Kurshok Images</title><style>
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-gap: 1rem;
+            width: 100%;
+            max-width: 800px;
+        }
+        .img-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            margin: .1cm;
+            filter: drop-shadow(0 0 0.5rem black);
+        }
+        .img-grid > article {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+    </style><script src="https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/lazy-simon.js"></script></head><body> <main> <header> <h1>Some Images</h1> <p>from my life</p> </header> <section class="img-grid"></section> </main> <script>
+        const imgGrid = document.querySelector('.img-grid')
+        Array.prototype.randomize = function () {
+            const l = [], ln = this.length
+            while (l.length != ln) {
+                const i = Math.floor(Math.random() * this.length)
+                l.push(this[i])
+                this.splice(i, 1)
+            }
+            this.splice(0, this.length, ...l)
+            return this
+        }
+        async function fetchPictures() {
+            const imgtxt = await (await fetch('https://cdn.jsdelivr.net/gh/SaulDoesCode/resources/imgs.txt')).text()
+            const urls = imgtxt.split('\n\n').map(s => {
+                let [u, d] = s.trim().split('\n')
+                if (u.endsWith(',')) {
+                    u = u.slice(0, -1)
+                }
+                return [u, d]
+            }).filter(([u, d]) => u && d)
+            urls.randomize().map(([u, d]) => {
+                const art = document.createElement('article')
+                const img = document.createElement('img')
+                img.setAttribute('src', 'https://' + u)
+                const p = document.createElement('p')
+                p.textContent = d
+                art.append(img, p)
+                imgGrid.appendChild(art)
+            })
+        }
+        fetchPictures()
+    </script> </body></html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head><style>
+    #svg-container {
+      width: 100%;
+      height: 100vh;
+    }
+
+    .layer {
+      animation: morph 10s infinite alternate;
+      filter: blur(2px);
+    }
+
+    @keyframes morph {
+      0%, 100% {
+        transform: translate(-50%, -50%);
+      }
+      50% {
+        transform: translate(calc(-50% + 10px), calc(-50% + 10px));
+      }
+    }
+  </style></head><body> <div id="svg-container"></div> <script>
+    // Generate the SVG code dynamically
+    function generateSVG() {
+      const container = document.getElementById('svg-container');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+      for (let i = 0; i < 420; i++) {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', getRandomCoordinate(width));
+        circle.setAttribute('cy', getRandomCoordinate(height));
+        circle.setAttribute('r', getRandomRadius());
+        circle.setAttribute('fill', getRandomColor());
+        circle.classList.add('layer');
+        svg.appendChild(circle);
+      }
+
+      container.innerHTML = '';
+      container.appendChild(svg);
+    }
+
+    // Get a random coordinate within the given size
+    function getRandomCoordinate(size) {
+      return Math.floor(Math.random() * size);
+    }
+
+    // Get a random radius for the circles
+    function getRandomRadius() {
+      return Math.floor(Math.random() * 10) + 10;
+    }
+
+    // Get a random color in rgba format
+    function getRandomColor() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      const a = Math.random() * 0.4 + 0.4;
+      return `rgba(${r}, ${g}, ${b}, ${a})`;
+    }
+
+    // Generate the initial SVG
+    generateSVG();
+
+    // Regenerate the SVG on window resize
+    window.addEventListener('resize', generateSVG);
+  </script> </body></html>

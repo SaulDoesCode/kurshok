@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Document</title><style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #333;
+    color: #eee;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+main > * {
+    margin: 0.5rem;
+}
+
+main > *:first-child {
+    margin-top: 0;
+}
+
+.doodle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #444;
+    box-shadow: 0 1px .1cm -.05cm hsla(0, 0%, 0%, .6);
+    transition: all 140ms ease-in;
+}
+
+.doodle:hover {
+    background-color: #555;
+}
+    </style></head><body> <main> </main> <script type="module">
+        import domlib from './domlib.js'
+
+        const {div, h1, p, button} = domlib.domfn
+
+        div.doodle({$: 'main'},
+            h1('Hello World'),
+            p('This is a paragraph'),
+            button({
+                onpointerdown(e, btn) {
+                    // change button's text
+                    btn.textContent = 'Clicked!'
+                    if (btn.to != null) {
+                        clearTimeout(btn.to)
+                        btn.to = null
+                        btn.textContent = btn.finePoints > 0 ? 'Idk magic xan.' : 'Stay?'
+                    } else {
+                        if (btn.clickCount > 3) {
+                            // I'm leaving
+                            btn.textContent = 'Goodbye!'
+                            btn.to = setTimeout(() => {
+                                btn.remove()
+                            }, 1500)
+                            btn.clickCount = 0
+                        } else if (btn.clickCount > 2) {
+                            // thrice the charm
+                            btn.textContent = 'Stop clicking me!'
+                        } else if (btn.clickCount > 1) {
+                            // twice the charm
+                            btn.textContent = btn.finePoints > 1 ? 'Hmm?' : 'Stop it!'
+                            btn.to = setTimeout(() => {
+                                btn.textContent = 'Ok fine, click me..'
+                                btn.clickCount = btn.finePoints > 3 ? 0 : 1
+                                btn.to = null
+                                btn.finePoints += 1
+                            }, 10000)
+                        } else if (btn.clickCount > 0) {
+                            // once the charm
+                            if (btn.finePoints === undefined) {
+                                btn.finePoints = 0
+                            }
+                            btn.textContent = btn.finePoints > 0 ? 'Oo again!' : 'Stop!'
+                            if (btn.finePoints > 0) {
+                                btn.textContent = 'Yass, click me!'
+                                btn.finePoints += 1
+                                btn.to = setTimeout(() => {
+                                    btn.textContent = 'Moar Pheaze!'
+                                    btn.clickCount = btn.finePoints == 3 ? 0 : btn.clickCount + 1
+                                    btn.to = null
+                                    btn.finePoints += 1
+                                }, 10000)
+                            } else if (btn.finePoints > 3) {
+                                btn.textContent = 'Stop!'
+                                btn.finePoints = 0
+                            }
+                            btn.to = setTimeout(() => {
+                                btn.textContent = 'Ok fine, click me..'
+                                btn.clickCount = btn.finePoints > 3 ? 0 : btn.clickCount + 1
+                                btn.to = null
+                                btn.finePoints += 1
+                            }, 10000)
+                        } else if (btn.clickCount === 0) {
+                            // first click
+                            btn.textContent = 'Clicked!'
+                        }
+                        btn.clickCount = (btn.clickCount || 0) + 1
+                    }
+                }
+            }, 'Click me')
+        )
+    </script> </body></html>

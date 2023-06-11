@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>grid</title><style>
+        
+    </style></head><body> <aside class="filter"></aside> <main class="grid"></main> <script type="module">
+        import domlib from './domlib.js'
+
+        const {queryAsync, runAsync} = domlib
+        const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = domlib.domfn
+
+        const $ = document.querySelector('main')
+
+        const gridItem = (...contents) => article.item({$}, ...contents)
+    </script> </body></html>

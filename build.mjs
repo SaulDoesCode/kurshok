@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename)
 const args = process.argv.slice(2)
 const watchMode = args.includes('--watch')
 
-const ignoredFileExtensions = '.png .ico'.split(' ')
+const ignoredFileParts = '.png .ico media'.split(' ')
 
 const cleanupDist = () => {
     fs.readdir('./dist', (err, files) => {
@@ -25,7 +25,7 @@ const cleanupDist = () => {
             return;
         }
         files.forEach((file) => {
-            if (ignoredFileExtensions.some(i => file.includes(i))) return
+            if (ignoredFileParts.some(i => file.includes(i))) return
             const filePath = path.join('./dist', file);
             fs.unlink(filePath, err => err && console.error('Error deleting file:', filePath, err))
         })
