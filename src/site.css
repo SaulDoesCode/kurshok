@@ -87,8 +87,8 @@ button:focus {
     height: .5em;
     margin-left: 1em;
     border-radius: 100%;
-    background: #fff;
-    filter: blur(1);
+    background: hsla(0, 0%, 100%, 0.96);
+    filter: blur(1px);
     animation: breathing-circle 4s ease-in-out infinite;
 }
 
@@ -101,7 +101,7 @@ button:focus {
     50% {
         transform: scale(2, 2);
         background: rgba(255, 255, 255, 0.69);
-        filter: blur(4) drop-shadow(0 0 6px rgba(48, 23, 23, 0.5));
+        filter: blur(4px) drop-shadow(0 0 6px rgba(48, 23, 23, 0.5));
     }
     100% {
         transform: scale(.05, .05);

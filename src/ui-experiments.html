@@ -63,7 +63,6 @@ main > *:first-child {
                 onpointerdown(e, btn) {
                     // change button's text
                     btn.textContent = 'Clicked!'
-                    btn.clickCount = (btn.clickCount || 0) + 1
                     if (btn.to != null) {
                         clearTimeout(btn.to)
                         btn.to = null
@@ -117,6 +116,7 @@ main > *:first-child {
                             // first click
                             btn.textContent = 'Clicked!'
                         }
+                        btn.clickCount = (btn.clickCount || 0) + 1
                     }
                 }
             }, 'Click me')
