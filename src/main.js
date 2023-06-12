@@ -15,8 +15,9 @@ const
   app = domlib.emitter({toasts: new Set()}),
   shuffleChildren = (s, filter) => {
     for (const c of [...(s = query(s)).children].randomize()) {
-      if (filter instanceof Function && !filter(c)) continue
-      c.remove(); s.appendChild(c)
+      if (filter && !filter(c)) continue
+      c.remove()
+      s.appendChild(c)
     }
   },
   ftxt = async url => (await (await fetch(url)).text()).trim(),
