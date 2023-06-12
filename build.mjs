@@ -150,32 +150,19 @@ readDirectory('./src', handles)
 
 if (watchMode) {
     console.log('Watching for changes...')
-    ;(function watchDirectory(directoryPath) {
-        const watcher = chokidar.watch(directoryPath);
-      
-        watcher.on('add', (filePath) => {
-          fs.readFile(filePath, 'utf8', (err, contents) => {
-            if (err) {
-              console.error('Error reading file:', filePath, err);
-              return;
-            }
-      
-            handleFileContents(filePath, handles, contents);
-          });
-        });
-      
-        watcher.on('change', (filePath) => {
-          fs.readFile(filePath, 'utf8', (err, contents) => {
-            if (err) {
-              console.error('Error reading file:', filePath, err);
-              return;
-            }
-      
-            handleFileContents(filePath, handles, contents)
-          })
-        })
+    const changeHandle = filePath => {
+      fs.readFile(filePath, 'utf8', (err, contents) => {
+        if (err) return console.error('Error reading file:', filePath, err)
+        handleFileContents(filePath, handles, contents)
+      })
+    }
+    
+    ;(function watchDirectory(directoryPath = './src') {
+        const watcher = chokidar.watch(directoryPath)
+        watcher.on('add', changeHandle)
+        watcher.on('change', changeHandle)
       }
-    )('./src')
+    )()
 
     const app = express()
     const port = 1234
