@@ -2,6 +2,7 @@ import chokidar from 'chokidar'
 import express from 'express'
 import compression from 'compression'
 import {minify} from 'terser'
+import {optimize} from 'svgo'
 import path from 'path'
 import fs from 'fs'
 import {transform} from 'lightningcss'
@@ -17,7 +18,8 @@ const watchMode = args.includes('--watch')
 
 const ignoredFileParts = '.png .ico media'.split(' ')
 
-const cleanupDist = () => {
+const cleanupDist = (windowsOnly = true) => {
+    if (process.platform !== 'win32' || windowsOnly) return
     fs.readdir('./dist', (err, files) => {
         if (err) {
             console.error('Error reading directory:', err);
@@ -44,8 +46,7 @@ const handles = {
     },
     async css(filename, c) {
         try {
-             // return (await postcss([cssnano({preset: 'default'})]).process(c, {from: './src/' + name, to: './dist/' + name})).css
-             return transform({filename, code: Buffer.from(c), minify: true, sourceMap: false}).code
+            return transform({filename, code: Buffer.from(c), minify: true, sourceMap: false}).code
         } catch(e) {
             console.error('Error minifying CSS:', e)
             return c
@@ -69,8 +70,13 @@ const handles = {
             return c
         }
     },
-    async svg(name, c) {
-        return c
+    async svg(path, c) {
+        try {
+            return optimize(c, {path, multipass: true}).data
+        } catch(e) {
+            console.error('Error minifying SVG:', e)
+            return c
+        }
     },
     async other(name, c, ext) {
         return c
@@ -97,7 +103,7 @@ async function handleFileContents(filePath, {js, html, css, svg, other}, content
         break;
         case '.svg':
         console.log('Handling SVG file:', filePath);
-        result = await svg(fileName, contents)
+        result = await svg('./src/' + fileName + ext, contents)
         break;
         default:
         console.log('Handling other file:', filePath);
