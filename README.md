@@ -4,5 +4,7 @@ Backend rust server for my website, pretty basic but uses redb for key value sto
 
 ## Building
 
-cargo and some packages for linux are needed
-
+clone the repo
+``npm i``
+``npm run dev`` or ``npm run build``
+serve up the dist folder with your favourite web server when done.
