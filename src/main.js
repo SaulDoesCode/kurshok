@@ -1,13 +1,12 @@
 import domlib from 'https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/domlib.js'
 Array.prototype.randomize = function () {
-  const l = [], ln = this.length
+  let l = [], a = this, ln = a.length, i
   while (l.length != ln) {
-    const i = Math.floor(Math.random() * this.length)
-    l.push(this[i])
-    this.splice(i, 1)
+    l.push(a[i = Math.floor(Math.random() * a.length)])
+    a.splice(i, 1)
   }
-  this.splice(0, this.length, ...l)
-  return this
+  a.splice(0, a.length, ...l)
+  return a
 }
 domlib.runAsync(async _ => {
 const
@@ -19,10 +18,11 @@ const
       if (filter instanceof Function && !filter(c)) continue
       c.remove(); s.appendChild(c)
     }
-  }, 
-  gurl = 'https://cdn.jsdelivr.net/gh/SaulDoesCode/resources/',
-  thoughts = (await (await fetch(gurl + 'expressions.txt')).text())
-     .trim()
+  },
+  ftxt = async url => (await (await fetch(url)).text()).trim(),
+  cdnRoot = 'https://cdn.jsdelivr.net/gh/SaulDoesCode/',
+  gurl = cdnRoot + 'resources/',
+  thoughts = (await ftxt(gurl + 'expressions.txt'))
      .split("\n")
      .map(t => t.trim())
      .filter(t => t != '')
@@ -50,7 +50,7 @@ const
      br,
      div.spacer
    ), 
-   shortIdeasList = (await (await fetch(gurl + 'short-ideas.txt')).text())
+   shortIdeasList = (await ftxt(gurl + 'short-ideas.txt'))
      .split('.')
      .map(s => s.trim())
      .filter(s => s.length > 0)
@@ -81,7 +81,7 @@ const
    css:{top:`calc(1vh + 1.5cm * ${app.toasts.size})`, zIndex: 0},
    onclick(e,t){rmT(t)}
  }, e, t => {t.to = setTimeout(_=>rmT(t),5500)})))
- app.once.xpm(async()=>(await import(location.hostname == 'localhost' ? "./experimental.js" : 'https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/experimental.js')).default(app, domlib))
+ app.once.xpm(async()=>(await import(location.hostname == 'localhost' ? "./experimental.js" : cdnRoot + 'kurshok/experimental.js')).default(app, domlib))
  ;(await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
  ;(onhashchange=_=>lhi(xpmtl)&&app.emit.xpm())()
  render(shortIdeasList,shortIdeasContainer)
