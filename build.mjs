@@ -17,22 +17,21 @@ const args = process.argv.slice(2)
 const watchMode = args.includes('--watch')
 
 const ignoredFileParts = '.png .ico media'.split(' ')
-
-const cleanupDist = (windowsOnly = true) => {
-    if (process.platform !== 'win32' || windowsOnly) return
-    fs.readdir('./dist', (err, files) => {
-        if (err) {
-            console.error('Error reading directory:', err);
-            return;
-        }
-        files.forEach((file) => {
-            if (ignoredFileParts.some(i => file.includes(i))) return
-            const filePath = path.join('./dist', file);
-            fs.unlink(filePath, err => err && console.error('Error deleting file:', filePath, err))
+const cleanupDist = () => {
+    if (process.platform == 'win32') {
+        fs.readdir('./dist', (err, files) => {
+            if (err) {
+                console.error('Error reading directory:', err);
+                return;
+            }
+            files.forEach((file) => {
+                if (ignoredFileParts.some(i => file.includes(i))) return
+                const filePath = path.join('./dist', file);
+                fs.unlink(filePath, err => err && console.error('Error deleting file:', filePath, err))
+            })
         })
-    })
+    }
 }
-
 cleanupDist()
 
 const handles = {

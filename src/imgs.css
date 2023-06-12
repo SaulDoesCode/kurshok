@@ -1,0 +1,37 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: content-box;
+}
+.img-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    grid-gap: 1rem;
+    width: 100%;
+    max-width: 95vw;
+}
+.img-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: .1cm;
+    filter: drop-shadow(0 0 0.5rem black);
+    transition: all 120ms ease-in-out;
+}
+.img-grid img:hover{
+    filter: drop-shadow(0 0 0.5rem white);
+    transform: scale(1.16);
+    z-index: 1;
+}
+.img-grid > article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
