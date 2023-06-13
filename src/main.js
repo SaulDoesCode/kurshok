@@ -82,9 +82,10 @@ const
    css:{top:`calc(1vh + 1.5cm * ${app.toasts.size})`, zIndex: 0},
    onclick(e,t){rmT(t)}
  }, e, t => {t.to = setTimeout(_=>rmT(t),5500)})))
- app.once.xpm(async()=>(await import(location.hostname == 'localhost' ? "./experimental.js" : cdnRoot + 'kurshok/experimental.js')).default(app, domlib))
  ;(await queryAsync('.breathing-circle')).onclick=_=>lhs(xpmtl)
  ;(onhashchange=_=>lhi(xpmtl)&&app.emit.xpm())()
  render(shortIdeasList,shortIdeasContainer)
- toast('loaded; pressing r randomizes things'); sfhlFtr()
+ toast('loaded; pressing r randomizes things')
+ sfhlFtr()
+ app.once.xpm(async()=>(await import(location.hostname[1] == 'o' ? `./experimental.js` : cdnRoot + 'kurshok/dist/experimental.js')).default(app, domlib))
 })

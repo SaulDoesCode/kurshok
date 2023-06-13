@@ -219,8 +219,14 @@ export default (d => {
   d.merge.able = o => d.isArr(o) || (o != null && typeof o === 'object' && !d.isFunc(o.then))
 
   d.emitter = (host = Object.create(null), listeners = new Map()) => Object.assign(host, {
-    emit: d.infinify((event, ...data) => d.runAsync(() => {
-      if (listeners.has(event)) for (const h of listeners.get(event)) h.apply(null, data)
+    emit: d.infinify((event, ...data) => listeners.has(event) && d.runAsync(() => {
+      for (const h of listeners.get(event)) {
+        try {
+          h.apply(null, data)
+        } catch(e) {
+          console.error(`${event}: hndl`, e)
+        }
+      }
     })),
     on: d.infinify((event, handler) => {
       if (!listeners.has(event)) listeners.set(event, new Set())
