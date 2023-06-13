@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurshok SurrealDB Interface</title>
+</head>
+<body>
+    <input type="password" name="sqlpass">
+    <script type="module"">
+        import domlib from 'https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/domlib.js'
+        import Surreal from "https://unpkg.com/surrealdb.js"
+        
+        domlib.run(async () => {
+            const db = await new Promise((res, rej) => {
+                domlib.queryAsync('input[name="sqlpass"]').then(async i => {
+                    i.onkeydown = async e => {
+                        if (e.key != 'Enter') return
+                        e.preventDefault()
+                        const pass = i.value
+                        i.value = ''
+                        try {
+                            const db = new Surreal('https://sql.kurshok.space/rpc')
+                            await db.signin({user: 'admin', pass})
+                            await db.use({ns: 'kurshok', db: 'kurshok'})
+                            res(db)
+                        } catch(e) {
+                            console.error(e)
+                            alert('Invalid password or network error')
+                            rej(e)
+                        }
+                    }
+                })
+            })
+
+            const {textarea, section, button, div, span} = domlib.domfn
+            const input = textarea({placeholder: 'SQL Query'})
+            const output = div.output()
+            section.sql({$: 'body'},
+                input,
+                button({
+                    on: {
+                        async pointerdown(e, btn) {
+                            const res = await db.query(input.value.trim())
+                            console.log(res)
+                            const displayResultFully = () => {
+                                // assume res is an object, unpack each of its properties into a div with a span for the field and a span for the value
+                                const out = div()
+                                for (const [key, value] of Object.entries(res)) {
+                                    out.appendChild(div({style: 'display: flex; flex-direction: row;'},
+                                        span(key),
+                                        span(value)
+                                    ))
+                                }
+                                return out
+                            }
+                            output.innerHTML = ''
+                            output.appendChild(displayResultFully())
+                        }
+                    }
+                }, 'run query'),
+                output
+            )
+        })
+    </script>
+</body>
+</html>
