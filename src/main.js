@@ -1,4 +1,4 @@
-import domlib from './domlib.js'
+import domlib from 'https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/domlib.js'
 Array.prototype.randomize = function () {
   let l = [], a = this, ln = a.length, i
   while (l.length != ln) {
