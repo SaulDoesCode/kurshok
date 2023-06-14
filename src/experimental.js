@@ -1,14 +1,8 @@
-export default async function(app, {ready, style, domfn}) {
+export default async function(app, {ready, style, domfn: {div, article, p, button, h1, h4, section, span, header}}) {
     await ready; console.log('experiments...')
-    const {div, article, textarea, input, a, p, button, br, hr, h1, h4, section, span, header} = domfn
-
-    const mbcss = await (await fetch(location.hostname == 'localhost' ? './mb.css' : 'https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/mb.css')).text()
-    style`${mbcss}`
-
     const gEl = tag => cl => {
         const el = document.createElement(tag)
-        el.classList.add(cl)
-        el.innerText = cl
+        el.className = el.innerText = cl
         return el
     }
     const sma = (str, el, s = '') => str.split(s).map(gEl('span'))
@@ -95,8 +89,8 @@ export default async function(app, {ready, style, domfn}) {
             p('if you have suggestions contact me and lemme know for things to try out on this site.'),
         )
     )
-      
-    app.toast('experiments loaded')
+    style`${await app.ftxt(app.isLH ? './mb.css' : app.cdnRoot+'kurshok/dist/mb.css')}`
+    app.emit.toast('experiments loaded')
 /*
 
 const P = async (val, ...fns) => {

@@ -101,27 +101,22 @@ export default (d => {
   Object.defineProperty(d, 'ready', {
     get: _=>new Promise(r => d.run(_ => r(true)))
   })
-
+  
   d.style = (strs, ...values) => {
     const s = document.createElement('style')
-    s.textContent = strs.reduce((accumulator, currentString, index) => {
-        const value = values[index] ? values[index] : ''
-        return accumulator + currentString + value
-    }, '')
+    s.textContent = strs.reduce((acc, current, i) => acc + current + (values[i] || ''), '')
     document.head.appendChild(s)
-}
+  }
 
   d.html = (input, ...args) => {
     if (args.length > 2) return d.h(input, ...args)
     if (input instanceof Function) input = input(...args)
-    if (input instanceof Promise) return new Promise(resolve => {
-      input.then(i => resolve(d.html(i, ...args)))
-    })
+    if (input instanceof Promise) return new Promise(r => { input.then(i => r(d.html(i, ...args))) })
     if (input instanceof Node) return input
-    if (d.isNum(input)) input = String(input)
     if (typeof input === 'string') return Array.from(document.createRange().createContextualFragment(input).childNodes)
+    if (d.isNum(input)) input = String(input)
     if (d.isArr(input)) return input.map(i => d.html(i, ...args))
-    throw new Error('.html: unrenderable input')
+    throw new Error('html: unrenderable input')
   }
 
   d.frag = inner => inner != null ? d.html(inner) : document.createDocumentFragment()
@@ -135,7 +130,7 @@ export default (d => {
     const find = () => {
       const result = d.query(selector, host)
       result == null ?
-        reject(new Error("queryAsync: couldn't find " + selector)) :
+        reject(new Error("couldn't find " + selector)) :
         resolve(result)
     }
     document.body ? find() : d.run(find)
@@ -219,7 +214,7 @@ export default (d => {
   d.merge.able = o => d.isArr(o) || (o != null && typeof o === 'object' && !d.isFunc(o.then))
 
   d.emitter = (host = Object.create(null), listeners = new Map()) => Object.assign(host, {
-    emit: d.infinify((event, ...data) => listeners.has(event) && d.runAsync(() => {
+    emit: d.infinify((event, ...data) => listeners.has(event) && d.runAsync(_ => {
       for (const h of listeners.get(event)) {
         try {
           h.apply(null, data)
@@ -231,10 +226,10 @@ export default (d => {
     on: d.infinify((event, handler) => {
       if (!listeners.has(event)) listeners.set(event, new Set())
       listeners.get(event).add(handler)
-      const manager = () => host.off(event, handler)
+      const manager = _ => host.off(event, handler)
       manager.off = manager
-      manager.on = () => (manager(), host.on(event, handler))
-      manager.once = () => (manager(), host.once(event, handler))
+      manager.on = _ => (manager(), host.on(event, handler))
+      manager.once = _ => (manager(), host.once(event, handler))
       return manager
     }),
     once: d.infinify((event, handler) => host.on(event, function h() {
@@ -242,11 +237,9 @@ export default (d => {
       host.off(event, h)
     })),
     off: d.infinify((event, handler) => {
-      if (listeners.has(event)) {
-        const ls = listeners.get(event)
-        ls.delete(handler)
-        if (!ls.size || handler == null) listeners.delete(event)
-      }
+      try {
+        (listeners.get(event).delete(handler) && !ls.size || handler == null) && listeners.delete(event)
+      } catch(e) {}
     }),
     clear: () => (listeners.clear(), host)
   })
@@ -266,9 +259,7 @@ export default (d => {
     }
 
     if (d.isArr(target)) {
-      for (let i = 0; i < target.length; i++) {
-        target[i] = listen(once, target[i], typeobj ? d.clone(type) : type, fn, options)
-      }
+      for (let i = 0; i < target.length; i++) target[i] = listen(once, target[i], typeobj ? d.clone(type) : type, fn, options)
       target.off = () => {
         for (const h of target) h()
         return target
@@ -281,9 +272,7 @@ export default (d => {
     }
 
     if (typeobj) {
-      for (const name in type) {
-        type[name] = listen(once, target, name, type[name], options)
-      }
+      for (const name in type) type[name] = listen(once, target, name, type[name], options)
       target.off = () => {
         for (const h of Object.values(type)) h()
         return target
@@ -363,7 +352,7 @@ export default (d => {
           let lvl = 0
           let ishost = false
           let lastchild
-          while (child instanceof Function && lvl < 25) {
+          while (child instanceof Function && lvl < 26) {
             lastchild = child
             child = child()
             if ((ishost = child === host) || lastchild === child) break
@@ -404,9 +393,8 @@ export default (d => {
         nodes.splice(i, 1)
         continue
       }
-      if (n instanceof Node || n instanceof Function) {
-        continue
-      } else if (ntype === 'string' || ntype === 'number') {
+      if (n instanceof Node || n instanceof Function) continue
+      else if (ntype === 'string' || ntype === 'number') {
         const nextI = i + 1
         if (nextI < nodes.length) {
           const next = nodes[nextI]
@@ -444,9 +432,7 @@ export default (d => {
         }
         nodes.splice(i, 1, ...n)
         i--
-      } else if (n != null) {
-        throw new Error(`illegal renderable: ${n}`)
-      }
+      } else if (n != null) throw new Error(`unrenderable: ${n}`)
     }
     return nodes
   }
@@ -474,8 +460,10 @@ export default (d => {
    */
   d.render = (node, host = document.body || 'body', connector = 'appendChild') => d.attach(host, connector, node)
 
-  const infinifyDOM = (gen, tag) => tag in gen ? Reflect.get(gen, tag) :
-    (gen[tag] = new Proxy(gen.bind(null, tag), {
+  d.actualDF = {}
+
+  const infinifyDOM = (gen, tag) => tag in gen ?
+    Reflect.get(gen, tag) : (gen[tag] = new Proxy(gen.bind(null, tag), {
       get(fn, classes) {
         classes = classes.replace(/_/g, '-').split('.')
         return new Proxy(function () {
@@ -491,7 +479,6 @@ export default (d => {
       }
     }))
 
-  d.actualDF = {}
   const domfn = new Proxy(d, {
     get: (d, key) => d.actualDF[key] || infinifyDOM(d, key),
     set: (d, key, val) => Reflect.set(d.actualDF, key, val)
@@ -693,7 +680,7 @@ export default (d => {
   }
 
   const mutateSet = set => (n, state) =>
-    set[state == null ? 'has' : state ? 'add' : 'delete'](n)
+    set[state === undefined ? 'has' : state ? 'add' : 'delete'](n)
 
   const Initiated = new Map()
   const beenInitiated = (name, el) => Initiated.has(name) && Initiated.get(name)(el)
@@ -777,7 +764,7 @@ export default (d => {
     }
   }
 
-  d.createElementPlugins = {}
+  d.elementPlugins = {}
 
   return d
 })(
@@ -813,8 +800,8 @@ export default (d => {
         } else if (key in d.actualDF) {
           val = d.isArr(val) ? d.actualDF[key](el, ...val) : d.actualDF[key](el, val)
           if (val !== el) ops[key] = val
-        } else if (key in d.createElementPlugins) {
-          d.createElementPlugins[key](val, el, ops)
+        } else if (key in d.elementPlugins) {
+          d.elementPlugins[key](val, el, ops)
         } else if (val instanceof Function) {
           el[key] = val.bind(el, el)
         }
