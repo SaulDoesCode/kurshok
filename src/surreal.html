@@ -4,6 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kurshok SurrealDB Interface</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .field {
+            font-weight: bold;
+        }
+
+        .value {
+            margin-left: 1em;
+        }
+
+        .output {
+            margin: 1em auto;
+            padding: 1em;
+            max-width: 800px;
+        }
+
+        input[type="password"] {
+            margin: 1em auto;
+            display: block;
+            padding: .25em;
+            border-radius: 4px;
+            box-shadow: 0 0 4px black;
+        }
+
+        textarea {
+            display: block;
+            margin: 1em auto;
+            padding: .25em;
+            border: 1px solid hsla(0, 0%, 80%, 0.5);
+        }
+
+        button {
+            display: block;
+            margin: 1em auto;
+            padding: .25em;
+            border-radius: 4px;
+            background: #fff;
+            box-shadow: 0 1px 4px hsla(0, 0%, 0%, .4);
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <input type="password" name="sqlpass">
@@ -20,9 +72,10 @@
                         const pass = i.value
                         i.value = ''
                         try {
-                            const db = new Surreal('https://sql.kurshok.space/rpc')
+                            const db = new Surreal('https://db.kurshok.space/rpc')
                             await db.signin({user: 'admin', pass})
                             await db.use({ns: 'kurshok', db: 'kurshok'})
+                            i.remove()
                             res(db)
                         } catch(e) {
                             console.error(e)
@@ -32,6 +85,70 @@
                     }
                 })
             })
+
+            let kind = ''
+            window.model = new Proxy(db, {
+                get(target, prop) {
+                    if (prop == 'query') return async (...args) => await target.query(...args)
+                    if (prop == 'kind') return kind
+                    if (prop == 'db') return db
+                    return new Promise(async (r, rj) => {
+                        try {
+                            if (prop.includes(':')) {
+                                [kind, prop] = prop.split(':')
+                            }
+                            r(await db.select(`${kind == '' ? '' : kind + ':'}${prop}`))
+                        } catch(e) {
+                            rj(e)
+                        }
+                    })
+                },
+                set(target, prop, value) {
+                    if (prop == 'kind') return kind = value
+                    return new Promise(async (r, rj) => {
+                        try {
+                            if (prop.includes(':')) {
+                                [kind, prop] = prop.split(':')
+                            }
+                            r(await d.create(`${kind == '' ? '' : kind + ':'}${prop}`, value))
+                        } catch(e) {
+                            rj(e)
+                        }
+                    })
+                }
+            })
+
+            const jsonToPrettyHTML = json => {
+                if (typeof json == 'string') json = JSON.parse(json)
+                const out = div()
+                for (const [field, value] of Object.entries(json)) {
+                    out.appendChild(span.field(field, ': '))
+                    if (typeof value == 'object') {
+                        out.appendChild(div.value(jsonToPrettyHTML(value)))
+                    } else {
+                        out.appendChild(span.value(value))
+                    }
+                }
+                return out
+            }
+
+            const displayResultFully = res => {
+                // assume res is an array, unpack each of its properties into a div with a span for the field and a span for the value
+                const out = div()
+                for (const row of res) {
+                    const rowDiv = div.row()
+                    for (const [field, value] of Object.entries(row)) {
+                        rowDiv.appendChild(span.field(field))
+                        if (typeof value == 'object') {
+                            rowDiv.appendChild(div.value(jsonToPrettyHTML(value)))
+                        } else {
+                            rowDiv.appendChild(span.value(value))
+                        }
+                    }
+                    out.appendChild(rowDiv)
+                }
+                return out
+            }
 
             const {textarea, section, button, div, span} = domlib.domfn
             const input = textarea({placeholder: 'SQL Query'})
@@ -43,22 +160,41 @@
                         async pointerdown(e, btn) {
                             const res = await db.query(input.value.trim())
                             console.log(res)
-                            const displayResultFully = () => {
-                                // assume res is an object, unpack each of its properties into a div with a span for the field and a span for the value
-                                const out = div()
-                                for (const [key, value] of Object.entries(res)) {
-                                    out.appendChild(div({style: 'display: flex; flex-direction: row;'},
-                                        span(key),
-                                        span(value)
-                                    ))
-                                }
-                                return out
-                            }
                             output.innerHTML = ''
-                            output.appendChild(displayResultFully())
+                            output.appendChild(displayResultFully(res))
                         }
                     }
                 }, 'run query'),
+                button({
+                    on: {
+                        async pointerdown() {
+                            const q = input.value
+                            await db.create('query', {query: q, now: Date.now()})
+                            alert('Query saved')
+                        }
+                    },
+                }, 'save query'),
+                button({
+                    on: {
+                        async pointerdown() {
+                            const queries = await db.select('query')
+                            const sq = div.saved_queries({$pre: output})
+                            console.log(queries)
+                            for (const query of queries) {
+                                sq.appendChild(div.saved_query(jsonToPrettyHTML(query), button({
+                                    on: {
+                                        async pointerdown() {
+                                            const res = await db.query(query.query)
+                                            console.log(res)
+                                            output.innerHTML = ''
+                                            output.appendChild(displayResultFully(res))
+                                        }
+                                    }
+                                }, 'run')))
+                            }
+                        }
+                    },
+                }, 'retrieve saved queries'),
                 output
             )
         })
