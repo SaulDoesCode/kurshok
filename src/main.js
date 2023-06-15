@@ -35,13 +35,13 @@ const
    shflIdeas = _ => shuffleChildren(shortIdeasContainer, clh('small-idea')),
    shflExpressions = _ => shuffleChildren(thoughtsContainer, clh('thought')),
    sfhlFtr = _ => w(shuffleChildren)('.doodle-links')('.links', c => c.tagName == 'A'),
-   thoughtsContainer = section.thoughts({
+   thoughtsContainer = section.expressions({
       $pre: 'main',
       ondblclick() { shflExpressions() }
     },
       header('expressions'),
       div.spacer,
-      thoughts.map(t => p.thought(t))
+      thoughts.map(t => p.exp(t))
     ),
    shortIdeasContainer = section.short_ideas({
        $pre: 'main',

@@ -1,7 +1,7 @@
 
 :root {
     --highlight-color: rgb(253, 53, 53);
-    --theme-color: rgba(63, 52, 52, 0.86);
+    --theme-color: rgba(90, 73, 64, 0.8);
 }
 
 html, body {
@@ -199,22 +199,22 @@ section.books img:hover {
     scale: 1.1;
 }
 
-section.thoughts {
+section.expressions {
     position: relative;
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    max-width: 440px;
-    max-height: 10cm;
-    margin: .1cm .1cm;
+    max-width: 444px;
+    max-height: 11cm;
+    margin: 1mm 1.1mm;
     padding-top: .1em;
     overflow: auto;
     background: var(--theme-color);
   }
   
-  section.thoughts .thought {
+  section.expressions .exp {
     position: relative;
     display: inline-flex;
     flex-flow: row wrap;
@@ -237,11 +237,11 @@ section.thoughts {
   }
   
 
-section.thoughts .thought:first-of-type {
+section.expressions .exp:first-of-type {
     margin-top: -1.5em;
 }
 
-section.thoughts .thought:hover, section.thoughts .thought:focus {
+section.expressions .exp:hover, section.expressions .exp:focus {
     transform: scale(1);
     background: rgb(81, 65, 65);
     color: rgb(225, 215, 215);
@@ -279,9 +279,9 @@ footer>section {
     align-content: center;
     flex-flow: column wrap;
     padding: .1cm .1cm;
-    margin: .1cm;
-    border: .04cm solid rgba(42, 18, 23, 0.372);
-    background: rgba(68, 58, 58, 0.819);
+    margin: 2mm;
+    border: .04cm solid rgba(42, 18, 23, .37);
+    background: rgba(37, 30, 30, 0.6);
     border-radius: .25em;
     transition: all 240ms ease-in;
     font-weight: 600;
@@ -299,10 +299,12 @@ footer>section>header {
     white-space: nowrap;
 }
 
-footer>section>header::after {
-    content: ":";
+footer>section>header::before {
+    content: "#";
+    margin-right: 1mm;
+    font-size: 0.8em;
     display: inline-block;
-    color: #eebcbca4;
+    color: #403636c1;
 }
 
 footer .doodles {
@@ -320,20 +322,48 @@ footer .links {
     grid-template-columns: 1fr 1fr; 
    /*grid-template-rows: 1fr 1fr 1fr;*/
     grid-auto-rows: 1fr 1fr 1fr; 
-    gap: .1cm .1cm; 
+    gap: .05cm; 
     grid-template-areas: 
       ". ."
       ". ."
       ". .";
     text-align: center;
     align-items: space-evenly;
+} 
+
+.help-out .links {
+    display: flex;
+    background: #282421aa;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    border-radius: 1mm;
+    padding: 1mm;
+    margin: 1mm;
+}
+
+.help-out img {
+    filter: invert(100) drop-shadow(0 0 2px rgba(0, 0, 0, .22));
+}
+
+.donate > div, .referrals {
+    margin: 1mm;
+}
+
+.referrals, .referrals > header {
+    padding: 1mm;
+}
+
+footer section > div > header {
+    font-size: 1.1em;
 }
 
 footer>section a {
     margin: .1rem;
     border-radius: .1cm;
     transition: 120ms ease-in;
-    padding: .25em;
+    padding: 1mm;
 }
 
 footer>section>a img {
@@ -378,7 +408,7 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
     align-items: center;
     align-content: flex-start;
     flex-flow: row wrap;
-    margin: .1cm .1cm;
+    margin: .1cm 1.1mm;
     padding: .15cm;
     background: var(--theme-color);
     max-width: 777px;
@@ -394,8 +424,8 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
 .small-idea {
     display: inline-block;
     align-self: center;
-    margin: .1em .1em;
-    padding: .12em;
+    margin: 1mm 1mm 1mm 1mm;
+    padding: 1mm;
     max-width: 200px;
     overflow: hidden;
     line-height: 1;
@@ -424,14 +454,14 @@ iframe[src="https://kurshok-api.fly.dev/tell"] {
     font-size: 1em;
     max-width: 100%;
     line-height: 1;
-    color:hsla(0, 0%, 0%, .9);
+    color:hsla(0, 0%, 0%, 0.927);
 }
 
 .small-idea > header {
     font-weight: 400;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     display: block;
-    color: rgba(110, 89, 88, .9);
+    color: rgba(144, 118, 115, 0.94);
     width: 100%;
     margin: 0 0 0 0;
     transition: all 120ms ease-in;
