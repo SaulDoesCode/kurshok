@@ -32,8 +32,8 @@ const
    j = (a, b, ...f) => a === b && (b = null, f.forEach(f => b = f(b)), b),
    w = fn => (...A) => (...B) => (fn(...A), fn(...B)),
    abl = (a, b, [A, B]) => [a(A), b(B)],
-   shflIdeas = _ => shuffleChildren(shortIdeasContainer, clh('small-idea')),
-   shflExpressions = _ => shuffleChildren(thoughtsContainer, clh('thought')),
+   shflIdeas = _ => shuffleChildren(shortIdeasContainer, clh('idea')),
+   shflExpressions = _ => shuffleChildren(thoughtsContainer, clh('exp')),
    sfhlFtr = _ => w(shuffleChildren)('.doodle-links')('.links', c => c.tagName == 'A'),
    thoughtsContainer = section.expressions({
       $pre: 'main',
@@ -57,7 +57,7 @@ const
      .map(s => s.trim())
      .filter(s => s.length > 0)
      .randomize()
-     .map(s => article.small_idea(abl(header, span, s.split(':')))),
+     .map(s => article.idea(abl(header, span, s.split(':')))),
    xpmtl = 'experimental',
    hl = h => h[0] != '#' ? '#' + h : h,
    lhi = h => hl(h) === location.hash,
@@ -67,7 +67,7 @@ const
      app.toasts.delete(t)
      clearTimeout(t.to)
    }
- onkeyup = e => j(e.key, 'r', shflIdeas, shflExpressions, sfhlFtr)
+
  document.onpointerdown = async ({target}) => {
    if (target.hasAttribute('copyable') && navigator.clipboard && window.isSecureContext) {
      await navigator.clipboard.writeText(target.textContent.trim())
@@ -85,4 +85,5 @@ const
  sfhlFtr()
  app.once.xpm(async()=>(await import((app.isLH = location.hostname[2] == 'c' ? './' : cdnRoot + 'kurshok/dist/') + `experimental.js`)).default(app, domlib))
  ;(onhashchange=_=>lhi(xpmtl)&&app.emit.xpm())()
+ onkeyup = e => j(e.key, 'r', shflIdeas, shflExpressions, sfhlFtr)
 })
