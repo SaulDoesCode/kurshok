@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kurshok SurrealDB Interface</title>
+    <link rel='icon' type='image/png' href='https://bafybeic6u7hg2zuml3azq75byba4nvocgti65r7xsplrak2crwajlenhbq.ipfs.w3s.link/favicon.png'>
+    <link rel="stylesheet" href="https://unpkg.com/marx-css/css/marx.min.css">
     <style>
         body {
             font-family: sans-serif;
@@ -11,10 +13,50 @@
             padding: 0;
         }
 
+        nav {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: center;
+            background: hsl(0, 0%, 90%);
+            box-shadow: 0 1px 4px hsla(0, 0%, 0%, .4);
+        }
+
+        nav > div.selector {
+            margin: 1em;
+            padding: 1mm 1mm;
+            border-radius: 4px;
+            background: #e06481;
+            color: #fff;
+            font-size: 1.1rem;
+            box-shadow: 0 1px 4px hsla(0, 0%, 0%, .4);
+            cursor: pointer;
+            transition: all .2s ease-in-out;
+        }
+
+        nav > div.selector:hover {
+            background: #c22b4e;
+        }
+
+        nav > div.selector.selected {
+            background: hsl(349, 93%, 54%);
+            filter: drop-shadow(0 -1px 1mm hsla(0, 0%, 0%, .4));
+        }
+        
+        .view {
+            margin: 1em auto;
+            padding: 1em;
+            max-width: 800px;
+        }
+        .sql {
+            max-width: 70vw;
+            min-width: 300px;
+        }
+
         .row {
             display: flex;
-            flex-direction: row;
-            align-items: center;
+            flex-flow: column nowrap;
+            align-items: flex-start;
         }
 
         .field {
@@ -40,164 +82,309 @@
         }
 
         textarea {
-            display: block;
             margin: 1em auto;
             padding: .25em;
             border: 1px solid hsla(0, 0%, 80%, 0.5);
         }
 
         button {
-            display: block;
-            margin: 1em auto;
+            margin: 1em;
             padding: .25em;
             border-radius: 4px;
-            background: #fff;
             box-shadow: 0 1px 4px hsla(0, 0%, 0%, .4);
             cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <input type="password" name="sqlpass">
-    <script type="module"">
-        import domlib from 'https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/domlib.js'
+    <nav class="view-selector"></nav>
+    <section class="view">
+        <input type="password" name="sqlpass">
+        <input type="checkbox" name="remember me">
+    </section>
+    <script type="module" async>
         import Surreal from "https://unpkg.com/surrealdb.js"
-        
-        domlib.run(async () => {
-            const db = await new Promise((res, rej) => {
-                domlib.queryAsync('input[name="sqlpass"]').then(async i => {
-                    i.onkeydown = async e => {
-                        if (e.key != 'Enter') return
-                        e.preventDefault()
-                        const pass = i.value
-                        i.value = ''
-                        try {
-                            const db = new Surreal('https://db.kurshok.space/rpc')
-                            await db.signin({user: 'admin', pass})
-                            await db.use({ns: 'kurshok', db: 'kurshok'})
-                            i.remove()
-                            res(db)
-                        } catch(e) {
-                            console.error(e)
-                            alert('Invalid password or network error')
-                            rej(e)
+        import domlib from 'https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/domlib.js'
+        await domlib.ready
+        const {textarea, section, button, div, span} = domlib.domfn
+        const {query} = domlib
+
+        const view = query('section.view')
+
+        const viewMananger = ((views = {}) => {
+            const viewSelector = query('nav.view-selector')
+            let lastSelected = ''
+            const mut = (name, fn) => {
+                if (fn == null && views[name] != null) {
+                    view.innerHTML = ''
+                    view.appendChild(views[name]())
+                    views[name].selector.classList.add('selected')
+                    if (lastSelected != '' && name != lastSelected) views[lastSelected].selector.classList.remove('selected')
+                    else lastSelected = name
+                    return mut
+                }
+                views[name] = fn
+                const s = fn.selector = div.selector(name)
+                s.onpointerdown = () => {
+                    view.innerHTML = ''
+                    view.appendChild(fn())
+                }
+                viewSelector.appendChild(s)
+                if (lastSelected == '') mut(name)
+                return mut
+            }
+            return mut
+        })()
+
+
+        const rememberMe = query('input[name="remember me"]') || {}
+        const i = query('input[name="sqlpass"]')
+        if (localStorage.getItem('sqlpass') != null) {
+            rememberMe.checked = true
+            i.value = localStorage.getItem('sqlpass')
+        }
+        const db = await new Promise((res, rej) => {
+            const connect = async e => {
+                if (e) {
+                    if (e.key != 'Enter') return
+                    e.preventDefault()
+                }
+                const pass = i.value
+                i.value = ''
+                try {
+                    const db = new Surreal('https://db.kurshok.space/rpc')
+                    await db.signin({user: 'admin', pass})
+                    await db.use({ns: 'kurshok', db: 'kurshok'})
+                    i.remove()
+                    res(db)
+                    if (rememberMe.checked) {
+                        localStorage.setItem('sqlpass', pass)
+                    }
+                } catch(e) {
+                    console.error(e)
+                    alert('Invalid password or network error')
+                    rej(e)
+                }
+                rememberMe.remove()
+            }
+            rememberMe.checked ? connect() : localStorage.removeItem('sqlpass')
+            i.onkeydown = connect
+        })
+
+        const prompt = (msg) => {
+            const val = window.prompt(msg)
+            if (val == null) throw new Error('User cancelled')
+            return val
+        }
+
+        let kind = ''
+        window.model = new Proxy(db, {
+            get(target, prop) {
+                if (prop == 'query') return async (...args) => await target.query(...args)
+                if (prop == 'kind') return kind
+                if (prop == 'db') return db
+                return new Promise(async (r, rj) => {
+                    try {
+                        if (prop.includes(':')) {
+                            [kind, prop] = prop.split(':')
                         }
+                        r(await db.select(`${kind == '' ? '' : kind + ':'}${prop}`))
+                    } catch(e) {
+                        rj(e)
                     }
                 })
-            })
-
-            let kind = ''
-            window.model = new Proxy(db, {
-                get(target, prop) {
-                    if (prop == 'query') return async (...args) => await target.query(...args)
-                    if (prop == 'kind') return kind
-                    if (prop == 'db') return db
-                    return new Promise(async (r, rj) => {
-                        try {
-                            if (prop.includes(':')) {
-                                [kind, prop] = prop.split(':')
-                            }
-                            r(await db.select(`${kind == '' ? '' : kind + ':'}${prop}`))
-                        } catch(e) {
-                            rj(e)
+            },
+            set(target, prop, value) {
+                if (prop == 'kind') return kind = value
+                return new Promise(async (r, rj) => {
+                    try {
+                        if (prop.includes(':')) {
+                            [kind, prop] = prop.split(':')
                         }
-                    })
-                },
-                set(target, prop, value) {
-                    if (prop == 'kind') return kind = value
-                    return new Promise(async (r, rj) => {
-                        try {
-                            if (prop.includes(':')) {
-                                [kind, prop] = prop.split(':')
-                            }
-                            r(await d.create(`${kind == '' ? '' : kind + ':'}${prop}`, value))
-                        } catch(e) {
-                            rj(e)
-                        }
-                    })
-                }
-            })
-
-            const jsonToPrettyHTML = json => {
-                if (typeof json == 'string') json = JSON.parse(json)
-                const out = div()
-                for (const [field, value] of Object.entries(json)) {
-                    out.appendChild(span.field(field, ': '))
-                    if (typeof value == 'object') {
-                        out.appendChild(div.value(jsonToPrettyHTML(value)))
-                    } else {
-                        out.appendChild(span.value(value))
+                        r(await d.create(`${kind == '' ? '' : kind + ':'}${prop}`, value))
+                    } catch(e) {
+                        rj(e)
                     }
-                }
-                return out
+                })
             }
-
-            const displayResultFully = res => {
-                // assume res is an array, unpack each of its properties into a div with a span for the field and a span for the value
-                const out = div()
-                for (const row of res) {
-                    const rowDiv = div.row()
-                    for (const [field, value] of Object.entries(row)) {
-                        rowDiv.appendChild(span.field(field))
-                        if (typeof value == 'object') {
-                            rowDiv.appendChild(div.value(jsonToPrettyHTML(value)))
-                        } else {
-                            rowDiv.appendChild(span.value(value))
-                        }
-                    }
-                    out.appendChild(rowDiv)
-                }
-                return out
-            }
-
-            const {textarea, section, button, div, span} = domlib.domfn
-            const input = textarea({placeholder: 'SQL Query'})
-            const output = div.output()
-            section.sql({$: 'body'},
-                input,
-                button({
-                    on: {
-                        async pointerdown(e, btn) {
-                            const res = await db.query(input.value.trim())
-                            console.log(res)
-                            output.innerHTML = ''
-                            output.appendChild(displayResultFully(res))
-                        }
-                    }
-                }, 'run query'),
-                button({
-                    on: {
-                        async pointerdown() {
-                            const q = input.value
-                            await db.create('query', {query: q, now: Date.now()})
-                            alert('Query saved')
-                        }
-                    },
-                }, 'save query'),
-                button({
-                    on: {
-                        async pointerdown() {
-                            const queries = await db.select('query')
-                            const sq = div.saved_queries({$pre: output})
-                            console.log(queries)
-                            for (const query of queries) {
-                                sq.appendChild(div.saved_query(jsonToPrettyHTML(query), button({
-                                    on: {
-                                        async pointerdown() {
-                                            const res = await db.query(query.query)
-                                            console.log(res)
-                                            output.innerHTML = ''
-                                            output.appendChild(displayResultFully(res))
-                                        }
-                                    }
-                                }, 'run')))
-                            }
-                        }
-                    },
-                }, 'retrieve saved queries'),
-                output
-            )
         })
+
+        const jsonToPrettyHTML = json => {
+            if (typeof json == 'string') json = JSON.parse(json)
+            const out = div()
+            if (json == null) {
+                out.appendChild(span.value('null'))
+                return out
+            }
+            for (let [field, value] of Object.entries(json)) {
+                const block = div.block({$: out})
+                if (field == 'id') {
+                    block.appendChild(span.field(value))
+                    continue
+                } else {
+                    block.appendChild(span.field(field, ': '))
+                }
+                if (typeof value == 'object') {
+                    block.appendChild(div.value(jsonToPrettyHTML(value)))
+                } else {
+                    if (field == 'now' && typeof value == 'number') {
+                        // parse unix timestamps
+                        const d = new Date(value)
+                        if (d != 'Invalid Date') {
+                            value = d.toLocaleString()
+                        }
+                    }
+                    block.appendChild(span.value(value))
+                }
+            }
+            return out
+        }
+
+        const displayResultFully = res => {
+            // assume res is an array, unpack each of its properties into a div with a span for the field and a span for the value
+            const out = div()
+            for (const row of res) {
+                const rowDiv = div.row({$: out})
+                if (row == null) {
+                    rowDiv.appendChild(span.value('null'))
+                    continue
+                }
+                for (const [field, value] of Object.entries(row)) {
+                    const block = div.block({$: rowDiv})
+                    block.appendChild(span.field(field, ': '))
+                    if (typeof value == 'object') {
+                        block.appendChild(div.value(jsonToPrettyHTML(value)))
+                    } else {
+                        block.appendChild(span.value(value))
+                    }
+                }
+            }
+            return out
+        }
+        const input = textarea({placeholder: 'SQL Query', attr: {autofocus: true, cols: 80, rows: 10}})
+        const output = div.output()
+        const sqlView = section.sql(
+            input,
+            button({
+                on: {
+                    async pointerdown(e, btn) {
+                        const res = await db.query(input.value.trim())
+                        console.log(res)
+                        output.innerHTML = ''
+                        output.appendChild(displayResultFully(res))
+                    }
+                }
+            }, 'run query'),
+            button({
+                on: {
+                    async pointerdown() {
+                        const q = input.value
+                        await db.create('query', {query: q, now: Date.now()})
+                        alert('Query saved')
+                    }
+                },
+            }, 'save query'),
+            button({
+                on: {
+                    async pointerdown() {
+                        const queries = await db.select('query')
+                        const sq = div.saved_queries({$pre: output})
+                        console.log(queries)
+                        for (const query of queries) {
+                            sq.appendChild(
+                                div.saved_query(
+                                    jsonToPrettyHTML(query),
+                                    button({
+                                        on: {
+                                            async pointerdown() {
+                                                try {
+                                                    const res = await db.query(query.query)
+                                                    console.log(res)
+                                                    output.innerHTML = ''
+                                                    output.appendChild(displayResultFully(res))
+                                                } catch(e) {
+                                                    alert(e)
+                                                }
+                                            }
+                                        }
+                                    }, 'run'),
+                                    button({
+                                        on: {
+                                            async pointerdown() {
+                                                const res = await db.query(`DELETE query WHERE query = "${query.query}"`)
+                                                alert('Query deleted')
+                                                this.parentElement.remove()
+                                                output.innerHTML = ''
+                                                output.appendChild(displayResultFully(res))
+                                            }
+                                        }
+                                    }, 'delete'),
+                                    button({
+                                        on: {
+                                            async pointerdown() {
+                                                input.value = query.query
+                                            }
+                                        }
+                                    }, 'into editor')
+                                )
+                            )
+                        }
+                    }
+                },
+            }, 'retrieve saved queries'),
+            output
+        )
+        
+        const nta = textarea({placeholder: 'write a note', attr: {autofocus: true, cols: 80, rows: 10}})
+        const nc = div.note_container()
+        const notes = section.notes(
+            nta,
+            nc
+        )
+
+        const populateNotes = async _ => {
+            const res = await db.select('note')
+            nc.innerHTML = ''
+            for (const note of res) {
+                nc.appendChild(
+                    div.note(
+                        jsonToPrettyHTML(note),
+                        button({
+                            on: {
+                                async pointerdown() {
+                                    const res = await db.query(`DELETE note WHERE note = "${note.note}"`)
+                                    alert('Note deleted')
+                                    this.parentElement.remove()
+                                }
+                            }
+                        }, 'delete')
+                    )
+                )
+            }
+        }
+
+        nta.onkeydown = async e => {
+            if (e.key == 'Enter' && !e.shiftKey) {
+                e.preventDefault()
+                let note = nta.value
+                let title
+                if (note[0] == '#') {
+                    // get the first line after the #
+                    title = note.split('\n')[0].slice(1)
+                    note = note.slice(title.length + 2)
+                }
+                await db.create('note', {title, note, now: Date.now()})
+                nta.value = ''
+                populateNotes()
+            }
+        }
+
+        viewMananger
+            ('sql', () => sqlView)
+            ('notes', () => {
+                populateNotes()
+                return notes
+            })
     </script>
 </body>
 </html>

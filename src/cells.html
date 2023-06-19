@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cells</title>
+    <link rel="stylesheet" href="/cells.css">
+</head>
+<body>
+    <main>
+
+    </main>
+    <nav>
+        <button class="pause">Play</button>
+        <button class="populate">Populate</button>
+        <input type="checkbox" name="move">
+        <!--button class="play">Play</button>
+        <button class="step">Step</button>
+        <button class="clear">Clear</button>
+        <button!-- class="random">Random</button!-->
+    </nav>
+    <script type="module" async>
+        import d from 'https://cdn.jsdelivr.net/gh/SaulDoesCode/kurshok/dist/domlib.js'
+        const {section, div, span, h1, header, article} = d.domfn
+        const {query, render, h} = d
+        await d.ready
+        const match = (o, cases) => cases[o]()
+        function keepElementCentered(selector) {
+            const element = document.querySelector(selector);
+            if (element) {
+                var elementRect = element.getBoundingClientRect();
+                var elementX = elementRect.left + elementRect.width / 2;
+                var elementY = elementRect.top + elementRect.height / 2;
+            
+                var windowWidth = window.innerWidth || document.documentElement.clientWidth;
+                var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            
+                var scrollX = elementX - windowWidth / 2;
+                var scrollY = elementY - windowHeight / 2;
+            
+                window.scrollTo(scrollX, scrollY);
+            }
+        }
+        const maybe = (chance = 0.5) => Math.random() < chance
+        const vowels = 'aeiou';
+        const consonants = 'bcdfghjklmnpqrstvwxyz';
+        const pattern = 'cv';
+        function wordishness(length = maybe() ? 4 : 7) {
+            let wordishString = '';
+            for (let i = 0; i < length; i++) {
+                const patternIndex = i % pattern.length;
+                const patternType = pattern[patternIndex];
+            
+                if (patternType === 'c') {
+                const consonantIndex = Math.floor(Math.random() * consonants.length);
+                wordishString += consonants[consonantIndex];
+                } else if (patternType === 'v') {
+                const vowelIndex = Math.floor(Math.random() * vowels.length);
+                wordishString += vowels[vowelIndex];
+                }
+            }
+            
+            return wordishString;
+        }
+        
+
+        const main = query('main')
+        const biases = []
+        const biasList = () => [...document.querySelectorAll('.bias') || []].map(b => Number(b.value))
+        const biasSlider = (n, min = -256, max = 256, val = 0, step = 1) => {
+            const i = h`
+            <div class="range-slider">
+                <span onclick="this.parentNode.remove()">X</span>
+                <span onclick="biasSlider(wordishness(), ${min}, ${max})">+</span>
+                <span>${n}</span>
+                <input class="bias bs${n}" style="width: 800px" type="range" min="${min}" max="${max}" value="${val}" step="0.000001">
+            </div>
+            `
+            biases.push(i)
+            query('nav').appendChild(i)
+        }
+        window.biasSlider = biasSlider
+        window.wordishness = wordishness
+        let ranges = 5
+        while (--ranges > -1) biasSlider(wordishness(), -256, 256)
+
+        function generateBiasedRandom(min = 0, max = 256, biases = []) {
+            const applyBias = {};
+            
+            biases.forEach((bias) => {
+                applyBias[bias] = Math.random() < 0.5;
+            });
+            
+            const range = max - min + 1;
+            const value = Math.floor(Math.random() * range) + min;
+            
+            let biasedValue = value;
+            biases.forEach((bias) => {
+                applyBias[bias] ? biasedValue += bias : biasedValue -= bias
+            })
+            return biasedValue
+        }          
+          
+
+        // const clamp = (n, min, max) => Math.min(Math.max(n, min), max)
+        const r = (l = 256) => generateBiasedRandom(-l, l, biasList(), 1)
+        const rc = (l = 256) => {
+            // random number between 0 and 255
+            return Math.floor(Math.random() * l)
+        }
+        const colorCases = {
+            rgb: () => `rgb(${rc()}, ${rc()}, ${rc()})`,
+            hex: () => `#${rc().toString(16)}${rc().toString(16)}${rc().toString(16)}`,
+            hsl: () => `hsl(${rc()}, ${rc()}%, ${rc(100)}%)`,
+            hsla: () => `hsla(${rc()}, ${rc()}%, ${rc(100)}%, ${Math.random()})`,
+            rgba: () => `rgba(${rc()}, ${rc()}, ${rc()}, ${Math.random()})`,
+        }
+        const rnd = new Proxy(op => {
+            let result = match(op, colorCases)
+            if (result) return result
+        }, {
+            get: (process, op) => process(op)
+        })
+        const moveCheckbox = query('input[name="move"]')
+        // cellular automata
+        let cells = []
+        const cell = () => {
+            const c = div.cell({css: {backgroundColor: rnd.hex}})
+            cells.push(c)
+            return c
+        }
+        let defOffset
+        let {width, height} = getComputedStyle(main)
+        width = parseFloat(width)
+        height = parseFloat(height)
+        const tick = () => {
+            // screen size
+            // keepElementCentered('.cell')
+            //console.log(width, height)
+            let x, y
+            for (const c of cells) {
+                let {left, top} = c.getBoundingClientRect()
+                if (left > width) left = left - 1
+                if (top > height) top = top - 1
+                if (left < 0) left = left + 1
+                if (top < 0) top = top + 1
+                // set the new values
+                if (moveCheckbox.checked) {
+                    x = left + r(.1)
+                    y = top + r(.1)
+                } else {
+                    x = r(2) + (width / 2)
+                    y = r(2) + (height / 2)
+                }
+                c.style.left = x + 'px'
+                c.style.top = y + 'px'
+            }
+
+            if (ticking) requestAnimationFrame(tick)
+        }
+
+        const populateBtn = query('button.populate')
+        if (populateBtn) populateBtn.onpointerdown = e => {
+            e.preventDefault()
+            e.stopPropagation()
+            if (e.button == 0) {
+                for (let i = 0; i < 100; i++) cell()
+                main.innerHtml = ''
+                main.append(...cells)
+            }
+        }
+
+        let interval = 2
+        let ticking
+        const pp = (on = pauseBtn.textContent != 'Pause') => {
+            if (on) {
+                ticking = true
+                pauseBtn.textContent = 'Pause'
+                tick()
+            } else {
+                pauseBtn.textContent = 'Play'
+                ticking = false
+            }
+        }
+        const pauseBtn = query('button.pause')
+        if (pauseBtn) pauseBtn.onpointerdown = e => {
+            e.preventDefault()
+            e.stopPropagation()
+            if (e.button == 0) pp()
+        }
+        document.onkeydown = e => {
+            // if p
+            if (e.key == 'p') pp()
+        }
+    </script>
+</body>
+</html>

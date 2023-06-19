@@ -1,0 +1,39 @@
+main {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background-color: #fff;
+    box-shadow: 0 0 1mm rgba(0, 0, 0, 0.1), 0 0 2mm rgba(182, 46, 46, 0.566);
+    /*filter: drop-shadow(0 2px 1mm rgba(94, 72, 72, 0.7));*/
+    min-height: 500px;
+    min-width: 360px;
+    border-radius: 2mm;
+    padding: 2.5mm;
+    margin: 4mm 4mm;
+}
+
+.cell {
+    position: absolute;
+    width: 1.25mm;
+    height: 1.25mm;
+    display: block;
+    background-color: #dc9e9e;
+    border-radius: 100%;
+    /*filter: drop-shadow(0 0 .5mm rgba(168, 130, 130, 0.412));*/
+}
+
+input[type="range"] {
+    position: relative;
+}
+
+input[type="range"]::after {
+    position: absolute;
+    display: block;
+    content: "|";
+    left: calc(50% - 10px / 2);
+    color: #fff;
+    width: 10px;
+}
