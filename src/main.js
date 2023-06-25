@@ -67,12 +67,24 @@ const
      app.toasts.delete(t)
      clearTimeout(t.to)
    }
-
- document.onpointerdown = async ({target}) => {
+ document.onpointerdown = async e => {
+   const target = e.target
    if (target.hasAttribute('copyable') && navigator.clipboard && window.isSecureContext) {
      await navigator.clipboard.writeText(target.textContent.trim())
      app.emit.toast('Copied to clipboard')
    }
+ }
+ document.oncontextmenu = e => {
+  const target = e.target
+  let audioSrc = target.getAttribute('audio')
+  if (audioSrc != null) {
+      // audioSrc = audioSrc.replace('1.wav', `${Math.floor(Math.random() * 3) + 1}.wav`)
+      e.stopPropagation()
+      e.preventDefault()
+      const audio = app[audioSrc] || (app[audioSrc] = new Audio(audioSrc))
+      audio.play()
+      app.emit.toast('Playing book title sound...')
+  }
  }
  app.on.toast(e => app.toasts.add(div.toast({
    $:'body',
@@ -82,6 +94,7 @@ const
  ;(await queryAsync('.breathing-circle')).onpointerdown=_=>lhs(xpmtl)
  render(shortIdeasList,shortIdeasContainer)
  app.emit.toast('loaded; pressing r randomizes things')
+ app.emit.toast('right-clicking on a book plays its title audio')
  sfhlFtr()
  app.once.xpm(async()=>(await import((app.isLH = location.hostname[2] == 'c' ? './' : cdnRoot + 'kurshok/dist/') + `experimental.js`)).default(app, domlib))
  ;(onhashchange=_=>lhi(xpmtl)&&app.emit.xpm())()
